@@ -4,23 +4,13 @@
 #include "pch.h"
 #include <iostream>
 
-#include "./src/IOTest.h"
-#include "./src/LimitTest.h"
-#include "./src/TestArray.h"
-#include "./src/TestString.h"
+#include "./src/Test.h"
 
 int main()
 {
     std::cout << "execute begin\n";
 
-	TestStdOutput();
-
-	TestLimits();
-
-	TestArray();
-
-	//std::cin.get();
-	TestString();
+	Test();
 
 	std::cout << "execute end\n";
 	return 0;

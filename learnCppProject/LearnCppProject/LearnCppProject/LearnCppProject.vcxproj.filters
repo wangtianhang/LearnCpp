@@ -33,6 +33,9 @@
     <ClInclude Include="src\TestString.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Test.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -40,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="LearnCppProject.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Test.cpp">
+      <Filter>源文件\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

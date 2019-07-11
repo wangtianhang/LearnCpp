@@ -4,9 +4,17 @@
 #include "pch.h"
 #include <iostream>
 
+#include "IOTest.h"
+
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "Hello World!\n";
+
+	TestIO();
+
+	//std::cin.get();
+
+	return 0;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

@@ -7,6 +7,7 @@
 #include "./src/IOTest.h"
 #include "./src/LimitTest.h"
 #include "./src/TestArray.h"
+#include "./src/TestString.h"
 
 int main()
 {
@@ -19,6 +20,7 @@ int main()
 	TestArray();
 
 	//std::cin.get();
+	TestString();
 
 	std::cout << "execute end\n";
 	return 0;

@@ -154,6 +154,7 @@
     <ClInclude Include="IOTest.h" />
     <ClInclude Include="LimitTest.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnCppProject.cpp" />

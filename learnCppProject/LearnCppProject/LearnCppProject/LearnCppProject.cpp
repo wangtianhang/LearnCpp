@@ -6,6 +6,7 @@
 
 #include "IOTest.h"
 #include "LimitTest.h"
+#include "TestArray.h"
 
 int main()
 {
@@ -14,6 +15,8 @@ int main()
 	TestStdOutput();
 
 	TestLimits();
+
+	TestArray();
 
 	//std::cin.get();
 

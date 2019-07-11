@@ -5,15 +5,19 @@
 #include <iostream>
 
 #include "IOTest.h"
+#include "LimitTest.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "execute begin\n";
 
-	TestIO();
+	TestStdOutput();
+
+	TestLimits();
 
 	//std::cin.get();
 
+	std::cout << "execute end\n";
 	return 0;
 }
 

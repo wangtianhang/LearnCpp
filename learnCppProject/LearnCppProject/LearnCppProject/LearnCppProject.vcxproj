@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IOTest.h" />
+    <ClInclude Include="LimitTest.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

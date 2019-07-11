@@ -4,9 +4,9 @@
 #include "pch.h"
 #include <iostream>
 
-#include "IOTest.h"
-#include "LimitTest.h"
-#include "TestArray.h"
+#include "./src/IOTest.h"
+#include "./src/LimitTest.h"
+#include "./src/TestArray.h"
 
 int main()
 {

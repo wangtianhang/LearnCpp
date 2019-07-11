@@ -13,19 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\src">
+      <UniqueIdentifier>{e7128fe1-6040-49d4-a8e5-93fda5b50036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="IOTest.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\src</Filter>
     </ClInclude>
     <ClInclude Include="LimitTest.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\src</Filter>
     </ClInclude>
     <ClInclude Include="TestArray.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

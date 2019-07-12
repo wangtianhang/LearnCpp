@@ -97,6 +97,16 @@ void TestStr(const std::string& a, const std::string& b, std::string& c)
 	c = a + b;
 }
 
+double Pam(int a)
+{
+	return 0;
+}
+
+void estimate(int lines, double(*pf)(int))
+{
+
+}
+
 void TestFunction()
 {
 	std::cout << "TestFunction ===============begin=================\n";
@@ -117,19 +127,34 @@ void TestFunction()
 
 	std::cout << "minimum 中 m 数量 " << ms << std::endl;
 
-	FuncStruct a;
-	a.test = 1;
-	FuncStruct b;
-	b.test = 2;
-	FuncStruct c = TestPassStruct(a, b);
-	std::cout << c.test << std::endl;
+	{
+		// 指针和引用相关
+		FuncStruct a;
+		a.test = 1;
+		FuncStruct b;
+		b.test = 2;
+		FuncStruct c = TestPassStruct(a, b);
+		std::cout << c.test << std::endl;
 
-	TestPassStruct3(&a, &b, &c);
-	TestPassStruct3(&a, &b, &c);
+		TestPassStruct3(&a, &b, &c);
+		TestPassStruct3(&a, &b, &c);
 
-	std::string str;
-	TestStr("aaa", "bbb", str);
-	std::cout << str << std::endl;
+		std::string str;
+		TestStr("aaa", "bbb", str);
+		std::cout << str << std::endl;
+	}
+
+
+	{
+		// 函数指针相关
+		double(*pf)(int);// pf points to a function that returns double
+		// 需要注意 下面这个不是函数指针 是一个函数
+		double *pf2(int); // pf() a function that returns a pointer-to-double
+		pf = Pam;
+		int ret4 = pf(1);
+		estimate(50, Pam);
+	}
+
 
 	std::cout << "TestFunction ===============end=================\n";
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <array>
 
 void TestArray()
 {
@@ -26,5 +27,13 @@ void TestArray()
 		std::cout << "wages == &wages[0]" << std::endl;
 	}
 	std::cout << *p << std::endl;
+
+	// 相当于定长vector
+	std::array<double, 4> a3 = { 3.14, 2.72, 1.62, 1.41 };
+	for (size_t i = 0; i < a3.size(); ++i)
+	{
+		std::cout << a3[i] << std::endl;
+	}
+
 	std::cout << "TestArray ===============end=================\n";
 }

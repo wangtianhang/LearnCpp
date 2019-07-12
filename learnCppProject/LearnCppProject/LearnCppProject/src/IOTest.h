@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
 void TestStdOutput()
 {
@@ -24,4 +25,16 @@ void TestStdInput()
 {
 	int test = 0;
 	std::cin >> test;
+}
+
+void TestFileOutput()
+{
+	std::cout << "TestFileOutput ===============begin=================\n";
+
+	std::ofstream outFile;
+	outFile.open("testWriteFile.txt");
+	outFile << "test";
+	outFile.close();
+
+	std::cout << "TestFileOutput ===============end=================\n";
 }

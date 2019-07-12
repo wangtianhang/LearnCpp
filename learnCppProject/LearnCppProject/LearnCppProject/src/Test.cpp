@@ -38,4 +38,6 @@ void Test()
 	TestTime();
 
 	TestFor();
+
+	TestFileOutput();
 }

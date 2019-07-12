@@ -42,5 +42,20 @@ void TestArray()
 
 	}
 
+	int maxtemps[4][5];
+	int maxtemps2[4][5] = // 2-D array
+	{
+		{96, 100, 87, 101, 105}, // values for maxtemps[0]
+		{96, 98, 91, 107, 104}, // values for maxtemps[1]
+		{97, 101, 93, 108, 107}, // values for maxtemps[2]
+		{98, 103, 95, 109, 108} // values for maxtemps[3]
+	};
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 5; ++col)
+			std::cout << maxtemps2[row][col] << "\t";
+		std::cout << std::endl;
+	}
+
 	std::cout << "TestArray ===============end=================\n";
 }

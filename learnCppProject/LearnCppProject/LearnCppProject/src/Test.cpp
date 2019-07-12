@@ -6,6 +6,7 @@
 #include "./LimitTest.h"
 #include "./TestArray.h"
 #include "./TestString.h"
+#include "./TestStruct.h"
 
 void Test()
 {
@@ -17,4 +18,6 @@ void Test()
 
 	//std::cin.get();
 	TestString();
+
+	TestStruct();
 }

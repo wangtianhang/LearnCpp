@@ -9,6 +9,7 @@
 #include "./TestStruct.h"
 #include "./TestEnum.h"
 #include "./TestPointer.h"
+#include "./TestNew.h"
 
 void Test()
 {
@@ -24,4 +25,6 @@ void Test()
 	TestStruct();
 
 	TestPointer();
+
+	TestNewAndDelete();
 }

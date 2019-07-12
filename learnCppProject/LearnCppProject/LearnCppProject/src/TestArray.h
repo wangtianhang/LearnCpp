@@ -19,5 +19,12 @@ void TestArray()
 		std::cout << test2[i] << std::endl;
 	}
 
+	double wages[3] = { 10000.0, 20000.0, 30000.0 };
+	double *p = &wages[0];
+	if (wages == &wages[0])
+	{
+		std::cout << "wages == &wages[0]" << std::endl;
+	}
+	std::cout << *p << std::endl;
 	std::cout << "TestArray ===============end=================\n";
 }

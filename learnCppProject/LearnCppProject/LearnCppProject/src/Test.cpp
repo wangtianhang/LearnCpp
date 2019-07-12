@@ -11,6 +11,7 @@
 #include "./TestPointer.h"
 #include "./TestNew.h"
 #include "./TestTime.h"
+#include "./TestFor.h"
 
 void Test()
 {
@@ -30,4 +31,6 @@ void Test()
 	TestNewAndDelete();
 
 	TestTime();
+
+	TestFor();
 }

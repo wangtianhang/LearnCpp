@@ -51,6 +51,9 @@
     <ClInclude Include="src\TestTime.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestFor.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

@@ -90,6 +90,17 @@ FuncStruct& TestPassStruct2(FuncStruct a, FuncStruct b)
 	return ret;
 }
 
+// 错误示范
+FuncStruct * TestPassStruct2_2(FuncStruct a, FuncStruct b)
+{
+	FuncStruct ret;
+
+	ret.test = a.test + b.test;
+
+	/*不能这样写 返回局部变量的引用 外部得到的会是一个烂值*/
+	return &ret;
+}
+
 void TestPassStruct3(const FuncStruct * a, const FuncStruct * b, FuncStruct * ret)
 {
 	//FuncStruct ret;

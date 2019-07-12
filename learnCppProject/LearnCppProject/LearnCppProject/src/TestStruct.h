@@ -17,7 +17,7 @@ void TestStruct()
 	Inflatable guest =
 	{
 		"Glorious Gloria", // name value
-		1.88, // volume value
+		1.88f, // volume value
 		29.99 // price value
 	};
 
@@ -28,3 +28,26 @@ void TestStruct()
 
 	std::cout << "TestStruct ===============end=================\n";
 }
+
+struct perks
+{
+	int key_number;
+	char car[12];
+} mr_smith, ms_jones; // two perks variables
+
+struct perks2
+{
+	int key_number;
+	char car[12];
+} mr_glitz =
+{
+7, // value for mr_glitz.key_number member
+"Packard" // value for mr_glitz.car member
+};
+
+struct // no tag
+{
+	int x; // 2 members
+	int y;
+} position; // a structure variable
+

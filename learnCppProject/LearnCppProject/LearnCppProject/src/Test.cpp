@@ -47,4 +47,8 @@ void Test()
 	TestBinaryFileInput();
 
 	TestFunction();
+
+	int rats;
+	// ±ğÃû
+	int & rodents = rats; // makes rodents an alias for rats 
 }

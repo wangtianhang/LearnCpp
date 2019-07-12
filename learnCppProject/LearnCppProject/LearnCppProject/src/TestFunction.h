@@ -120,6 +120,8 @@ void estimate(int lines, double(*pf)(int))
 
 typedef double (*p_fun)(int); // p_fun now a type name
 
+inline double square(double x) { return x * x; }
+
 void TestFunction()
 {
 	std::cout << "TestFunction ===============begin=================\n";

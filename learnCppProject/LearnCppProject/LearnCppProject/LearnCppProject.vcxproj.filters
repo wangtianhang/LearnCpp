@@ -14,26 +14,26 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="源文件\src">
-      <UniqueIdentifier>{e7128fe1-6040-49d4-a8e5-93fda5b50036}</UniqueIdentifier>
+      <UniqueIdentifier>{f4a99c0f-513f-4644-a558-503b3cc79549}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IOTest.h">
+    <ClInclude Include="src\IOTest.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
-    <ClInclude Include="LimitTest.h">
-      <Filter>源文件\src</Filter>
-    </ClInclude>
-    <ClInclude Include="TestArray.h">
-      <Filter>源文件\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TestString.h">
+    <ClInclude Include="src\LimitTest.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
     <ClInclude Include="src\Test.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestArray.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TestString.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
   </ItemGroup>

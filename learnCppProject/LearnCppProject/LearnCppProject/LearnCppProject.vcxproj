@@ -151,12 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="IOTest.h" />
-    <ClInclude Include="LimitTest.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\IOTest.h" />
+    <ClInclude Include="src\LimitTest.h" />
     <ClInclude Include="src\Test.h" />
+    <ClInclude Include="src\TestArray.h" />
     <ClInclude Include="src\TestString.h" />
-    <ClInclude Include="TestArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnCppProject.cpp" />

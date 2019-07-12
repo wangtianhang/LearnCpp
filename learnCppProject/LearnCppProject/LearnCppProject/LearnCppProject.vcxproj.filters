@@ -39,9 +39,6 @@
     <ClInclude Include="src\TestStruct.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestEnum.h">
-      <Filter>源文件\src</Filter>
-    </ClInclude>
     <ClInclude Include="src\TestPointer.h">
       <Filter>源文件\src</Filter>
     </ClInclude>

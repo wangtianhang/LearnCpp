@@ -7,11 +7,16 @@
 #include "./TestArray.h"
 #include "./TestString.h"
 #include "./TestStruct.h"
-#include "./TestEnum.h"
+//#include "./TestEnum.h"
 #include "./TestPointer.h"
 #include "./TestNew.h"
 #include "./TestTime.h"
 #include "./TestFor.h"
+
+typedef int gaga;
+
+enum spectrum { red, orange, yellow, green, blue, violet, indigo, ultraviolet };
+enum bits { one = 1, two = 2, four = 4, eight = 8 };
 
 void Test()
 {

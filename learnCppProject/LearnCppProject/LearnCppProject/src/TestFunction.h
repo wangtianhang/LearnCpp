@@ -54,6 +54,49 @@ unsigned int c_in_str(const char * str, char ch)
 	return pstr;
 }
 
+struct FuncStruct
+{
+	int test;
+};
+
+FuncStruct TestPassStruct(FuncStruct a, FuncStruct b)
+{
+	FuncStruct ret;
+
+	ret.test = a.test + b.test;
+
+	return ret;
+}
+
+// 错误示范
+FuncStruct& TestPassStruct2(FuncStruct a, FuncStruct b)
+{
+	FuncStruct ret;
+
+	ret.test = a.test + b.test;
+
+	/*不能这样写 返回局部变量的引用 外部得到的会是一个烂值*/
+	return ret;
+}
+
+void TestPassStruct3(const FuncStruct * a, const FuncStruct * b, FuncStruct * ret)
+{
+	//FuncStruct ret;
+
+	ret->test = a->test + b->test;
+
+}
+
+void TestPassStruct4(const FuncStruct& a, const FuncStruct& b, FuncStruct& c)
+{
+	c.test = a.test + b.test;
+}
+
+void TestStr(const std::string& a, const std::string& b, std::string& c)
+{
+	c = a + b;
+}
+
 void TestFunction()
 {
 	std::cout << "TestFunction ===============begin=================\n";
@@ -74,6 +117,21 @@ void TestFunction()
 
 	std::cout << "minimum 中 m 数量 " << ms << std::endl;
 
+	FuncStruct a;
+	a.test = 1;
+	FuncStruct b;
+	b.test = 2;
+	FuncStruct c = TestPassStruct(a, b);
+	std::cout << c.test << std::endl;
+
+	TestPassStruct3(&a, &b, &c);
+	TestPassStruct3(&a, &b, &c);
+
+	std::string str;
+	TestStr("aaa", "bbb", str);
+	std::cout << str << std::endl;
+
 	std::cout << "TestFunction ===============end=================\n";
 }
+
 

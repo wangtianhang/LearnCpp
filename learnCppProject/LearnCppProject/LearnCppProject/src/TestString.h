@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 
 void TestString()
 {
@@ -53,6 +54,16 @@ void TestString()
 	else
 	{
 		std::cout << "字符串不相等" << std::endl;
+	}
+
+	char tmp = 'a';
+	if (isalpha(tmp))
+	{
+		std::cout << "是字母" << std::endl;
+	}
+	else
+	{
+		std::cout << "不是字母" << std::endl;
 	}
 
 	std::cout << "TestString ===============end=================\n";

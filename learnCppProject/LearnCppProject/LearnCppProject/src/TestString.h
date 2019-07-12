@@ -35,6 +35,16 @@ void TestString()
 		std::cout << test2 << std::endl;
 	}
 	
+	const char * str4 = str3.c_str();
+	int tmpLen = strlen(str4);
+	char * ps = new char[tmpLen + 1];
+	// 太蛋疼了 同一个函数名居然能对应各种参数列表 无语。。
+	strcpy_s(ps, tmpLen + 1, str4);
+	//*(ps + tmpLen) = '\0';
+
+	char food[20];
+	strncpy_s(food, "a picnic basket filled with many goodies", 19);
+	food[19] = '\0';
 
 	std::cout << "TestString ===============end=================\n";
 }

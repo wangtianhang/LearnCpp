@@ -12,6 +12,7 @@
 #include "./TestNew.h"
 #include "./TestTime.h"
 #include "./TestFor.h"
+#include "./TestFunction.h"
 
 typedef int gaga;
 
@@ -44,4 +45,6 @@ void Test()
 	TestTextFileInput();
 
 	TestBinaryFileInput();
+
+	TestFunction();
 }

@@ -157,6 +157,7 @@
     <ClInclude Include="src\Test.h" />
     <ClInclude Include="src\TestArray.h" />
     <ClInclude Include="src\TestFor.h" />
+    <ClInclude Include="src\TestFunction.h" />
     <ClInclude Include="src\TestNew.h" />
     <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestString.h" />

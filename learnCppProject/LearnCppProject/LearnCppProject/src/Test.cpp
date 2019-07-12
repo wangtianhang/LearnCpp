@@ -39,7 +39,9 @@ void Test()
 
 	TestFor();
 
-	TestFileOutput();
+	TestTextFileOutput();
 
-	TestFileInput();
+	TestTextFileInput();
+
+	TestBinaryFileInput();
 }

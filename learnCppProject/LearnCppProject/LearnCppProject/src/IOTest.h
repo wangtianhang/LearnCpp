@@ -28,7 +28,7 @@ void TestStdInput()
 	std::cin >> test;
 }
 
-void TestFileOutput()
+void TestTextFileOutput()
 {
 	std::cout << "TestFileOutput ===============begin=================\n";
 
@@ -42,9 +42,9 @@ void TestFileOutput()
 	std::cout << "TestFileOutput ===============end=================\n";
 }
 
-void TestFileInput()
+void TestTextFileInput()
 {
-	std::cout << "TestFileInput ===============begin=================\n";
+	std::cout << "TestTextFileInput ===============begin=================\n";
 
 	std::ifstream inFile;
 	inFile.open("testWriteFile.txt");
@@ -76,5 +76,40 @@ void TestFileInput()
 	buffer.clear();
 
 	std::cout << content.c_str() << std::endl;
-	std::cout << "TestFileInput ===============end=================\n";
+	std::cout << "TestTextFileInput ===============end=================\n";
+}
+
+void TestBinaryFileInput()
+{
+	std::cout << "TestBinaryFileInput ===============begin=================\n";
+
+	std::ifstream inFile;
+	inFile.open("testWriteFile.txt");
+	if (!inFile.is_open())
+	{
+		std::cout << "没有打开文件" << std::endl;
+		return;
+	}
+
+	inFile.seekg(0, std::ios::end);
+	// 强转后编译器就不会报警告了
+	int totalLength = (int)inFile.tellg();
+	char * buffer = new char[totalLength];
+	inFile.seekg(0, std::ios::beg);
+	inFile.read(buffer, totalLength);
+	inFile.close();
+
+	if (false)
+	{
+		char * str = new char[totalLength + 1];
+		memcpy(str, buffer, totalLength);
+		str[totalLength] = '\0';
+
+		std::cout << str << std::endl;
+	}
+
+	delete[] buffer;
+	buffer = nullptr;
+
+	std::cout << "TestBinaryFileInput ===============end=================\n";
 }

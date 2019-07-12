@@ -152,7 +152,7 @@ void TestFunction()
 		std::cout << c.test << std::endl;
 
 		TestPassStruct3(&a, &b, &c);
-		TestPassStruct3(&a, &b, &c);
+		TestPassStruct4(a, b, c);
 
 		std::string str;
 		TestStr("aaa", "bbb", str);

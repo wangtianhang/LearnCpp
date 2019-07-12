@@ -10,6 +10,7 @@
 #include "./TestEnum.h"
 #include "./TestPointer.h"
 #include "./TestNew.h"
+#include "./TestTime.h"
 
 void Test()
 {
@@ -27,4 +28,6 @@ void Test()
 	TestPointer();
 
 	TestNewAndDelete();
+
+	TestTime();
 }

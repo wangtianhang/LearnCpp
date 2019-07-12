@@ -161,6 +161,7 @@
     <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestString.h" />
     <ClInclude Include="src\TestStruct.h" />
+    <ClInclude Include="src\TestTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnCppProject.cpp" />

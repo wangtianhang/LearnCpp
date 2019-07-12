@@ -34,6 +34,9 @@ void TestStruct()
 	{"Godzilla", 2000, 565.99} // next structure in array
 	};
 
+	Inflatable * ps = new Inflatable;
+	ps->price = 10;
+
 	std::cout << "TestStruct ===============end=================\n";
 }
 

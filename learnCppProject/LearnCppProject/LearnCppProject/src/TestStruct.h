@@ -26,6 +26,14 @@ void TestStruct()
 
 	cout << guest2.price << endl;
 
+	Inflatable gifts[100]; // array of 100 inflatable structures
+
+	Inflatable guests[2] = // initializing an array of structs
+	{
+	{"Bambi", 0.5, 21.99}, // first structure in array
+	{"Godzilla", 2000, 565.99} // next structure in array
+	};
+
 	std::cout << "TestStruct ===============end=================\n";
 }
 

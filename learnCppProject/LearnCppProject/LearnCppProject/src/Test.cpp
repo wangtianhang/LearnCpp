@@ -7,6 +7,7 @@
 #include "./TestArray.h"
 #include "./TestString.h"
 #include "./TestStruct.h"
+#include "./TestEnum.h"
 
 void Test()
 {

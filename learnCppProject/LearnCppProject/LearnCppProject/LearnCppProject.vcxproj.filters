@@ -39,6 +39,9 @@
     <ClInclude Include="src\TestStruct.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestEnum.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

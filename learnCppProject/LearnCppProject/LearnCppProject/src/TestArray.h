@@ -35,5 +35,12 @@ void TestArray()
 		std::cout << a3[i] << std::endl;
 	}
 
+	// ²âÊÔ¶ººÅ²Ù×÷·û¡£¡£
+	double j;
+	for (size_t i = 0, j = 0 ; i < a3.size(); ++i)
+	{
+
+	}
+
 	std::cout << "TestArray ===============end=================\n";
 }

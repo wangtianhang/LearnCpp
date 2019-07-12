@@ -46,5 +46,14 @@ void TestString()
 	strncpy_s(food, "a picnic basket filled with many goodies", 19);
 	food[19] = '\0';
 
+	if (strcmp(str4, ps) == 0)
+	{
+		std::cout << "字符串相等" << std::endl;
+ 	}
+	else
+	{
+		std::cout << "字符串不相等" << std::endl;
+	}
+
 	std::cout << "TestString ===============end=================\n";
 }

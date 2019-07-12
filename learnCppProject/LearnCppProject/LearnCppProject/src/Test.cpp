@@ -40,4 +40,6 @@ void Test()
 	TestFor();
 
 	TestFileOutput();
+
+	TestFileInput();
 }

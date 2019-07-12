@@ -157,6 +157,7 @@
     <ClInclude Include="src\Test.h" />
     <ClInclude Include="src\TestArray.h" />
     <ClInclude Include="src\TestEnum.h" />
+    <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestString.h" />
     <ClInclude Include="src\TestStruct.h" />
   </ItemGroup>

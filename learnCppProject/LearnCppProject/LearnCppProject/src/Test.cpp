@@ -8,6 +8,7 @@
 #include "./TestString.h"
 #include "./TestStruct.h"
 #include "./TestEnum.h"
+#include "./TestPointer.h"
 
 void Test()
 {
@@ -21,4 +22,6 @@ void Test()
 	TestString();
 
 	TestStruct();
+
+	TestPointer();
 }

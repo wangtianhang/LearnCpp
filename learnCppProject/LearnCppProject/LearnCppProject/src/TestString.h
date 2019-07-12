@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 void TestString()
 {
@@ -14,6 +15,26 @@ void TestString()
 		char tmp2 = (char)tmp;
 		std::cout << tmp2 << "\t" << tmp << std::endl;
 	}
+
+	std::string str1 = "gaga1";
+	std::string str2 = "gaga2";
+	std::string str3 = str1 + str2;
+	str2 += str1;
+	std::cout << str3 << std::endl;
+
+	int len = str1.size();
+	int len2 = strlen(str1.c_str());
+
+	if (false)
+	{
+		char test2[3] = "12";
+		char test3[10] = "12345";
+		strcpy_s(test2, test3); // 拷贝源str到des str 目标buffer需要比src buffer大
+		strcat_s(test2, test3); // 连接源str到des buffer 目标buffer需要比src buffer大
+
+		std::cout << test2 << std::endl;
+	}
+	
 
 	std::cout << "TestString ===============end=================\n";
 }

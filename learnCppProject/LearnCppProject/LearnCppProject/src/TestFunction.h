@@ -57,6 +57,17 @@ unsigned int c_in_str(const char * str, char ch)
 struct FuncStruct
 {
 	int test;
+
+public: 
+	int GetGaga()
+	{
+		return 0;
+	}
+
+	static int GetStaticGaga()
+	{
+		return 0;
+	}
 };
 
 FuncStruct TestPassStruct(FuncStruct a, FuncStruct b)
@@ -147,12 +158,29 @@ void TestFunction()
 
 	{
 		// 函数指针相关
+		// 1.全局函数 类c函数
 		double(*pf)(int);// pf points to a function that returns double
 		// 需要注意 下面这个不是函数指针 是一个函数
 		double *pf2(int); // pf() a function that returns a pointer-to-double
 		pf = Pam;
-		int ret4 = pf(1);
+		// 如下两种方式是等价的
+		int ret4 = (*pf)(1);
+		int ret5 = pf(1); // 这种感觉可以理解成一种语法糖
 		estimate(50, Pam);
+
+		// 如下形式是c++11的语法糖。。
+		auto pf3 = &Pam;
+		pf3(1);
+
+		// 2.测试成员函数的函数指针
+		FuncStruct test;
+		auto pf4 = &FuncStruct::GetGaga;
+		(test.*pf4)();
+
+		// 3.测试类成员的函数指针
+		FuncStruct::GetStaticGaga();
+		auto pf5 = &FuncStruct::GetStaticGaga;
+		pf5();
 	}
 
 

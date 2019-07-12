@@ -59,12 +59,12 @@ struct FuncStruct
 	int test;
 
 public: 
-	int GetGaga()
+	int GetGaga(int a)
 	{
 		return 0;
 	}
 
-	static int GetStaticGaga()
+	static int GetStaticGaga(int a)
 	{
 		return 0;
 	}
@@ -117,6 +117,8 @@ void estimate(int lines, double(*pf)(int))
 {
 
 }
+
+typedef double (*p_fun)(int); // p_fun now a type name
 
 void TestFunction()
 {
@@ -175,12 +177,15 @@ void TestFunction()
 		// 2.测试成员函数的函数指针
 		FuncStruct test;
 		auto pf4 = &FuncStruct::GetGaga;
-		(test.*pf4)();
+		(test.*pf4)(1);
 
 		// 3.测试类成员的函数指针
-		FuncStruct::GetStaticGaga();
+		FuncStruct::GetStaticGaga(1);
 		auto pf5 = &FuncStruct::GetStaticGaga;
-		pf5();
+		pf5(1);
+
+		p_fun pf6 = &Pam;
+		pf6(1);
 	}
 
 

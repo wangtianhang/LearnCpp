@@ -200,8 +200,8 @@ void TestFunction()
 		double *pf2(int); // pf() a function that returns a pointer-to-double
 		pf = Pam;
 		// 如下两种方式是等价的
-		int ret4 = (*pf)(1);
-		int ret5 = pf(1); // 这种感觉可以理解成一种语法糖
+		double ret4 = (*pf)(1);
+		double ret5 = pf(1); // 这种感觉可以理解成一种语法糖
 		estimate(50, Pam);
 
 		// 如下形式是c++11的语法糖。。

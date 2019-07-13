@@ -24,9 +24,48 @@ struct // no tag
 	int y;
 } position; // a structure variable
 
-void TestClass::TestClassFunc()
+int TestClass::m_test = 1;
+
+TestClass::TestClass()
+{
+	m_test2 = 1;
+}
+
+TestClass::TestClass(int a)
 {
 
+}
+
+TestClass::~TestClass()
+{
+
+}
+
+inline int TestClass::TestClassFunc() const
+{
+	return this->m_test2;
+}
+
+int TestClass::GetStaticGaga(int a)
+{
+	return 0;
+}
+
+TestClass TestClass::operator+(const TestClass & t) const
+{
+	TestClass sum;
+
+	return sum;
+}
+
+TestClass::operator int() const
+{
+	return 0;
+}
+
+TestClass::operator std::string() const
+{
+	return "";
 }
 
 void TestStructAndClass()
@@ -61,5 +100,19 @@ void TestStructAndClass()
 	TestClass testClass;
 	testClass.TestClassFunc();
 
+	TestClass a;
+	TestClass b;
+	TestClass c = a + b;
+
+	int d = (int)c;
+	TestClass e = 2;
+	string f = c;
+
 	std::cout << "TestStruct ===============end=================\n";
+}
+
+std::ostream & operator<<(std::ostream & os, const TestClass & t)
+{
+	os << t.m_test3;
+	return os;
 }

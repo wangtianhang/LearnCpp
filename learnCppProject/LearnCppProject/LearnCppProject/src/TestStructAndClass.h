@@ -11,9 +11,27 @@ struct Inflatable
 class TestClass
 {
 public:
-	void TestClassFunc();
+	TestClass();
+	TestClass(int a);
+	virtual ~TestClass();
+	int m_test2;
+	static int m_test;
+
+	int TestClassFunc() const;
+
+	static int GetStaticGaga(int a);
+
+	TestClass operator+(const TestClass & t) const;
+	friend std::ostream & operator<<(std::ostream & os, const TestClass & t);
+
+	// 显式转换
+	explicit operator int() const;
+	// 隐式转换
+	operator std::string() const;
 protected:
+	
 private:
+	int m_test3;
 };
 
 

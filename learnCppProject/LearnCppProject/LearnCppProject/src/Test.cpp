@@ -6,7 +6,7 @@
 #include "./LimitTest.h"
 #include "./TestArray.h"
 #include "./TestString.h"
-#include "./TestStruct.h"
+#include "./TestStructAndClass.h"
 //#include "./TestEnum.h"
 #include "./TestPointer.h"
 #include "./TestNew.h"
@@ -28,6 +28,11 @@ extern void TestExternFunc();
 //void TestStaticFunc();
 extern "C" void spiff(int); // øÁ”Ô—‘µ˜”√
 
+namespace wth
+{
+
+}
+
 void Test()
 {
 	TestStdOutput();
@@ -39,7 +44,7 @@ void Test()
 	//std::cin.get();
 	TestString();
 
-	TestStruct();
+	TestStructAndClass();
 
 	TestPointer();
 

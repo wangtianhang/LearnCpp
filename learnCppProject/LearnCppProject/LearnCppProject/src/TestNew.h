@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+
+
 void TestNewAndDelete()
 {
 	using namespace std;
@@ -27,5 +29,12 @@ void TestNewAndDelete()
 		delete[] psome;
 		psome = nullptr;
 	}
+
+	// placement new 可以指定new的内存位置
+	char buffer2[500];
+	int * placement = new (buffer2) int[20];
+	//delete[] placement; // 貌似这种不用delete。。
+	placement = NULL;
+
 	std::cout << "TestNewAndDelete ===============end=================\n";
 }

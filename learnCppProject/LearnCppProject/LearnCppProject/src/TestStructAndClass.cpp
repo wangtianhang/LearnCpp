@@ -1,14 +1,35 @@
-#pragma once
-#include <iostream>
+#include "pch.h"
 
-struct Inflatable
+#include "./TestStructAndClass.h"
+
+struct perks
 {
-	char name[20];
-	float volume;
-	double price;
+	int key_number;
+	char car[12];
+} mr_smith, ms_jones; // two perks variables
+
+struct perks2
+{
+	int key_number;
+	char car[12];
+} mr_glitz =
+{
+7, // value for mr_glitz.key_number member
+"Packard" // value for mr_glitz.car member
 };
 
-void TestStruct()
+struct // no tag
+{
+	int x; // 2 members
+	int y;
+} position; // a structure variable
+
+void TestClass::TestClassFunc()
+{
+
+}
+
+void TestStructAndClass()
 {
 	std::cout << "TestStruct ===============begin=================\n";
 
@@ -37,28 +58,8 @@ void TestStruct()
 	Inflatable * ps = new Inflatable;
 	ps->price = 10;
 
+	TestClass testClass;
+	testClass.TestClassFunc();
+
 	std::cout << "TestStruct ===============end=================\n";
 }
-
-struct perks
-{
-	int key_number;
-	char car[12];
-} mr_smith, ms_jones; // two perks variables
-
-struct perks2
-{
-	int key_number;
-	char car[12];
-} mr_glitz =
-{
-7, // value for mr_glitz.key_number member
-"Packard" // value for mr_glitz.car member
-};
-
-struct // no tag
-{
-	int x; // 2 members
-	int y;
-} position; // a structure variable
-

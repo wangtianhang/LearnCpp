@@ -161,7 +161,7 @@
     <ClInclude Include="src\TestNew.h" />
     <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestString.h" />
-    <ClInclude Include="src\TestStruct.h" />
+    <ClInclude Include="src\TestStructAndClass.h" />
     <ClInclude Include="src\TestTemplate.h" />
     <ClInclude Include="src\TestTime.h" />
   </ItemGroup>
@@ -175,6 +175,7 @@
     </ClCompile>
     <ClCompile Include="src\Test.cpp" />
     <ClCompile Include="src\TestLink.cpp" />
+    <ClCompile Include="src\TestStructAndClass.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

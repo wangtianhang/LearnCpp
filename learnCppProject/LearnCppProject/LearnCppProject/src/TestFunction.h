@@ -56,9 +56,10 @@ unsigned int c_in_str(const char * str, char ch)
 
 struct FuncStruct
 {
-	int test;
 
 public: 
+	int test;
+
 	int GetGaga(int a)
 	{
 		return 0;
@@ -68,6 +69,11 @@ public:
 	{
 		return 0;
 	}
+};
+
+struct SubFuncStruct : FuncStruct
+{
+
 };
 
 FuncStruct TestPassStruct(FuncStruct a, FuncStruct b)
@@ -163,7 +169,10 @@ void TestFunction()
 		std::cout << c.test << std::endl;
 
 		TestPassStruct3(&a, &b, &c);
-		TestPassStruct4(a, b, c);
+
+		// 子类可以直接传到父类引用
+		SubFuncStruct d;
+		TestPassStruct4(a, b, d);
 
 		std::string str;
 		TestStr("aaa", "bbb", str);

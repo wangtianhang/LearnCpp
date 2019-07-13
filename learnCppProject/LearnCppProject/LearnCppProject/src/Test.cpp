@@ -13,6 +13,7 @@
 #include "./TestTime.h"
 #include "./TestFor.h"
 #include "./TestFunction.h"
+#include "./TestTemplate.h"
 
 typedef int gaga;
 
@@ -51,4 +52,6 @@ void Test()
 	int rats;
 	// ±ğÃû
 	int & rodents = rats; // makes rodents an alias for rats 
+
+	TestTemplate();
 }

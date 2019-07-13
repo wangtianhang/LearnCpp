@@ -125,7 +125,7 @@ void TestStr(const std::string& a, const std::string& b, std::string& c)
 	c = a + b;
 }
 
-double Pam(int a)
+double Pam(int a = 1)
 {
 	return 0;
 }
@@ -138,6 +138,16 @@ void estimate(int lines, double(*pf)(int))
 typedef double (*p_fun)(int); // p_fun now a type name
 
 inline double square(double x) { return x * x; }
+
+void OverloadTest(int a)
+{
+
+}
+
+void OverloadTest(double b)
+{
+
+}
 
 void TestFunction()
 {

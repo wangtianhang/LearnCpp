@@ -20,6 +20,14 @@ typedef int gaga;
 enum spectrum { red, orange, yellow, green, blue, violet, indigo, ultraviolet };
 enum bits { one = 1, two = 2, four = 4, eight = 8 };
 
+extern int blem;
+//extern int blem2;
+// 带和不带extern的效果貌似是一致的
+void TestExternFunc();
+extern void TestExternFunc();
+//void TestStaticFunc();
+extern "C" void spiff(int); // 跨语言调用
+
 void Test()
 {
 	TestStdOutput();
@@ -54,4 +62,12 @@ void Test()
 	int & rodents = rats; // makes rodents an alias for rats 
 
 	TestTemplate();
+
+	blem = 1;
+	//blem2 = 2;
+
+	TestExternFunc();
+	//TestStaticFunc();
+
+	//spiff(1);
 }

@@ -36,6 +36,16 @@ TestClass::TestClass(int a)
 
 }
 
+TestClass::TestClass(const TestClass& testClass)
+{
+
+}
+
+TestClass& TestClass::operator=(const TestClass &)
+{
+	return *this;
+}
+
 TestClass::~TestClass()
 {
 
@@ -100,13 +110,37 @@ void TestStructAndClass()
 	TestClass testClass;
 	testClass.TestClassFunc();
 
-	TestClass a;
-	TestClass b;
-	TestClass c = a + b;
+	{
+		// 操作符
+		TestClass a;
+		TestClass b;
+		TestClass c = a + b;
 
-	int d = (int)c;
-	TestClass e = 2;
-	string f = c;
+		// 各种转换
+		int d = (int)c;
+		TestClass e = 2;
+		string f = c;
+	}
+
+
+	{
+		// 复制函数
+		TestClass a;
+		TestClass b(a);
+		TestClass c = a;
+		TestClass d = TestClass(a);
+		TestClass * e = new TestClass(a);
+
+		delete e;
+		e = NULL;
+	}
+
+	{
+		// 赋值函数
+		TestClass a;
+		TestClass b;
+		b = a;
+	}
 
 	std::cout << "TestStruct ===============end=================\n";
 }

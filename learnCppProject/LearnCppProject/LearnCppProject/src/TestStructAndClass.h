@@ -14,6 +14,10 @@ public:
 	TestClass();
 	TestClass(int a);
 	virtual ~TestClass();
+	// ¸´ÖÆº¯Êý 
+	TestClass(const TestClass& testClass);
+	TestClass& operator=(const TestClass &);
+
 	int m_test2;
 	static int m_test;
 

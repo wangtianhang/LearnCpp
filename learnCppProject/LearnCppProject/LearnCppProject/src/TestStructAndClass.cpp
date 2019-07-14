@@ -107,6 +107,9 @@ void TestStructAndClass()
 	Inflatable * ps = new Inflatable;
 	ps->price = 10;
 
+	delete ps;
+	ps = NULL;
+
 	TestClass testClass;
 	testClass.TestClassFunc();
 
@@ -141,6 +144,10 @@ void TestStructAndClass()
 		TestClass b;
 		b = a;
 	}
+
+	char buffer[512];
+	TestClass *f = new (buffer)TestClass();
+	//delete f;
 
 	std::cout << "TestStruct ===============end=================\n";
 }

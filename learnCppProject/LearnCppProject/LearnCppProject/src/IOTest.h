@@ -106,6 +106,7 @@ void TestBinaryFileInput()
 		str[totalLength] = '\0';
 
 		std::cout << str << std::endl;
+		delete[] str;
 	}
 
 	delete[] buffer;

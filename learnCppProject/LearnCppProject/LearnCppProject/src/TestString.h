@@ -55,6 +55,8 @@ void TestString()
 	{
 		std::cout << "×Ö·û´®²»ÏàµÈ" << std::endl;
 	}
+	delete[] ps;
+	ps = nullptr;
 
 	char tmp = 'a';
 	if (isalpha(tmp))

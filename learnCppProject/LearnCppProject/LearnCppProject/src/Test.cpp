@@ -14,6 +14,7 @@
 #include "./TestFor.h"
 #include "./TestFunction.h"
 #include "./TestTemplate.h"
+#include "./TestException.h"
 
 typedef int gaga;
 
@@ -75,4 +76,6 @@ void Test()
 	//TestStaticFunc();
 
 	//spiff(1);
+
+	TestException();
 }

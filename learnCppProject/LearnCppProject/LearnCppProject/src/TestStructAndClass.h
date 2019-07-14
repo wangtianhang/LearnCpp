@@ -6,6 +6,8 @@ struct Inflatable
 	char name[20];
 	float volume;
 	double price;
+
+
 };
 
 class AbstractBaseClassTest
@@ -17,6 +19,15 @@ public:
 class TestClass : AbstractBaseClassTest
 {
 public:
+	friend struct Inflatable;
+
+	template<typename T>
+	class NestedClassTest
+	{
+	public:
+		T m_t;
+	};
+
 	TestClass();
 	TestClass(int a);
 	virtual ~TestClass();

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <exception>
 
 class BadException
 {
@@ -43,6 +44,19 @@ void TestException()
 		//pException->m_msg = "test null pointer";
 	}
 	catch (BadException* e)
+	{
+
+	}
+
+	try
+	{
+
+	}
+	catch (std::bad_alloc & e)
+	{
+
+	}
+	catch (std::exception & e)
 	{
 
 	}

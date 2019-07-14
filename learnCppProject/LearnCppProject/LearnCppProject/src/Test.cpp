@@ -15,6 +15,7 @@
 #include "./TestFunction.h"
 #include "./TestTemplate.h"
 #include "./TestException.h"
+#include "./TestRTTI.h"
 
 typedef int gaga;
 
@@ -78,4 +79,6 @@ void Test()
 	//spiff(1);
 
 	TestException();
+
+	TestRTTI();
 }

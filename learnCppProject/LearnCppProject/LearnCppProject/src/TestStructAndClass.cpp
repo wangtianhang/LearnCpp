@@ -73,6 +73,11 @@ TestClass::operator int() const
 	return 0;
 }
 
+void TestClass::TestVirtualFunc()
+{
+	std::cout << "TestClass::TestVirtualFunc" << std::endl;
+}
+
 TestClass::operator std::string() const
 {
 	return "";
@@ -80,7 +85,7 @@ TestClass::operator std::string() const
 
 void TestStructAndClass()
 {
-	std::cout << "TestStruct ===============begin=================\n";
+	std::cout << "TestStructAndClass ===============begin=================\n";
 
 	using namespace std;
 
@@ -149,11 +154,20 @@ void TestStructAndClass()
 	TestClass *f = new (buffer)TestClass();
 	//delete f;
 
-	std::cout << "TestStruct ===============end=================\n";
+	SubTestClass subClass;
+	subClass.TestVirtualFunc();
+
+	std::cout << "TestStructAndClass ===============end=================\n";
 }
 
 std::ostream & operator<<(std::ostream & os, const TestClass & t)
 {
 	os << t.m_test3;
 	return os;
+}
+
+void SubTestClass::TestVirtualFunc()
+{
+	TestClass::TestVirtualFunc();
+	std::cout << "SubTestClass::TestVirtualFunc" << std::endl;
 }

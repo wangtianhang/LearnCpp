@@ -32,12 +32,19 @@ public:
 	explicit operator int() const;
 	// ÒþÊ½×ª»»
 	operator std::string() const;
+
+	virtual void TestVirtualFunc();
 protected:
 	
 private:
 	int m_test3;
 };
 
+class SubTestClass : public TestClass
+{
+public:
+	virtual void TestVirtualFunc();
+};
 
 void TestStructAndClass();
 

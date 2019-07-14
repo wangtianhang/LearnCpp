@@ -61,6 +61,11 @@ int TestClass::GetStaticGaga(int a)
 	return 0;
 }
 
+void TestClass::PureVirtualFuncTest()
+{
+
+}
+
 TestClass TestClass::operator+(const TestClass & t) const
 {
 	TestClass sum;

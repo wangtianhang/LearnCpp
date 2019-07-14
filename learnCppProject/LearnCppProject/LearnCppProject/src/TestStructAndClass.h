@@ -8,7 +8,13 @@ struct Inflatable
 	double price;
 };
 
-class TestClass
+class AbstractBaseClassTest
+{
+public:
+	virtual void PureVirtualFuncTest() = 0;
+};
+
+class TestClass : AbstractBaseClassTest
 {
 public:
 	TestClass();
@@ -24,6 +30,8 @@ public:
 	int TestClassFunc() const;
 
 	static int GetStaticGaga(int a);
+
+	virtual void PureVirtualFuncTest();
 
 	TestClass operator+(const TestClass & t) const;
 	friend std::ostream & operator<<(std::ostream & os, const TestClass & t);

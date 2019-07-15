@@ -260,5 +260,7 @@ public:
 			|| this->z != b.z;
 	}
 
-	friend Vector4 operator *(const float d, Vector4 & b);
+	friend Vector4 operator *(const float d, Vector4 b);
 };
+
+Vector4 operator *(const float d, Vector4 b);

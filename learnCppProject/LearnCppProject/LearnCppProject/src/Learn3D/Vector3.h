@@ -22,6 +22,9 @@ public:
 		}
 
 		e[0] = 3;
+
+		float g = 2;
+		Vector3 h = g * Vector3::one();
 	}
 
 	float x;
@@ -311,7 +314,9 @@ public:
 
 	// todo 需要补充。。不过依赖矩阵和四元数 先去写其他的了。。
 
-	friend Vector3 operator *(const float d, Vector3 & b);
+	//friend Vector3 operator *(const float d, Vector3 & b);
+	friend Vector3 operator *(const float d, Vector3 b);
 };
 
-Vector3 operator *(const float d, Vector3 & b);
+//Vector3 operator *(const float d, Vector3 & b);
+Vector3 operator *(const float d, Vector3 b);

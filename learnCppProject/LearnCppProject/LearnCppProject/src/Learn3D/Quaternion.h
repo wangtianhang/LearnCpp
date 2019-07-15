@@ -1,5 +1,7 @@
 #pragma once
 
+#include "./Vector3.h"
+
 struct Quaternion
 {
 public:
@@ -47,10 +49,7 @@ public:
 		return Quaternion::Dot(*this, b) <= 0.999999f;
 	}
 
-	static float Dot(Quaternion a, Quaternion b)
-	{
-		return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-	}
+
 
 	Quaternion operator*(const Quaternion & b) const
 	{
@@ -212,6 +211,137 @@ public:
 	Vector3 SetEulerAngles(Vector3 euler)
 	{
 		*this = Quaternion::FromEulerRad(euler * 0.0174532924f);
+	}
+
+	static float Dot(Quaternion a, Quaternion b)
+	{
+		return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+	}
+
+	static Quaternion Euler(Vector3 euler)
+	{
+		Vector3 eulerRad = euler * Mathf::Deg2Rad;
+		return FromEulerRad(eulerRad);
+	}
+
+	static Quaternion Euler(float x, float y, float z)
+	{
+		return Quaternion::Euler(Vector3(x, y, z));
+	}
+
+
+	//static Quaternion FromToRotation(Vector3 fromDiection, Vector3 toDirection)
+//根据两个向量计算出旋转量，计算出来的旋转量为从fromDiection,旋转到toDirection的旋转量。
+//这句话意思很明显了。就是计算旋转量。
+//那么LookRotation(Vector3 forward)计算的是，Z轴旋转到forward的旋转量。
+//推出：Quaternion.LookRotation(new Vector3(1,0,0)) == Quaternion.FromToRotation(Vector3.forward, new Vector3(1,0,0));
+//因为前者就是计算向前向量到当前向量（1,0,0）的旋转量的，其实现过程就是后者喽。
+	static Quaternion FromToRotation(Vector3 v1, Vector3 v2)
+	{
+		return Quaternion::AngleAxis(Vector3::Angle(v1, v2), Vector3::Cross(v1, v2));
+	}
+
+	static Quaternion Inverse(Quaternion rotation)
+	{
+		float lengthSq = rotation.LengthSquared();
+		if (lengthSq != 0.0)
+		{
+			float i = 1.0f / lengthSq;
+			float x = rotation.x * -i;
+			float y = rotation.y * -i;
+			float z = rotation.z * -i;
+			return Quaternion(x, y, z, rotation.w * i);
+		}
+		return rotation;
+	}
+
+	static Quaternion Lerp(Quaternion from, Quaternion to, float t)
+	{
+		if (t > 1) t = 1;
+		if (t < 0) t = 0;
+		return Slerp(from, to, t);
+	}
+
+	static Quaternion Slerp(Quaternion a, Quaternion b, float t)
+	{
+		if (t > 1) t = 1;
+		if (t < 0) t = 0;
+		return SlerpUnclamped(a, b, t);
+	}
+
+	Vector3 GetXYZ()
+	{
+		return Vector3(x, y, z);
+	}
+
+	Vector3 SetXYZ(Vector3 xyz)
+	{
+		x = xyz.x;
+		y = xyz.y;
+		z = xyz.z;
+	}
+
+	static Quaternion SlerpUnclamped(Quaternion a, Quaternion b, float t)
+	{
+		// if either input is zero, return the other.
+		if (a.LengthSquared() == 0.0f)
+		{
+			if (b.LengthSquared() == 0.0f)
+			{
+				return identity();
+			}
+			return b;
+		}
+		else if (b.LengthSquared() == 0.0f)
+		{
+			return a;
+		}
+
+
+		float cosHalfAngle = a.w * b.w + Vector3::Dot(a.GetXYZ(), b.GetXYZ());
+
+		if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+		{
+			// angle = 0.0f, so just return one input.
+			return a;
+		}
+		else if (cosHalfAngle < 0.0f)
+		{
+			b.SetXYZ(-b.GetXYZ());
+			b.w = -b.w;
+			cosHalfAngle = -cosHalfAngle;
+		}
+
+		float blendA;
+		float blendB;
+		if (cosHalfAngle < 0.99f)
+		{
+			// do proper slerp for big angles
+			float halfAngle = Mathf::Acos(cosHalfAngle);
+			float sinHalfAngle = Mathf::Sin(halfAngle);
+			float oneOverSinHalfAngle = 1.0f / sinHalfAngle;
+			blendA = Mathf::Sin(halfAngle * (1.0f - t)) * oneOverSinHalfAngle;
+			blendB = Mathf::Sin(halfAngle * t) * oneOverSinHalfAngle;
+		}
+		else
+		{
+			// do lerp if angle is really small.
+			blendA = 1.0f - t;
+			blendB = t;
+		}
+
+		Vector3 tmp1 = blendA * a.GetXYZ();
+		Vector3 tmp2 = blendB * b.GetXYZ();
+		Quaternion result = Quaternion(tmp1 + tmp2, blendA * a.w + blendB * b.w);
+		if (result.LengthSquared() > 0.0f)
+			return Normalize(result);
+		else
+			return identity();
+	}
+
+	float LengthSquared()
+	{
+		return x * x + y * y + z * z + w * w;
 	}
 
 	float Length()

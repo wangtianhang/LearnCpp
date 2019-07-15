@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\include">
+      <UniqueIdentifier>{248b291e-eb45-45a2-b239-23956bb681a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\src">
+      <UniqueIdentifier>{0f0e343e-97a1-463b-8b94-6197eaa6f63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\src\sb7">
+      <UniqueIdentifier>{5d9dd63d-4bbd-48fd-a996-5eaefd33ea9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\include\GL">
+      <UniqueIdentifier>{5d122227-ecef-4a1e-ad12-86ccf5dd2901}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\gl3w.h">
+      <Filter>源文件\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\glcorearb.h">
+      <Filter>源文件\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\glext.h">
+      <Filter>源文件\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\glxext.h">
+      <Filter>源文件\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\wglext.h">
+      <Filter>源文件\include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\object.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb6mfile.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb7.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb7color.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb7ext.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb7ktx.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sb7textoverlay.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shader.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vmath.h">
+      <Filter>源文件\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LearnOpenGL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\gl3w.c">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7color.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7ktx.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7object.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7shader.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sb7\sb7textoverlay.cpp">
+      <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

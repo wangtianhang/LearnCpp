@@ -10,7 +10,9 @@ namespace Math3d
     {
         static void Main(string[] args)
         {
+            UnityEngine.Matrix4x4.Test();
 
+            Console.ReadLine();
         }
     }
 }

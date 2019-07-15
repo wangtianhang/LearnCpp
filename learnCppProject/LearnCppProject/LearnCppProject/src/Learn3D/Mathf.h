@@ -221,6 +221,122 @@ public:
 		return log(f);
 	}
 
+	static float Log(float f, float p)
+	{
+		return log(f) / log(p);
+	}
+
+	static float Log10(float f)
+	{
+		return log10(f);
+	}
+
+	static float Max(float a, float b)
+	{
+		return (a <= b) ? b : a;
+	}
+
+	static float Max(float values[], int n)
+	{
+		int num = n;
+		if (num == 0)
+		{
+			return 0;
+		}
+		float num2 = values[0];
+		for (int i = 1; i < num; i++)
+		{
+			if (values[i] > num2)
+			{
+				num2 = values[i];
+			}
+		}
+		return num2;
+	}
+
+	static int Max(int a, int b)
+	{
+		return (a <= b) ? b : a;
+	}
+
+	static int Max(int values[], int n)
+	{
+		int num = n;
+		if (num == 0)
+		{
+			return 0;
+		}
+		int num2 = values[0];
+		for (int i = 1; i < num; i++)
+		{
+			if (values[i] > num2)
+			{
+				num2 = values[i];
+			}
+		}
+		return num2;
+	}
+
+	static float Min(float a, float b)
+	{
+		return (a >= b) ? b : a;
+	}
+
+	static float Min(float values[], int n)
+	{
+		int num = n;
+		if (num == 0)
+		{
+			return 0;
+		}
+		float num2 = values[0];
+		for (int i = 1; i < num; i++)
+		{
+			if (values[i] < num2)
+			{
+				num2 = values[i];
+			}
+		}
+		return num2;
+	}
+
+	static int Min(int a, int b)
+	{
+		return (a >= b) ? b : a;
+	}
+
+	static int Min(int values[], int n)
+	{
+		int num = n;
+		if (num == 0)
+		{
+			return 0;
+		}
+		int num2 = values[0];
+		for (int i = 1; i < num; i++)
+		{
+			if (values[i] < num2)
+			{
+				num2 = values[i];
+			}
+		}
+		return num2;
+	}
+
+	static float MoveTowards(float current, float target, float maxDelta)
+	{
+		if (Mathf::Abs(target - current) <= maxDelta)
+		{
+			return target;
+		}
+		return current + Mathf::Sign(target - current) * maxDelta;
+	}
+
+	static float Sign(float f)
+	{
+		return (f < 0) ? (float)-1 : (float)1;
+	}
+
 	static float Pow(float f, float p)
 	{
 		return pow(f, p);
@@ -231,8 +347,5 @@ public:
 		return t - Mathf::Floor(t / length) * length;
 	}
 
-	static float Max(float a, float b)
-	{
-		return (a <= b) ? b : a;
-	}
+
 };

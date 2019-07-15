@@ -132,81 +132,11 @@ public:
 		return Quaternion::ToEulerRad(*this) * 57.29578f;
 	}
 
-	// 四元数转欧拉角
-	static Vector3 ToEulerRad(Quaternion rotation)
-	{
-		float sqw = rotation.w * rotation.w;
-		float sqx = rotation.x * rotation.x;
-		float sqy = rotation.y * rotation.y;
-		float sqz = rotation.z * rotation.z;
-		float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-		float test = rotation.x * rotation.w - rotation.y * rotation.z;
-		Vector3 v;
 
-		if (test > 0.4995f * unit)
-		{ // singularity at north pole
-			v.y = 2 * Mathf::Atan2(rotation.y, rotation.x);
-			v.x = Mathf::PI / 2;
-			v.z = 0;
-			return NormalizeAngles(v * Mathf::Rad2Deg);
-		}
-		if (test < -0.4995f * unit)
-		{ // singularity at south pole
-			v.y = -2 * Mathf::Atan2(rotation.y, rotation.x);
-			v.x = -Mathf::PI / 2;
-			v.z = 0;
-			return NormalizeAngles(v * Mathf::Rad2Deg);
-		}
-		Quaternion q = Quaternion(rotation.w, rotation.z, rotation.x, rotation.y);
-		v.y = Mathf::Atan2(2 * q.x * q.w + 2 * q.y * q.z, 1 - 2 * (q.z * q.z + q.w * q.w));     // Yaw
-		v.x = Mathf::Asin(2 * (q.x * q.z - q.w * q.y));                             // Pitch
-		v.z = Mathf::Atan2(2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.y * q.y + q.z * q.z));      // Roll
-		return NormalizeAngles(v * Mathf::Rad2Deg) * Mathf::Deg2Rad;
-	}
 
-	static Vector3 NormalizeAngles(Vector3 angles)
-	{
-		angles.x = NormalizeAngle(angles.x);
-		angles.y = NormalizeAngle(angles.y);
-		angles.z = NormalizeAngle(angles.z);
-		return angles;
-	}
 
-	static float NormalizeAngle(float angle)
-	{
-		while (angle > 360)
-			angle -= 360;
-		while (angle < 0)
-			angle += 360;
-		return angle;
-	}
 
-	// 欧拉角转四元数
-	static Quaternion FromEulerRad(Vector3 euler)
-	{
-		float yaw = euler.z;
-		float pitch = euler.x;
-		float roll = euler.y;
 
-		float yawOver2 = yaw * 0.5f;
-		float sinYawOver2 = Mathf::Sin(yawOver2);
-		float cosYawOver2 = Mathf::Cos(yawOver2);
-
-		float pitchOver2 = pitch * 0.5f;
-		float sinPitchOver2 = Mathf::Sin(pitchOver2);
-		float cosPitchOver2 = Mathf::Cos(pitchOver2);
-
-		float rollOver2 = roll * 0.5f;
-		float sinRollOver2 = Mathf::Sin(rollOver2);
-		float cosRollOver2 = Mathf::Cos(rollOver2);
-
-		Quaternion result;
-		result.w = cosYawOver2 * cosPitchOver2 * cosRollOver2 + sinYawOver2 * sinPitchOver2 * sinRollOver2;
-		result.x = cosYawOver2 * sinPitchOver2 * cosRollOver2 + sinYawOver2 * cosPitchOver2 * sinRollOver2;
-		result.y = cosYawOver2 * cosPitchOver2 * sinRollOver2 - sinYawOver2 * sinPitchOver2 * cosRollOver2;
-		result.z = sinYawOver2 * cosPitchOver2 * cosRollOver2 - cosYawOver2 * sinPitchOver2 * sinRollOver2;
-		return result;
-	}
 
 	Vector3 SetEulerAngles(Vector3 euler)
 	{
@@ -262,23 +192,178 @@ public:
 		return Slerp(from, to, t);
 	}
 
-	static Quaternion Slerp(Quaternion a, Quaternion b, float t)
+
+	// 四元数转欧拉角
+	static Vector3 ToEulerRad(Quaternion rotation)
 	{
-		if (t > 1) t = 1;
-		if (t < 0) t = 0;
-		return SlerpUnclamped(a, b, t);
+		float sqw = rotation.w * rotation.w;
+		float sqx = rotation.x * rotation.x;
+		float sqy = rotation.y * rotation.y;
+		float sqz = rotation.z * rotation.z;
+		float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+		float test = rotation.x * rotation.w - rotation.y * rotation.z;
+		Vector3 v;
+
+		if (test > 0.4995f * unit)
+		{ // singularity at north pole
+			v.y = 2 * Mathf::Atan2(rotation.y, rotation.x);
+			v.x = Mathf::PI / 2;
+			v.z = 0;
+			return NormalizeAngles(v * Mathf::Rad2Deg);
+		}
+		if (test < -0.4995f * unit)
+		{ // singularity at south pole
+			v.y = -2 * Mathf::Atan2(rotation.y, rotation.x);
+			v.x = -Mathf::PI / 2;
+			v.z = 0;
+			return NormalizeAngles(v * Mathf::Rad2Deg);
+		}
+		Quaternion q = Quaternion(rotation.w, rotation.z, rotation.x, rotation.y);
+		v.y = Mathf::Atan2(2 * q.x * q.w + 2 * q.y * q.z, 1 - 2 * (q.z * q.z + q.w * q.w));     // Yaw
+		v.x = Mathf::Asin(2 * (q.x * q.z - q.w * q.y));                             // Pitch
+		v.z = Mathf::Atan2(2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.y * q.y + q.z * q.z));      // Roll
+		return NormalizeAngles(v * Mathf::Rad2Deg) * Mathf::Deg2Rad;
 	}
 
-	Vector3 GetXYZ()
+	static Vector3 NormalizeAngles(Vector3 angles)
 	{
-		return Vector3(x, y, z);
+		angles.x = NormalizeAngle(angles.x);
+		angles.y = NormalizeAngle(angles.y);
+		angles.z = NormalizeAngle(angles.z);
+		return angles;
 	}
 
-	Vector3 SetXYZ(Vector3 xyz)
+	static float NormalizeAngle(float angle)
 	{
-		x = xyz.x;
-		y = xyz.y;
-		z = xyz.z;
+		while (angle > 360)
+			angle -= 360;
+		while (angle < 0)
+			angle += 360;
+		return angle;
+	}
+
+
+	// 欧拉角转四元数
+	static Quaternion FromEulerRad(Vector3 euler)
+	{
+		float yaw = euler.z;
+		float pitch = euler.x;
+		float roll = euler.y;
+
+		float yawOver2 = yaw * 0.5f;
+		float sinYawOver2 = Mathf::Sin(yawOver2);
+		float cosYawOver2 = Mathf::Cos(yawOver2);
+
+		float pitchOver2 = pitch * 0.5f;
+		float sinPitchOver2 = Mathf::Sin(pitchOver2);
+		float cosPitchOver2 = Mathf::Cos(pitchOver2);
+
+		float rollOver2 = roll * 0.5f;
+		float sinRollOver2 = Mathf::Sin(rollOver2);
+		float cosRollOver2 = Mathf::Cos(rollOver2);
+
+		Quaternion result;
+		result.w = cosYawOver2 * cosPitchOver2 * cosRollOver2 + sinYawOver2 * sinPitchOver2 * sinRollOver2;
+		result.x = cosYawOver2 * sinPitchOver2 * cosRollOver2 + sinYawOver2 * cosPitchOver2 * sinRollOver2;
+		result.y = cosYawOver2 * cosPitchOver2 * sinRollOver2 - sinYawOver2 * sinPitchOver2 * cosRollOver2;
+		result.z = sinYawOver2 * cosPitchOver2 * cosRollOver2 - cosYawOver2 * sinPitchOver2 * sinRollOver2;
+		return result;
+	}
+
+	static Quaternion LookRotation(Vector3 forward)
+	{
+		return LookRotation(forward, Vector3::up());
+	}
+
+	static Quaternion LookRotation(Vector3 forward, Vector3 up)
+	{
+		forward = Vector3::Normalize(forward);
+		Vector3 right = Vector3::Normalize(Vector3::Cross(up, forward));
+		up = Vector3::Cross(forward, right);
+		float m00 = right.x;
+		float m01 = right.y;
+		float m02 = right.z;
+		float m10 = up.x;
+		float m11 = up.y;
+		float m12 = up.z;
+		float m20 = forward.x;
+		float m21 = forward.y;
+		float m22 = forward.z;
+
+
+		float num8 = (m00 + m11) + m22;
+		Quaternion quaternion = Quaternion();
+		if (num8 > 0)
+		{
+			float num = Mathf::Sqrt(num8 + 1);
+			quaternion.w = num * 0.5f;
+			num = 0.5f / num;
+			quaternion.x = (m12 - m21) * num;
+			quaternion.y = (m20 - m02) * num;
+			quaternion.z = (m01 - m10) * num;
+			return quaternion;
+		}
+		if ((m00 >= m11) && (m00 >= m22))
+		{
+			float num7 = Mathf::Sqrt(((1 + m00) - m11) - m22);
+			float num4 = 0.5f / num7;
+			quaternion.x = 0.5f * num7;
+			quaternion.y = (m01 + m10) * num4;
+			quaternion.z = (m02 + m20) * num4;
+			quaternion.w = (m12 - m21) * num4;
+			return quaternion;
+		}
+		if (m11 > m22)
+		{
+			float num6 = Mathf::Sqrt(((1 + m11) - m00) - m22);
+			float num3 = 0.5f / num6;
+			quaternion.x = (m10 + m01) * num3;
+			quaternion.y = 0.5f * num6;
+			quaternion.z = (m21 + m12) * num3;
+			quaternion.w = (m20 - m02) * num3;
+			return quaternion;
+		}
+		float num5 = Mathf::Sqrt(((1 + m22) - m00) - m11);
+		float num2 = 0.5f / num5;
+		quaternion.x = (m20 + m02) * num2;
+		quaternion.y = (m21 + m12) * num2;
+		quaternion.z = 0.5f * num5;
+		quaternion.w = (m01 - m10) * num2;
+		return quaternion;
+	}
+
+	static Quaternion RotateTowards(Quaternion from, Quaternion to, float maxDegreesDelta)
+	{
+		float num = Quaternion::Angle(from, to);
+		if (num == 0)
+		{
+			return to;
+		}
+		float t = Mathf::Min((double)1, maxDegreesDelta / num);
+		return Quaternion::SlerpUnclamped(from, to, t);
+	}
+
+	void Set(float new_x, float new_y, float new_z, float new_w)
+	{
+		x = new_x;
+		y = new_y;
+		z = new_z;
+		w = new_w;
+	}
+
+	void SetFromToRotation(Vector3 fromDirection, Vector3 toDirection)
+	{
+		*this = FromToRotation(fromDirection, toDirection);
+	}
+
+	void SetLookRotation(Vector3 view)
+	{
+		*this = LookRotation(view);
+	}
+
+	void SetLookRotation(Vector3 view, Vector3 up)
+	{
+		*this = LookRotation(view, up);
 	}
 
 	static Quaternion SlerpUnclamped(Quaternion a, Quaternion b, float t)
@@ -339,6 +424,20 @@ public:
 			return identity();
 	}
 
+
+
+	Vector3 GetXYZ()
+	{
+		return Vector3(x, y, z);
+	}
+
+	Vector3 SetXYZ(Vector3 xyz)
+	{
+		x = xyz.x;
+		y = xyz.y;
+		z = xyz.z;
+	}
+
 	float LengthSquared()
 	{
 		return x * x + y * y + z * z + w * w;
@@ -349,6 +448,13 @@ public:
 		return Mathf::Sqrt(x * x + y * y + z * z + w * w);
 	}
 
+	static Quaternion Slerp(Quaternion a, Quaternion b, float t)
+	{
+		if (t > 1) t = 1;
+		if (t < 0) t = 0;
+		return SlerpUnclamped(a, b, t);
+	}
+
 	static Quaternion Normalize(Quaternion q)
 	{
 		float scale = 1.0f / q.Length();
@@ -357,5 +463,37 @@ public:
 		float z = q.z * scale;
 		Quaternion result = Quaternion(x, y, z, q.w * scale);
 		return result;
+	}
+
+	void ToAngleAxis(float& angle, Vector3& axis)
+	{
+		Quaternion::ToAxisAngleRad(*this, axis, angle);
+		angle *= Mathf::Rad2Deg;
+	}
+
+	void Normalize()
+	{
+		float scale = 1.0f / Length();
+		//xyz *= scale;
+		SetXYZ(GetXYZ() * scale);
+		w *= scale;
+	}
+
+	static void ToAxisAngleRad(Quaternion q, Vector3& axis, float& angle)
+	{
+		if (Mathf::Abs(q.w) > 1.0f)
+			q.Normalize();
+		angle = 2.0f * Mathf::Acos(q.w); // angle
+		float den = Mathf::Sqrt(1.0f - q.w * q.w);
+		if (den > 0.0001f)
+		{
+			axis = q.GetXYZ() / den;
+		}
+		else
+		{
+			// This occurs when the angle is zero. 
+			// Not a problem: just set an arbitrary normalized axis.
+			axis = Vector3(1, 0, 0);
+		}
 	}
 };

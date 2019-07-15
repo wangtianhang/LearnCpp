@@ -4,10 +4,28 @@
 #include "pch.h"
 #include <iostream>
 
-int main()
+// int main()
+// {
+//     std::cout << "Hello World!\n"; 
+// }
+
+//#define _CRT_SECURE_NO_WARNINGS 1
+
+#include "sb7.h"
+// Derive my_application from sb7::application
+class my_application : public sb7::application
 {
-    std::cout << "Hello World!\n"; 
-}
+public:
+	// Our rendering function
+	void render(double currentTime)
+	{
+		// Simply clear the window with red
+		static const GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+		glClearBufferfv(GL_COLOR, 0, red);
+	}
+};
+// Our one and only instance of DECLARE_MAIN
+DECLARE_MAIN(my_application);
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
 // 调试程序: F5 或调试 >“开始调试”菜单

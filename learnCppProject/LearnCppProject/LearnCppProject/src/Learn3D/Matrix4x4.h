@@ -28,7 +28,7 @@ public:
 
 	static void Test()
 	{
-
+		// todo Ò»¶¨Òª²âÊÔÄæ¾ØÕó¡£¡£Ì«tm¸´ÔÓÁË
 	}
 
 	float m00;
@@ -138,6 +138,223 @@ public:
 	{
 		return Matrix4x4();
 	}
+
+	Matrix4x4 inverse()
+	{
+		return Inverse(*this);
+	}
+
+	static Matrix4x4 Inverse(Matrix4x4 m)
+	{
+		float mat[4][4];
+
+		mat[0][0] = m.m00;
+		mat[0][1] = m.m01;
+		mat[0][2] = m.m02;
+		mat[0][3] = m.m03;
+
+		mat[1][0] = m.m10;
+		mat[1][1] = m.m11;
+		mat[1][2] = m.m12;
+		mat[1][3] = m.m13;
+
+		mat[2][0] = m.m20;
+		mat[2][1] = m.m21;
+		mat[2][2] = m.m22;
+		mat[2][3] = m.m23;
+
+		mat[3][0] = m.m30;
+		mat[3][1] = m.m31;
+		mat[3][2] = m.m32;
+		mat[3][3] = m.m33;
+
+		float inverseMat[4][4];
+		_MatrixInverse(mat, inverseMat);
+
+		Matrix4x4 ret = Matrix4x4();
+		ret.m00 = inverseMat[0][0];
+		ret.m01 = inverseMat[0][1];
+		ret.m02 = inverseMat[0][2];
+		ret.m03 = inverseMat[0][3];
+
+		ret.m10 = inverseMat[1][0];
+		ret.m11 = inverseMat[1][1];
+		ret.m12 = inverseMat[1][2];
+		ret.m13 = inverseMat[1][3];
+
+		ret.m20 = inverseMat[2][0];
+		ret.m21 = inverseMat[2][1];
+		ret.m22 = inverseMat[2][2];
+		ret.m23 = inverseMat[2][3];
+
+		ret.m30 = inverseMat[3][0];
+		ret.m31 = inverseMat[3][1];
+		ret.m32 = inverseMat[3][2];
+		ret.m33 = inverseMat[3][3];
+
+		return ret;
+	}
+
+	//ÇóÄæ https ://github.com/Phylliida/UnityMatrix/blob/master/Matrix.cs
+// 	static float[][] _MatrixCreate(int rows, int cols)
+// 	{
+// 		float[][] result = new float[rows][];
+// 		for (int i = 0; i < rows; ++i)
+// 			result[i] = new float[cols];
+// 		return result;
+// 	}
+
+	static void _MatrixInverse(float matrix [4][4], float result[4][4])
+	{
+		// assumes determinant is not 0
+		// that is, the matrix does have an inverse
+		int n = 4;
+		//float** result = _MatrixCreate(n, n); // make a copy of matrix
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < n; ++j)
+				result[i][j] = matrix[i][j];
+
+		float lum[4][4] ; // combined lower & upper
+		int perm[4] ;
+		int toggle;
+		toggle = _MatrixDecompose(matrix, lum, perm);
+
+		float b[4];
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = 0; j < n; ++j)
+				if (i == perm[j])
+					b[j] = 1.0f;
+				else
+					b[j] = 0.0f;
+
+			float x[4];
+			_Helper(lum, b, x); // 
+			for (int j = 0; j < n; ++j)
+				result[j][i] = x[j];
+		}
+		//return result;
+	}
+
+	static int _MatrixDecompose(float m[4][4], float lum[4][4] , int perm[4] )
+	{
+		// Crout's LU decomposition for matrix determinant and inverse
+		// stores combined lower & upper in lum[][]
+		// stores row permuations into perm[]
+		// returns +1 or -1 according to even or odd number of row permutations
+		// lower gets dummy 1.0s on diagonal (0.0s above)
+		// upper gets lum values on diagonal (0.0s below)
+
+		int toggle = +1; // even (+1) or odd (-1) row permutatuions
+		int n = 4;
+
+		// make a copy of m[][] into result lu[][]
+		//lum = _MatrixCreate(n, n);
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < n; ++j)
+				lum[i][j] = m[i][j];
+
+
+		// make perm[]
+		perm = new int[n];
+		for (int i = 0; i < n; ++i)
+			perm[i] = i;
+
+		for (int j = 0; j < n - 1; ++j) // process by column. note n-1 
+		{
+			float max = Mathf::Abs(lum[j][j]);
+			int piv = j;
+
+			for (int i = j + 1; i < n; ++i) // find pivot index
+			{
+				float xij = Mathf::Abs(lum[i][j]);
+				if (xij > max)
+				{
+					max = xij;
+					piv = i;
+				}
+			} // i
+
+			if (piv != j)
+			{
+				//float[] tmp = lum[piv]; // swap rows j, piv
+				//lum[piv] = lum[j];
+				//lum[j] = tmp;
+				ChangeRow(lum, j, piv);
+
+				int t = perm[piv]; // swap perm elements
+				perm[piv] = perm[j];
+				perm[j] = t;
+
+				toggle = -toggle;
+			}
+
+			float xjj = lum[j][j];
+			if (xjj != 0.0)
+			{
+				for (int i = j + 1; i < n; ++i)
+				{
+					float xij = lum[i][j] / xjj;
+					lum[i][j] = xij;
+					for (int k = j + 1; k < n; ++k)
+						lum[i][k] -= xij * lum[j][k];
+				}
+			}
+
+		} // j
+
+		return toggle;
+	}
+	
+	static void ChangeRow(float mat[4][4], int row1, int row2)
+	{
+		float row10 = mat[row1][0];
+		float row11 = mat[row1][1];
+		float row12 = mat[row1][2];
+		float row13 = mat[row1][3];
+
+		mat[row1][0] = mat[row2][0];
+		mat[row1][1] = mat[row2][1];
+		mat[row1][2] = mat[row2][2];
+		mat[row1][3] = mat[row2][3];
+
+		mat[row2][0] = row10;
+		mat[row2][1] = row11;
+		mat[row2][2] = row12;
+		mat[row2][3] = row13;
+	}
+
+	static void _Helper(float luMatrix[4][4] , float b[4], float result[4]) // helper
+	{
+		int n = 4;
+		//float[] x = new float[n];
+		//b.CopyTo(x, 0);
+		//float x[4];
+		for (int i = 0; i < 4; ++i)
+		{
+			result[i] = b[i];
+		}
+
+		for (int i = 1; i < n; ++i)
+		{
+			float sum = result[i];
+			for (int j = 0; j < i; ++j)
+				sum -= luMatrix[i][j] * result[j];
+			result[i] = sum;
+		}
+
+		result[n - 1] /= luMatrix[n - 1][n - 1];
+		for (int i = n - 2; i >= 0; --i)
+		{
+			float sum = result[i];
+			for (int j = i + 1; j < n; ++j)
+				sum -= luMatrix[i][j] * result[j];
+			result[i] = sum / luMatrix[i][i];
+		}
+
+		//return x;
+	}
+	// ==================½áÊøÇóÄæ====================================
 
 	Vector4 GetColumn(int i) const
 	{

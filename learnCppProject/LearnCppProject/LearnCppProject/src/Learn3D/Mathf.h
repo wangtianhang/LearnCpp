@@ -332,9 +332,16 @@ public:
 		return current + Mathf::Sign(target - current) * maxDelta;
 	}
 
-	static float Sign(float f)
+	static float MoveTowardsAngle(float current, float target, float maxDelta)
 	{
-		return (f < 0) ? (float)-1 : (float)1;
+		target = current + Mathf::DeltaAngle(current, target);
+		return Mathf::MoveTowards(current, target, maxDelta);
+	}
+
+	static float PingPong(float t, float length)
+	{
+		t = Mathf::Repeat(t, length * 2);
+		return length - Mathf::Abs(t - length);
 	}
 
 	static float Pow(float f, float p)
@@ -346,6 +353,102 @@ public:
 	{
 		return t - Mathf::Floor(t / length) * length;
 	}
+
+	static float Round(float f)
+	{
+		return round(f);
+	}
+
+	static int RoundToInt(float f)
+	{
+		return (int)round(f);
+	}
+
+	static float Sign(float f)
+	{
+		return (f < 0) ? (float)-1 : (float)1;
+	}
+
+	static float Sin(float f)
+	{
+		return sin(f);
+	}
+
+	static float SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+	{
+		smoothTime = Mathf::Max(0.0001f, smoothTime);
+		float num = 2 / smoothTime;
+		float num2 = num * deltaTime;
+		float num3 = 1 / (1 + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
+		float num4 = current - target;
+		float num5 = target;
+		float num6 = maxSpeed * smoothTime;
+		num4 = Mathf::Clamp(num4, -num6, num6);
+		target = current - num4;
+		float num7 = (currentVelocity + num * num4) * deltaTime;
+		currentVelocity = (currentVelocity - num * num7) * num3;
+		float num8 = target + (num4 + num7) * num3;
+		if (num5 - current > 0 == num8 > num5)
+		{
+			num8 = num5;
+			currentVelocity = (num8 - num5) / deltaTime;
+		}
+		return num8;
+	}
+
+	static float SmoothDampAngle(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+	{
+		target = current + Mathf::DeltaAngle(current, target);
+		return Mathf::SmoothDamp(current, target, currentVelocity, smoothTime, maxSpeed, deltaTime);
+	}
+
+	static float SmoothStep(float from, float to, float t)
+	{
+		t = Mathf::Clamp01(t);
+		t = -2 * t * t * t + 3 * t * t;
+		return to * t + from * (1 - t);
+	}
+
+	static float Sqrt(float f)
+	{
+		return sqrt(f);
+	}
+
+	static float Tan(float f)
+	{
+		return tan(f);
+	}
+
+	static int ClosestPowerOfTwo(int n)
+	{
+		int v = n;
+		v--;
+		v |= v >> 1;
+		v |= v >> 2;
+		v |= v >> 4;
+		v |= v >> 8;
+		v |= v >> 16;
+		v++;
+
+		int x = v >> 1;
+		return (v - n) > (n - x) ? x : v;
+	}
+
+	static bool IsPowerOfTwo(int n)
+	{
+		if (n <= 0)
+		{
+			return false;
+		}
+		else
+		{
+			return (n & (n - 1)) == 0;
+		}
+	}
+
+
+
+
 
 
 };

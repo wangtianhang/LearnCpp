@@ -6,6 +6,7 @@
 #include "./Mathf.h"
 #include "./Vector3.h"
 #include "./Quaternion.h"
+#include "./Matrix4x4.h"
 
 void Test3dMath()
 {
@@ -16,6 +17,8 @@ void Test3dMath()
 	Vector3::Test();
 
 	Quaternion::Test();
+
+	Matrix4x4::Test();
 
 	std::cout << "Test3dMath ===============end=================\n";
 }

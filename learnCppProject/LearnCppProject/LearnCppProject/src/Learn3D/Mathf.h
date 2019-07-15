@@ -46,15 +46,85 @@ public:
 		return atan2(y, x);
 	}
 
+	static float Ceil(float f)
+	{
+		return ceil(f);
+	}
 
+	static int CeilToInt(float f)
+	{
+		return (int)ceil(f);
+	}
 
+	static float Clamp(float value, float min, float max)
+	{
+		if (value < min)
+		{
+			value = min;
+		}
+		else if (value > max)
+		{
+			value = max;
+		}
+		return value;
+	}
 
+	static double Clamp(double value, double min, double max)
+	{
+		if (value < min)
+		{
+			value = min;
+		}
+		else if (value > max)
+		{
+			value = max;
+		}
+		return value;
+	}
 
+	static int Clamp(int value, int min, int max)
+	{
+		if (value < min)
+		{
+			value = min;
+		}
+		else if (value > max)
+		{
+			value = max;
+		}
+		return value;
+	}
 
+	static float Clamp01(float value)
+	{
+		if (value < 0)
+		{
+			return 0;
+		}
+		if (value > 1)
+		{
+			return 1;
+		}
+		return value;
+	}
 
+	static double Clamp01(double value)
+	{
+		if (value < 0)
+		{
+			return 0;
+		}
+		if (value > 1)
+		{
+			return 1;
+		}
+		return value;
+	}
 
-
-
+	static float Cos(float f)
+	{
+		return cos(f);
+	}
 
 	static float Max(float a, float b)
 	{

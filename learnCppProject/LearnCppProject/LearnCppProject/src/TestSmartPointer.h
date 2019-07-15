@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory.h>
 
+using namespace std;
+
 //auto_ptr这是C++98标准下的智能指针，现在常常已经被C++标准的其他智能指针取代。它的缺点是在转移所有权后会使运行期不安全。C++11新标准，用unique_ptr来代替auto_ptr原有功能，其用法介绍见第四部分unique_ptr。
 void TestAutoPtr()
 {
@@ -80,13 +82,63 @@ void TestUniquePtr()
 	cout << "*pb " << *pb << endl;//pb变成了“RUS”
 }
 
+class B;
+class A
+{
+public:
+	weak_ptr<B> pb_weak;
+	~A()
+	{
+		cout << "A delete\n";
+	}
+};
+class B
+{
+public:
+	shared_ptr<A> pa_;
+	~B()
+	{
+		cout << "B delete\n";
+	}
+	void print() {
+		cout << "This is B" << endl;
+	}
+};
+
+void TestWeakPtr()
+{
+	shared_ptr<B> pb(new B());
+	cout << "pb.use_count " << pb.use_count() << endl;//1
+	shared_ptr<A> pa(new A());
+	cout << "pa.use_count " << pa.use_count() << endl;//1
+
+	pb->pa_ = pa;
+	cout << "pb.use_count " << pb.use_count() << endl;//1
+	cout << "pa.use_count " << pa.use_count() << endl;//2
+
+	pa->pb_weak = pb;
+	cout << "pb.use_count " << pb.use_count() << endl;//1：弱引用不会增加所指资源的引用计数use_count()的值
+	cout << "pa.use_count " << pa.use_count() << endl;//2
+
+	shared_ptr<B> p = pa->pb_weak.lock();
+	p->print();//不能通过weak_ptr直接访问对象的方法，须先转化为shared_ptr
+	cout << "pb.use_count " << pb.use_count() << endl;//2
+	cout << "pa.use_count " << pa.use_count() << endl;//2
+
+	//函数结束时，正确的情况下，应该调用A和B的析构函数
+	/*资源B的引用计数一直就只有1，当pb析构时，B的计数减一，变为0，B得到释放，
+B释放的同时也会使A的计数减一，同时pa自己析构时也会使资源A的计数减一，那么A的计数为0，A得到释放。
+*/
+}
+
 void TestSmartPointer()
 {
 	std::cout << "TestSmartPointer ===============begin=================\n";
 	//TestAutoPtr();
-	TestSharedPtr();
-
 	TestUniquePtr();
 
+	TestSharedPtr();
+
+	TestWeakPtr();
 	std::cout << "TestSmartPointer ===============end=================\n";
 }

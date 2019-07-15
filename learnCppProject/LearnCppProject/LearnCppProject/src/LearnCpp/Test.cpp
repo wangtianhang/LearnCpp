@@ -20,6 +20,8 @@
 #include "./TestSTLContainer.h"
 #include "./TestFunctor.h"
 
+//#include "../Learn3D/Vector3.h"
+
 typedef int gaga;
 
 enum spectrum { red, orange, yellow, green, blue, violet, indigo, ultraviolet };

@@ -154,6 +154,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Learn3D\Mathf.h" />
     <ClInclude Include="src\Learn3D\Test3DMath.h" />
+    <ClInclude Include="src\Learn3D\Vector3.h" />
     <ClInclude Include="src\LearnCpp\IOTest.h" />
     <ClInclude Include="src\LearnCpp\LimitTest.h" />
     <ClInclude Include="src\LearnCpp\Test.h" />
@@ -181,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\Learn3D\Test3DMath.cpp" />
+    <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\LearnCpp\Test.cpp" />
     <ClCompile Include="src\LearnCpp\TestLink.cpp" />
     <ClCompile Include="src\LearnCpp\TestStructAndClass.cpp" />

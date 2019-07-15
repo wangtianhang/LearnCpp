@@ -163,6 +163,7 @@
     <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestRTTI.h" />
     <ClInclude Include="src\TestSmartPointer.h" />
+    <ClInclude Include="src\TestSTLContainer.h" />
     <ClInclude Include="src\TestString.h" />
     <ClInclude Include="src\TestStructAndClass.h" />
     <ClInclude Include="src\TestTemplate.h" />

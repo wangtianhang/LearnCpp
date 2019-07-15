@@ -66,6 +66,9 @@
     <ClInclude Include="src\TestSmartPointer.h">
       <Filter>源文件\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\TestSTLContainer.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

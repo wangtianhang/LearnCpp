@@ -159,6 +159,7 @@
     <ClInclude Include="src\TestException.h" />
     <ClInclude Include="src\TestFor.h" />
     <ClInclude Include="src\TestFunction.h" />
+    <ClInclude Include="src\TestFunctor.h" />
     <ClInclude Include="src\TestNew.h" />
     <ClInclude Include="src\TestPointer.h" />
     <ClInclude Include="src\TestRTTI.h" />

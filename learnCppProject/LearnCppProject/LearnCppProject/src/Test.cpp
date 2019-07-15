@@ -18,6 +18,7 @@
 #include "./TestRTTI.h"
 #include "./TestSmartPointer.h"
 #include "./TestSTLContainer.h"
+#include "./TestFunctor.h"
 
 typedef int gaga;
 
@@ -87,4 +88,6 @@ void Test()
 	TestSmartPointer();
 
 	TestSTLContainer();
+
+	TestFunctor();
 }

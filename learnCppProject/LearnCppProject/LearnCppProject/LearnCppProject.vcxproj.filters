@@ -87,6 +87,9 @@
     <ClInclude Include="src\Learn3D\Vector3.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\Learn3D\Vector4.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -108,6 +111,9 @@
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
     <ClCompile Include="src\Learn3D\Vector3.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Vector4.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
   </ItemGroup>

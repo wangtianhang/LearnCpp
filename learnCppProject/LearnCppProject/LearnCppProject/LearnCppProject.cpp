@@ -5,12 +5,15 @@
 #include <iostream>
 
 #include "./src/LearnCpp/Test.h"
+#include "./src/Learn3D//Test3DMath.h"
 
 int main()
 {
     std::cout << "execute begin\n";
 
 	Test();
+
+	Test3dMath();
 
 	std::cout << "execute end\n";
 	return 0;

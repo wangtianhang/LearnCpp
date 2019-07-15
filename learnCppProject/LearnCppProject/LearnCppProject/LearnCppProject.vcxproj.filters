@@ -78,7 +78,10 @@
     <ClInclude Include="src\LearnCpp\TestTime.h">
       <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\Learn3D\Math.h">
+    <ClInclude Include="src\Learn3D\Test3DMath.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Mathf.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
   </ItemGroup>
@@ -97,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="src\LearnCpp\TestStructAndClass.cpp">
       <Filter>源文件\src\LearnCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Test3DMath.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

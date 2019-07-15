@@ -152,23 +152,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="src\IOTest.h" />
-    <ClInclude Include="src\LimitTest.h" />
-    <ClInclude Include="src\Test.h" />
-    <ClInclude Include="src\TestArray.h" />
-    <ClInclude Include="src\TestException.h" />
-    <ClInclude Include="src\TestFor.h" />
-    <ClInclude Include="src\TestFunction.h" />
-    <ClInclude Include="src\TestFunctor.h" />
-    <ClInclude Include="src\TestNew.h" />
-    <ClInclude Include="src\TestPointer.h" />
-    <ClInclude Include="src\TestRTTI.h" />
-    <ClInclude Include="src\TestSmartPointer.h" />
-    <ClInclude Include="src\TestSTLContainer.h" />
-    <ClInclude Include="src\TestString.h" />
-    <ClInclude Include="src\TestStructAndClass.h" />
-    <ClInclude Include="src\TestTemplate.h" />
-    <ClInclude Include="src\TestTime.h" />
+    <ClInclude Include="src\Learn3D\Math.h" />
+    <ClInclude Include="src\LearnCpp\IOTest.h" />
+    <ClInclude Include="src\LearnCpp\LimitTest.h" />
+    <ClInclude Include="src\LearnCpp\Test.h" />
+    <ClInclude Include="src\LearnCpp\TestArray.h" />
+    <ClInclude Include="src\LearnCpp\TestException.h" />
+    <ClInclude Include="src\LearnCpp\TestFor.h" />
+    <ClInclude Include="src\LearnCpp\TestFunction.h" />
+    <ClInclude Include="src\LearnCpp\TestFunctor.h" />
+    <ClInclude Include="src\LearnCpp\TestNew.h" />
+    <ClInclude Include="src\LearnCpp\TestPointer.h" />
+    <ClInclude Include="src\LearnCpp\TestRTTI.h" />
+    <ClInclude Include="src\LearnCpp\TestSmartPointer.h" />
+    <ClInclude Include="src\LearnCpp\TestSTLContainer.h" />
+    <ClInclude Include="src\LearnCpp\TestString.h" />
+    <ClInclude Include="src\LearnCpp\TestStructAndClass.h" />
+    <ClInclude Include="src\LearnCpp\TestTemplate.h" />
+    <ClInclude Include="src\LearnCpp\TestTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnCppProject.cpp" />
@@ -178,9 +179,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Test.cpp" />
-    <ClCompile Include="src\TestLink.cpp" />
-    <ClCompile Include="src\TestStructAndClass.cpp" />
+    <ClCompile Include="src\LearnCpp\Test.cpp" />
+    <ClCompile Include="src\LearnCpp\TestLink.cpp" />
+    <ClCompile Include="src\LearnCpp\TestStructAndClass.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

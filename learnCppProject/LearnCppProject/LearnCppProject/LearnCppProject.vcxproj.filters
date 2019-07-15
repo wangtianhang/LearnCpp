@@ -16,61 +16,70 @@
     <Filter Include="源文件\src">
       <UniqueIdentifier>{f4a99c0f-513f-4644-a558-503b3cc79549}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\LearnCpp">
+      <UniqueIdentifier>{3055069f-945a-474a-a6db-babb206d590a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\src\Learn3D">
+      <UniqueIdentifier>{c9717c80-c4a5-4c57-a356-973ae2c28756}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\IOTest.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\IOTest.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\LimitTest.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\LimitTest.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\Test.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\Test.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestArray.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestArray.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestString.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestException.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestPointer.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestFor.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestNew.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestFunction.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestTime.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestFunctor.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestFor.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestNew.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestFunction.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestPointer.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestTemplate.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestRTTI.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestStructAndClass.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestSmartPointer.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestException.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestSTLContainer.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestRTTI.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestString.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestSmartPointer.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestStructAndClass.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestSTLContainer.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestTemplate.h">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClInclude>
-    <ClInclude Include="src\TestFunctor.h">
-      <Filter>源文件\src</Filter>
+    <ClInclude Include="src\LearnCpp\TestTime.h">
+      <Filter>源文件\src\LearnCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Math.h">
+      <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +89,14 @@
     <ClCompile Include="LearnCppProject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\Test.cpp">
-      <Filter>源文件\src</Filter>
+    <ClCompile Include="src\LearnCpp\Test.cpp">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClCompile>
-    <ClCompile Include="src\TestLink.cpp">
-      <Filter>源文件\src</Filter>
+    <ClCompile Include="src\LearnCpp\TestLink.cpp">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClCompile>
-    <ClCompile Include="src\TestStructAndClass.cpp">
-      <Filter>源文件\src</Filter>
+    <ClCompile Include="src\LearnCpp\TestStructAndClass.cpp">
+      <Filter>源文件\src\LearnCpp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

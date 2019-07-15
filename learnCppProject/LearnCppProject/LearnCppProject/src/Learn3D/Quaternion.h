@@ -133,12 +133,7 @@ public:
 	}
 
 
-
-
-
-
-
-	Vector3 SetEulerAngles(Vector3 euler)
+	void SetEulerAngles(Vector3 euler)
 	{
 		*this = Quaternion::FromEulerRad(euler * 0.0174532924f);
 	}

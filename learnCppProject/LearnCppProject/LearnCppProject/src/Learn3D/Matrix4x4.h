@@ -1,10 +1,39 @@
 #pragma once
 
+#include <string>
 #include "./Vector4.h"
+
+#include "../GUtil/GUtil.h"
 
 struct Matrix4x4
 {
 public:
+	static void Test()
+	{
+		// todo 一定要测试逆矩阵。。太tm复杂了
+		Vector3 pos = Vector3(100, 200, 300);
+		Quaternion rotate = Quaternion::identity();
+		rotate.SetEulerAngles(Vector3(40, 50, 60));
+
+		Vector3 scale = Vector3(7, 8, 9);
+		Matrix4x4 trs = Matrix4x4::TRS(pos, rotate, scale);
+		GUtil::Log("测试trs\n" + trs.ToString());
+
+		Matrix4x4 transpose = Transpose(trs);
+		GUtil::Log("测试转置矩阵\n" + transpose.ToString());
+
+		Matrix4x4 inverse = Inverse(trs);
+		GUtil::Log("测试逆矩阵\n" + inverse.ToString());
+	}
+
+	std::string ToString()
+	{
+		std::string ret = std::to_string(m00) + ",\t" + std::to_string(m01) + ",\t" + std::to_string(m02) + ",\t" + std::to_string(m03) + "\n";
+		ret += std::to_string(m10) + ",\t" + std::to_string(m11) + ",\t" + std::to_string(m12) + ",\t" + std::to_string(m13) + "\n";
+		ret += std::to_string(m20) + ",\t" + std::to_string(m21) + ",\t" + std::to_string(m22) + ",\t" + std::to_string(m23) + "\n";
+		ret += std::to_string(m30) + ",\t" + std::to_string(m31) + ",\t" + std::to_string(m32) + ",\t" + std::to_string(m33) + "\n";
+		return ret;
+	}
 
 	Matrix4x4()
 	{
@@ -26,10 +55,7 @@ public:
 		m33 = 0;
 	}
 
-	static void Test()
-	{
-		// todo 一定要测试逆矩阵。。太tm复杂了
-	}
+
 
 	float m00;
 
@@ -342,7 +368,67 @@ public:
 		return result;
 	}
 
+	Vector3 MultiplyVector(Vector3 v)
+	{
+		Vector3 result;
+		result.x = m00 * v.x + m01 * v.y + m02 * v.z;
+		result.y = m10 * v.x + m11 * v.y + m12 * v.z;
+		result.z = m20 * v.x + m21 * v.y + m22 * v.z;
+		return result;
+	}
 
+	static Matrix4x4 Perspective(float fov, float aspect, float zNear, float zFar)
+	{
+		// 为什么这里用的是opengl的透视矩阵？
+
+		Matrix4x4 ret = Matrix4x4::zero();
+
+		//ret.m00 = 1 / (float)Math.Tan(fov * 0.5f) / aspect;
+		//ret.m11 = 1 / (float)Math.Tan(fov * 0.5f);
+		//ret.m22 = zFar / (zFar - zNear);
+		//ret.m23 = 1;
+		//ret.m32 = zFar * zNear / (zNear - zFar);
+		float fovRad = Mathf::Deg2Rad * fov;
+		// 
+		//         float width = (float)Math.Tan(fovRad / 2) * zNear * 2;
+		//         float height = width / aspect;
+		//         float fovYRad = (float)Math.Atan(height / 2 / zNear) * 2;
+		// 
+		//         float fovY = Math3d.Rad2Deg * fovYRad;
+
+		ret.m00 = 1 / Mathf::Tan(fovRad * 0.5f) / aspect;
+		ret.m11 = 1 / Mathf::Tan(fovRad * 0.5f);
+
+		ret.m22 = -(zFar + zNear) / (zFar - zNear);
+		ret.m23 = -2 * zNear * zFar / (zFar - zNear);
+		ret.m32 = -1;
+
+		return ret;
+	}
+
+	static Matrix4x4 Scale(Vector3 v)
+	{
+		Matrix4x4 ret = Matrix4x4();
+		
+		ret.m00 = v.x;
+		ret.m01 = 0;
+		ret.m02 = 0;
+		ret.m03 = 0;
+		ret.m10 = 0;
+		ret.m11 = v.y;
+		ret.m12 = 0;
+		ret.m13 = 0;
+		ret.m20 = 0;
+		ret.m21 = 0;
+		ret.m22 = v.z;
+		ret.m23 = 0;
+		ret.m30 = 0;
+		ret.m31 = 0;
+		ret.m32 = 0;
+		ret.m33 = 1;
+		
+		return ret;
+	}
 
 	static Matrix4x4 Transpose(Matrix4x4 m)
 	{
@@ -351,6 +437,39 @@ public:
 		ret.m10 = m.m01; ret.m11 = m.m11; ret.m12 = m.m21; ret.m13 = m.m31;
 		ret.m20 = m.m02; ret.m21 = m.m12; ret.m22 = m.m22; ret.m23 = m.m32;
 		ret.m30 = m.m03; ret.m31 = m.m13; ret.m32 = m.m23; ret.m33 = m.m33;
+		return ret;
+	}
+
+	/// <summary>
+	/// 可以用来计算ojbtoworld矩阵
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="q"></param>
+	/// <param name="s"></param>
+	/// <returns></returns>
+	static Matrix4x4 TRS(Vector3 pos, Quaternion q, Vector3 s)
+	{
+		Matrix4x4 posMatrix = Matrix4x4::identity();
+		posMatrix.m03 = pos.x;
+		posMatrix.m13 = pos.y;
+		posMatrix.m23 = pos.z;
+
+		Matrix4x4 rotateMatrix = Matrix4x4::identity();
+		rotateMatrix.m00 = 1 - 2 * q.y * q.y - 2 * q.z * q.z;
+		rotateMatrix.m10 = 2 * q.x * q.y + 2 * q.w * q.z;
+		rotateMatrix.m20 = 2 * q.x * q.z - 2 * q.w * q.y;
+
+		rotateMatrix.m01 = 2 * q.x * q.y - 2 * q.w * q.z;
+		rotateMatrix.m11 = 1 - 2 * q.x * q.x - 2 * q.z * q.z;
+		rotateMatrix.m21 = 2 * q.y * q.z + 2 * q.w * q.x;
+
+		rotateMatrix.m02 = 2 * q.x * q.z + 2 * q.w * q.y;
+		rotateMatrix.m12 = 2 * q.y * q.z - 2 * q.w * q.x;
+		rotateMatrix.m22 = 1 - 2 * q.x * q.x - 2 * q.y * q.y;
+
+		Matrix4x4 scaleMatrix = Scale(s);
+
+		Matrix4x4 ret = posMatrix * rotateMatrix * scaleMatrix;
 		return ret;
 	}
 
@@ -374,12 +493,12 @@ public:
 			for (int j = 0; j < n; ++j)
 				result[i][j] = matrix[i][j];
 
-		float lum[4][4]; // combined lower & upper
-		int perm[4];
+		float lum[4][4] = { {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0} }; // combined lower & upper
+		int perm[4] = {0, 0, 0, 0};
 		int toggle;
 		toggle = _MatrixDecompose(matrix, lum, perm);
 
-		float b[4];
+		float b[4] = { 0, 0, 0, 0 };
 		for (int i = 0; i < n; ++i)
 		{
 			for (int j = 0; j < n; ++j)
@@ -388,7 +507,7 @@ public:
 				else
 					b[j] = 0.0f;
 
-			float x[4];
+			float x[4] = { 0, 0, 0, 0 };
 			_Helper(lum, b, x); // 
 			for (int j = 0; j < n; ++j)
 				result[j][i] = x[j];
@@ -416,7 +535,7 @@ public:
 
 
 		// make perm[]
-		perm = new int[n];
+		//perm = new int[n];
 		for (int i = 0; i < n; ++i)
 			perm[i] = i;
 

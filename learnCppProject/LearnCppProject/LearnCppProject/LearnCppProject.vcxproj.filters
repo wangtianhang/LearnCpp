@@ -22,6 +22,9 @@
     <Filter Include="源文件\src\Learn3D">
       <UniqueIdentifier>{c9717c80-c4a5-4c57-a356-973ae2c28756}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\GUtil">
+      <UniqueIdentifier>{3d456e71-d0c5-418b-9ede-ab85c57f8435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -95,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="src\Learn3D\Matrix4x4.h">
       <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUtil\GUtil.h">
+      <Filter>源文件\src\GUtil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

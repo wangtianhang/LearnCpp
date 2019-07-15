@@ -6,6 +6,13 @@
 struct Mathf
 {
 public:
+	static float Deg2Rad;
+	static float Epsilon;
+	static float Infinity;
+	static float NegativeInfinity;
+	static float PI;
+	static float Rad2Deg;
+
 	static void Test()
 	{
 		std::cout << "acos " << Acos(0.5) << std::endl;

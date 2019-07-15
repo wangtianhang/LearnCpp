@@ -39,7 +39,7 @@ public:
 		case 3:
 			return w;
 		default:
-			throw std::exception("vector3 no index");
+			throw std::exception("vector4 no index");
 			break;
 		}
 	}

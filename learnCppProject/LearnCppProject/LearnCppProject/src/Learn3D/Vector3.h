@@ -230,23 +230,29 @@ public:
 		return Vector3(Mathf::Min(lhs.x, rhs.x), Mathf::Min(lhs.y, rhs.y), Mathf::Min(lhs.z, rhs.z));
 	}
 
+	static Vector3 MoveTowards(Vector3 current, Vector3 target, float maxDistanceDelta)
+	{
+		Vector3 a = target - current;
+		float magnitude = a.magnitude();
+		if (magnitude <= maxDistanceDelta || magnitude == 0)
+		{
+			return target;
+		}
+		return current + a / magnitude * maxDistanceDelta;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	void Normalize()
+	{
+		float num = Vector3::Magnitude(*this);
+		if (num > 1E-05f)
+		{
+			*this = *this / num;
+		}
+		else
+		{
+			*this = Vector3::zero();
+		}
+	}
 
 	static Vector3 Normalize(Vector3 value)
 	{
@@ -257,6 +263,53 @@ public:
 		}
 		return Vector3::zero();
 	}
+
+	static Vector3 Project(Vector3 vector, Vector3 onNormal)
+	{
+		float num = Vector3::Dot(onNormal, onNormal);
+		if (num < 1.401298E-45f)
+		{
+			return Vector3::zero();
+		}
+		return onNormal * Vector3::Dot(vector, onNormal) / num;
+	}
+
+	static Vector3 ProjectOnPlane(Vector3 vector, Vector3 planeNormal)
+	{
+		return vector - Vector3::Project(vector, planeNormal);
+	}
+
+	// 潜规则 inNormal 需要为单位向量
+	static Vector3 Reflect(Vector3 inDirection, Vector3 inNormal)
+	{
+		return -2 * Vector3::Dot(inNormal, inDirection) * inNormal + inDirection;
+	}
+
+	void Scale(Vector3 scale)
+	{
+		x *= scale.x;
+		y *= scale.y;
+		z *= scale.z;
+	}
+
+	static Vector3 Scale(Vector3 a, Vector3 b)
+	{
+		return Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+	}
+
+	void Set(float new_x, float new_y, float new_z)
+	{
+		x = new_x;
+		y = new_y;
+		z = new_z;
+	}
+
+	static float SqrMagnitude(Vector3 a)
+	{
+		return a.x * a.x + a.y * a.y + a.z * a.z;
+	}
+
+	// todo 需要补充。。不过依赖矩阵和四元数 先去写其他的了。。
 
 	friend Vector3 operator *(const float d, Vector3 & b);
 };

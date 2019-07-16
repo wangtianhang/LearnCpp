@@ -52,6 +52,8 @@
 #include <string.h>
 #include <math.h>
 
+GL3WglProc sb6GetProcAddress(const char * funcname);
+int sb6IsExtensionSupported(const char * extname);
 
 namespace sb7
 {

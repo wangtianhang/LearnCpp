@@ -28,6 +28,9 @@
     <Filter Include="源文件\src\GL">
       <UniqueIdentifier>{0d0d7379-2849-4873-aa34-ecbef3497532}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\LearnOpengl">
+      <UniqueIdentifier>{cf4c1b11-d9d0-4dc2-8344-30e0f03122d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -75,6 +78,9 @@
     <ClInclude Include="include\vmath.h">
       <Filter>源文件\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\LearnOpengl\TestApplication.h">
+      <Filter>源文件\src\LearnOpengl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -103,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="src\GL\gl3w.c">
       <Filter>源文件\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LearnOpengl\TestApplication.cpp">
+      <Filter>源文件\src\LearnOpengl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

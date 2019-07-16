@@ -11,9 +11,11 @@
 
 //#define _CRT_SECURE_NO_WARNINGS 1
 
-#include "sb7.h"
+//#include "sb7.h"
+#include "./src/LearnOpengl/TestApplication.h"
+
 // Derive my_application from sb7::application
-class my_application : public sb7::application
+class my_application : public application
 {
 public:
 	// Our rendering function

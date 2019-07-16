@@ -101,47 +101,47 @@ fail_data_alloc:
     return result;
 }
 
-GLuint from_string(const char * source,
-                   GLenum shader_type,
-                   bool check_errors)
-{
-    GLuint sh;
-
-    sh = glCreateShader(shader_type);
-
-    const char * strings[] = { source };
-    glShaderSource(sh, 1, strings, nullptr);
-
-    glCompileShader(sh);
-
-    if (check_errors)
-    {
-        GLint status = 0;
-        glGetShaderiv(sh, GL_COMPILE_STATUS, &status);
-
-        if (!status)
-        {
-            char buffer[4096];
-            glGetShaderInfoLog(sh, 4096, NULL, buffer);
-#ifdef _WIN32
-            OutputDebugStringA(buffer);
-            OutputDebugStringA("\n");
-#else
-            fprintf(stderr, "%s\n", buffer);
-#endif
-            goto fail_compile_shader;
-        }
-    }
-
-    return sh;
-
-fail_compile_shader:
-    glDeleteShader(sh);
-
-    return 0;
-}
-
-}
+// GLuint from_string(const char * source,
+//                    GLenum shader_type,
+//                    bool check_errors)
+// {
+//     GLuint sh;
+// 
+//     sh = glCreateShader(shader_type);
+// 
+//     const char * strings[] = { source };
+//     glShaderSource(sh, 1, strings, nullptr);
+// 
+//     glCompileShader(sh);
+// 
+//     if (check_errors)
+//     {
+//         GLint status = 0;
+//         glGetShaderiv(sh, GL_COMPILE_STATUS, &status);
+// 
+//         if (!status)
+//         {
+//             char buffer[4096];
+//             glGetShaderInfoLog(sh, 4096, NULL, buffer);
+// #ifdef _WIN32
+//             OutputDebugStringA(buffer);
+//             OutputDebugStringA("\n");
+// #else
+//             fprintf(stderr, "%s\n", buffer);
+// #endif
+//             goto fail_compile_shader;
+//         }
+//     }
+// 
+//     return sh;
+// 
+// fail_compile_shader:
+//     glDeleteShader(sh);
+// 
+//     return 0;
+// }
+// 
+ }
 
 namespace program
 {

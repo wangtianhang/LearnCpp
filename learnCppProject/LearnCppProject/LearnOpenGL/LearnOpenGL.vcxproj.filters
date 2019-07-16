@@ -81,6 +81,9 @@
     <ClInclude Include="src\LearnOpengl\TestApplication.h">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClInclude>
+    <ClInclude Include="src\LearnOpengl\ShaderHelper.h">
+      <Filter>源文件\src\LearnOpengl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -111,6 +114,9 @@
       <Filter>源文件\src\GL</Filter>
     </ClCompile>
     <ClCompile Include="src\LearnOpengl\TestApplication.cpp">
+      <Filter>源文件\src\LearnOpengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClCompile>
   </ItemGroup>

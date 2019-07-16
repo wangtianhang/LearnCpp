@@ -1,6 +1,8 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
+#include <gl3w.h>
+
 namespace sb7
 {
 
@@ -15,13 +17,13 @@ GLuint load(const char * filename,
             bool check_errors = false);
 #endif
 
-GLuint from_string(const char * source,
-                   GLenum shader_type,
-#ifdef _DEBUG
-                   bool check_errors = true);
-#else
-                   bool check_errors = false);
-#endif
+// GLuint from_string(const char * source,
+//                    GLenum shader_type,
+// #ifdef _DEBUG
+//                    bool check_errors = true);
+// #else
+//                    bool check_errors = false);
+// #endif
 
 }
 

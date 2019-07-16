@@ -170,6 +170,7 @@
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\vmath.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />
     <ClInclude Include="src\LearnOpengl\TestApplication.h" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GL\gl3w.c" />
+    <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp" />
     <ClCompile Include="src\LearnOpengl\TestApplication.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />
     <ClCompile Include="src\sb7\sb7color.cpp" />

@@ -43,6 +43,9 @@
     <Filter Include="源文件\src\GUtil">
       <UniqueIdentifier>{2fde86c0-d8a7-4397-975d-8840b4419f69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\Graphic">
+      <UniqueIdentifier>{39685857-9757-4fc3-b255-11532d0d2105}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -123,6 +126,9 @@
     <ClInclude Include="src\GUtil\GUtil.h">
       <Filter>源文件\src\GUtil</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphic\Color.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="src\Learn3D\Vector4.cpp">
       <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphic\Color.cpp">
+      <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

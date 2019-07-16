@@ -23,7 +23,7 @@
     <ProjectGuid>{491A2FC1-B9A9-4D13-A240-E6832F4A1604}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LearnOpenGL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -171,7 +171,7 @@
     <ClInclude Include="include\vmath.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />
-    <ClInclude Include="src\LearnOpengl\TestApplication.h" />
+    <ClInclude Include="src\LearnOpengl\ApplicationBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LearnOpenGL.cpp" />
@@ -183,7 +183,7 @@
     </ClCompile>
     <ClCompile Include="src\GL\gl3w.c" />
     <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp" />
-    <ClCompile Include="src\LearnOpengl\TestApplication.cpp" />
+    <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />
     <ClCompile Include="src\sb7\sb7color.cpp" />
     <ClCompile Include="src\sb7\sb7ktx.cpp" />

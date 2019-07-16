@@ -78,10 +78,10 @@
     <ClInclude Include="include\vmath.h">
       <Filter>源文件\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\LearnOpengl\TestApplication.h">
+    <ClInclude Include="src\LearnOpengl\ShaderHelper.h">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClInclude>
-    <ClInclude Include="src\LearnOpengl\ShaderHelper.h">
+    <ClInclude Include="src\LearnOpengl\ApplicationBase.h">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,10 +113,10 @@
     <ClCompile Include="src\GL\gl3w.c">
       <Filter>源文件\src\GL</Filter>
     </ClCompile>
-    <ClCompile Include="src\LearnOpengl\TestApplication.cpp">
+    <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClCompile>
-    <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp">
+    <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,7 +12,7 @@
 //#define _CRT_SECURE_NO_WARNINGS 1
 
 //#include "sb7.h"
-#include "./src/LearnOpengl/TestApplication.h"
+#include "./src/LearnOpengl/ApplicationBase.h"
 #include "./src/LearnOpengl/ShaderHelper.h"
 
 // Derive my_application from sb7::application

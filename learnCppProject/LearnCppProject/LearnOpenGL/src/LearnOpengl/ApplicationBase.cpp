@@ -1,4 +1,4 @@
-#include "./TestApplication.h"
+#include "./ApplicationBase.h"
 
 GL3WglProc sb6GetProcAddress(const char * funcname)
 {

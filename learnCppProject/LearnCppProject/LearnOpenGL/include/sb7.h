@@ -28,16 +28,16 @@
 
 //#define _CRT_SECURE_NO_WARNINGS 
 
-#ifdef WIN32
+/*#ifdef WIN32*/
     #pragma once
-    #define _CRT_SECURE_NO_WARNINGS 1
+    //#define _CRT_SECURE_NO_WARNINGS 1
 
     #define WIN32_LEAN_AND_MEAN 1
     #include <Windows.h>
-#else
-    #include <unistd.h>
-    #define Sleep(t) sleep(t)
-#endif
+// #else
+//     #include <unistd.h>
+//     #define Sleep(t) sleep(t)
+// #endif
 
 #include "GL/gl3w.h"
 
@@ -51,6 +51,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+
 
 namespace sb7
 {
@@ -87,7 +88,7 @@ public:
 
 #ifndef _DEBUG
         if (info.flags.debug)
-#endif /* _DEBUG */
+#endif 
         {
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
         }
@@ -182,13 +183,13 @@ public:
         strcpy_s(info.title, "OpenGL SuperBible Example");
         info.windowWidth = 800;
         info.windowHeight = 600;
-#ifdef __APPLE__
-        info.majorVersion = 3;
-        info.minorVersion = 2;
-#else
+// #ifdef __APPLE__
+//         info.majorVersion = 3;
+//         info.minorVersion = 2;
+// #else
         info.majorVersion = 4;
         info.minorVersion = 3;
-#endif
+//#endif
         info.samples = 0;
         info.flags.all = 0;
         info.flags.cursor = 1;
@@ -253,7 +254,7 @@ public:
 #ifdef _WIN32
         OutputDebugStringA(message);
         OutputDebugStringA("\n");
-#endif /* _WIN32 */
+#endif 
     }
 
     void getMousePosition(int& x, int& y)
@@ -327,6 +328,7 @@ protected:
 };
 
 };
+
 
 // #if defined _WIN32
 // #define DECLARE_MAIN(a)                             \

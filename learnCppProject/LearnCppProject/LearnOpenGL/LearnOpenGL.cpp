@@ -27,7 +27,7 @@ public:
 // Our one and only instance of DECLARE_MAIN
 //DECLARE_MAIN(my_application);
 
-sb7::application *app = 0;                          
+my_application *app = 0;
 int CALLBACK WinMain(HINSTANCE hInstance, 
 	HINSTANCE hPrevInstance, 
 	LPSTR lpCmdLine, 

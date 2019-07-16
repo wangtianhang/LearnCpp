@@ -131,7 +131,8 @@ void text_overlay::draw()
 void text_overlay::drawText(const char* str, int x, int y)
 {
     char* dst = screen_buffer + y * buffer_width + x;
-    strcpy(dst, str);
+	//strcpy(dst, str);
+    strcpy_s(dst, strlen(str) + 1, str);
     dirty = true;
 }
 

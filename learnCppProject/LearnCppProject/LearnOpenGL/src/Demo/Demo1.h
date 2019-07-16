@@ -85,8 +85,13 @@ public:
 		GLfloat attrib[] = { Mathf::Sin(m_accTime) * 0.5f,
 						Mathf::Cos(m_accTime) * 0.6f,
 						0.0f, 0.0f };
+
+		GLfloat attrib2[] = { Mathf::Sin(m_accTime) * 0.5f,
+				Mathf::Cos(m_accTime) * 0.6f,
+				0.0f, 0.0f };
 		// Update the value of input attribute 0
 		glVertexAttrib4fv(0, attrib);
+		glVertexAttrib4fv(1, attrib2);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}

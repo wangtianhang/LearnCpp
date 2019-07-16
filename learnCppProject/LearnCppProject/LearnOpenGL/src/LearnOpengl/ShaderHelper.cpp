@@ -90,6 +90,14 @@ GLuint CreateShaderFromString(const char * source,
 			char buffer[4096];
 			glGetShaderInfoLog(sh, 4096, NULL, buffer);
 #ifdef _WIN32
+			if(shader_type == GL_VERTEX_SHADER)
+			{
+				OutputDebugStringA("vertex shader error\n");
+			}
+			else if (shader_type == GL_FRAGMENT_SHADER)
+			{
+				OutputDebugStringA("pixel shader error\n");
+			}
 			OutputDebugStringA(buffer);
 			OutputDebugStringA("\n");
 #else

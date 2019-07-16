@@ -19,7 +19,18 @@ class my_application : public application
 {
 public:
 	// Our rendering function
+	
+	double m_accTime = 0;
+
 	void render(double currentTime)
+	{
+		float delta = currentTime - m_accTime;
+		m_accTime = currentTime;
+
+		RenderUpdate(delta);
+	}
+
+	void RenderUpdate(float delta)
 	{
 		// Simply clear the window with red
 		static const GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f };

@@ -25,6 +25,9 @@
     <Filter Include="源文件\include\GL">
       <UniqueIdentifier>{5d122227-ecef-4a1e-ad12-86ccf5dd2901}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\GL">
+      <UniqueIdentifier>{0d0d7379-2849-4873-aa34-ecbef3497532}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -80,9 +83,6 @@
     <ClCompile Include="LearnOpenGL.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\sb7\gl3w.c">
-      <Filter>源文件\src\sb7</Filter>
-    </ClCompile>
     <ClCompile Include="src\sb7\sb7.cpp">
       <Filter>源文件\src\sb7</Filter>
     </ClCompile>
@@ -100,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="src\sb7\sb7textoverlay.cpp">
       <Filter>源文件\src\sb7</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL\gl3w.c">
+      <Filter>源文件\src\GL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

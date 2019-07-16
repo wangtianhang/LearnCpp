@@ -313,6 +313,35 @@ public:
 	}
 
 	// todo 需要补充。。不过依赖矩阵和四元数 先去写其他的了。。
+	static Vector3 Slerp(Vector3 a, Vector3 b, float t)
+	{
+		//         Quaternion fromQua = Quaternion.LookRotation(from, Vector3.up);
+		//         Quaternion toQua = Quaternion.LookRotation(to, Vector3.up);
+		//         Quaternion endQua = Quaternion.Slerp(fromQua, toQua, t);
+		// 
+		//         Vector3 endDir = endQua * Vector3.forward;
+		//         endDir.Normalize();
+		// 
+		//         float length = Mathf3d.Lerp(from.magnitude, to.magnitude, t);
+		//         return endDir.normalized * length;
+		if (t <= 0)
+		{
+			return a;
+		}
+		else if (t >= 1)
+		{
+			return b;
+		}
+
+		Vector3 v = RotateTo(a, b, Vector3::Angle(a, b) * t);
+
+		//向量的长度，跟线性插值一样计算
+		float length = b.magnitude() * t + a.magnitude() * (1 - t);
+		return v.normalized() * length;
+	}
+
+	static Vector3 RotateTo(Vector3 from, Vector3 to, float angle);
+
 
 	//friend Vector3 operator *(const float d, Vector3 & b);
 	friend Vector3 operator *(const float d, Vector3 b);

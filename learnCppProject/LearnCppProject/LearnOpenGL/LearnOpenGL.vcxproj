@@ -171,6 +171,7 @@
     <ClInclude Include="include\vmath.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\Demo\Demo1.h" />
+    <ClInclude Include="src\IO\FileIO.h" />
     <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />
     <ClInclude Include="src\LearnOpengl\ApplicationBase.h" />
   </ItemGroup>
@@ -183,6 +184,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GL\gl3w.c" />
+    <ClCompile Include="src\IO\FileIO.cpp" />
     <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp" />
     <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />

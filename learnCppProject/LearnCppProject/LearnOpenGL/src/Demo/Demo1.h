@@ -3,6 +3,8 @@
 #include <string>
 
 #include "../LearnOpengl/ApplicationBase.h"
+#include "../IO/FileIO.h"
+
 class Demo1 : public application
 {
 public:
@@ -26,6 +28,7 @@ public:
 		// 		"} \n"
 		// 		};
 
+		/*
 		std::string vertex_shader_source =
 		{
 			"#version 450 core \n"
@@ -35,6 +38,7 @@ public:
 			" gl_Position = vec4(0.0, 0.0, 0.5, 1.0); \n"
 			"} \n"
 		};
+		*/
 
 		std::string fragment_shader_source =
 		{
@@ -47,6 +51,8 @@ public:
 		" color = vec4(0.0, 0.8, 1.0, 1.0); \n"
 		"} \n"
 		};
+
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo1Vertex.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
 		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);

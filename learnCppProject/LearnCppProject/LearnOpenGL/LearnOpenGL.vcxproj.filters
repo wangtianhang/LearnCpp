@@ -34,6 +34,9 @@
     <Filter Include="源文件\src\Demo">
       <UniqueIdentifier>{fd017716-39e2-42ad-80de-eeeba4b84006}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\IO">
+      <UniqueIdentifier>{e78640fd-a30e-436d-adfb-addb3539b351}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -90,6 +93,9 @@
     <ClInclude Include="src\Demo\Demo1.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\IO\FileIO.h">
+      <Filter>源文件\src\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -124,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp">
       <Filter>源文件\src\LearnOpengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IO\FileIO.cpp">
+      <Filter>源文件\src\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

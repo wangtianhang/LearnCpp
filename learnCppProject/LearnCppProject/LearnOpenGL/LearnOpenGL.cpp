@@ -61,8 +61,8 @@ public:
 		"} \n"
 		};
 
-		GLuint vertex = CreateShader(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
-		GLuint pixel = CreateShader(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
+		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
+		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
 		m_rendering_program = CreateShaderProgram(vertex, pixel, true, true);
 		glCreateVertexArrays(1, &m_vertex_array_object);
 		glBindVertexArray(m_vertex_array_object);

@@ -4,7 +4,13 @@
 
 #include <gl3w.h>
 
-GLuint CreateShader(const char * source,
+#pragma warning(disable:4996) // 等价于#define _CRT_SECURE_NO_WARNINGS 1 后面这个宏定义感觉不太好用
+
+GLuint CreateShaderFromFile(const char * filename,
+	GLenum shader_type,
+	bool check_errors);
+
+GLuint CreateShaderFromString(const char * source,
 	GLenum shader_type,
 	bool check_errors);
 

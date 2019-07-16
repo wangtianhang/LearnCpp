@@ -25,7 +25,19 @@ public:
 	}
 };
 // Our one and only instance of DECLARE_MAIN
-DECLARE_MAIN(my_application);
+//DECLARE_MAIN(my_application);
+
+sb7::application *app = 0;                          
+int CALLBACK WinMain(HINSTANCE hInstance, 
+	HINSTANCE hPrevInstance, 
+	LPSTR lpCmdLine, 
+	int nCmdShow)                  
+{                                                   
+my_application *app = new my_application;
+app->run(app);                                  
+delete app;                                     
+return 0;                                       
+}
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
 // 调试程序: F5 或调试 >“开始调试”菜单

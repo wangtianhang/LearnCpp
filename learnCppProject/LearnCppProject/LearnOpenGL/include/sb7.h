@@ -328,31 +328,31 @@ protected:
 
 };
 
-#if defined _WIN32
-#define DECLARE_MAIN(a)                             \
-sb7::application *app = 0;                          \
-int CALLBACK WinMain(HINSTANCE hInstance,           \
-                     HINSTANCE hPrevInstance,       \
-                     LPSTR lpCmdLine,               \
-                     int nCmdShow)                  \
-{                                                   \
-    a *app = new a;                                 \
-    app->run(app);                                  \
-    delete app;                                     \
-    return 0;                                       \
-}
-#elif defined _LINUX || defined __APPLE__
-#define DECLARE_MAIN(a)                             \
-int main(int argc, const char ** argv)              \
-{                                                   \
-    a *app = new a;                                 \
-    app->run(app);                                  \
-    delete app;                                     \
-    return 0;                                       \
-}
-#else
-#error Undefined platform!
-#endif
+// #if defined _WIN32
+// #define DECLARE_MAIN(a)                             \
+// sb7::application *app = 0;                          \
+// int CALLBACK WinMain(HINSTANCE hInstance,           \
+//                      HINSTANCE hPrevInstance,       \
+//                      LPSTR lpCmdLine,               \
+//                      int nCmdShow)                  \
+// {                                                   \
+//     a *app = new a;                                 \
+//     app->run(app);                                  \
+//     delete app;                                     \
+//     return 0;                                       \
+// }
+// #elif defined _LINUX || defined __APPLE__
+// #define DECLARE_MAIN(a)                             \
+// int main(int argc, const char ** argv)              \
+// {                                                   \
+//     a *app = new a;                                 \
+//     app->run(app);                                  \
+//     delete app;                                     \
+//     return 0;                                       \
+// }
+// #else
+// #error Undefined platform!
+// #endif
 
 #endif /* __SB7_H__ */
 

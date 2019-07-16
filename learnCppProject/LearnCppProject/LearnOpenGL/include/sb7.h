@@ -57,7 +57,7 @@ int sb6IsExtensionSupported(const char * extname);
 
 namespace sb7
 {
-
+/*
 class application
 {
 private:
@@ -328,8 +328,9 @@ protected:
         glfwSwapInterval((int)info.flags.vsync);
     }
 };
-
+*/
 };
+
 
 
 // #if defined _WIN32

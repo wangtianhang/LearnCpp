@@ -31,6 +31,9 @@
     <Filter Include="源文件\src\LearnOpengl">
       <UniqueIdentifier>{cf4c1b11-d9d0-4dc2-8344-30e0f03122d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\Demo">
+      <UniqueIdentifier>{fd017716-39e2-42ad-80de-eeeba4b84006}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="src\LearnOpengl\ApplicationBase.h">
       <Filter>源文件\src\LearnOpengl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Demo\Demo1.h">
+      <Filter>源文件\src\Demo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

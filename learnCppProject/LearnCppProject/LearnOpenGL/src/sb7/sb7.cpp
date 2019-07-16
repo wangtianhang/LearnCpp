@@ -25,7 +25,7 @@
 
 #include <sb7.h>
 
-sb7::application * sb7::application::app = 0;
+//sb7::application * sb7::application::app = 0;
 
 #include <GL/glext.h>
 
@@ -54,6 +54,7 @@ sb7::application * sb7::application::app = 0;
 // 
 //     return 0;
 // }
+/*
 void APIENTRY sb7::application::debug_callback(GLenum source,
                                                GLenum type,
                                                GLuint id,
@@ -64,3 +65,4 @@ void APIENTRY sb7::application::debug_callback(GLenum source,
 {
     reinterpret_cast<application *>(userParam)->onDebugMessage(source, type, id, severity, length, message);
 }
+*/

@@ -170,6 +170,7 @@
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\vmath.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\Demo\Demo1.h" />
     <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />
     <ClInclude Include="src\LearnOpengl\ApplicationBase.h" />
   </ItemGroup>

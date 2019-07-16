@@ -21,17 +21,17 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#define _CRT_SECURE_NO_WARNINGS 1
+//#define _CRT_SECURE_NO_WARNINGS 1
 
-#include "GL/gl3w.h"
+//#include "GL/gl3w.h"
 
-#include <cstdio>
+//#include <cstdio>
 
-namespace sb7
-{
+//namespace sb7
+//{
 
-namespace shader
-{
+//namespace shader
+//{
 
 // extern
 // GLuint load(const char * filename, GLenum shader_type, bool check_errors)
@@ -141,7 +141,7 @@ namespace shader
 //     return 0;
 // }
 // 
- }
+//}
 
 // namespace program
 // {
@@ -195,4 +195,4 @@ namespace shader
 // 
 // }
 
-}
+//}

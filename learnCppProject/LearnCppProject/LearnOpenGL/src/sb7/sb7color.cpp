@@ -1,6 +1,6 @@
 #include <vmath.h>
 #include <sb7color.h>
-
+/*
 namespace sb7
 {
 
@@ -152,3 +152,4 @@ const vmath::vec4 color::Yellow = colorfromhex(0xFFFF00);
 const vmath::vec4 color::YellowGreen = colorfromhex(0x9ACD32);
 
 }
+*/

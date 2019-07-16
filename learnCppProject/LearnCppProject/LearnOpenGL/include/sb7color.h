@@ -24,6 +24,7 @@
  *
  */
 
+/*
 #ifndef __SB7COLOR_H__
 #define __SB7COLOR_H__
 
@@ -180,3 +181,4 @@ struct color
 }
 
 #endif // __SB7COLOR_H__
+*/

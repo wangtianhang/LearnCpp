@@ -1,13 +1,13 @@
-#ifndef __SHADER_H__
-#define __SHADER_H__
+//#ifndef __SHADER_H__
+//#define __SHADER_H__
 
-#include <gl3w.h>
+//#include <gl3w.h>
 
-namespace sb7
-{
+//namespace sb7
+//{
 
-namespace shader
-{
+//namespace shader
+//{
 
 // GLuint load(const char * filename,
 //             GLenum shader_type = GL_FRAGMENT_SHADER,
@@ -25,7 +25,7 @@ namespace shader
 //                    bool check_errors = false);
 // #endif
 
-}
+//}
 
 // namespace program
 // {
@@ -41,6 +41,6 @@ namespace shader
 // 
 // }
 
-}
+//}
 
-#endif /* __SHADER_H__ */
+//#endif 

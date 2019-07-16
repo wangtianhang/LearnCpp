@@ -23,12 +23,13 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+
 #ifndef __SB7_H__
 #define __SB7_H__
 
 //#define _CRT_SECURE_NO_WARNINGS 
 
-/*#ifdef WIN32*/
+//#ifdef WIN32
     #pragma once
     #define _CRT_SECURE_NO_WARNINGS 1
 
@@ -38,6 +39,7 @@
 //     #include <unistd.h>
 //     #define Sleep(t) sleep(t)
 // #endif
+
 
 #include "GL/gl3w.h"
 
@@ -52,12 +54,13 @@
 #include <string.h>
 #include <math.h>
 
+ /*
 GL3WglProc sb6GetProcAddress(const char * funcname);
 int sb6IsExtensionSupported(const char * extname);
 
 namespace sb7
 {
-/*
+
 class application
 {
 private:
@@ -328,7 +331,7 @@ protected:
         glfwSwapInterval((int)info.flags.vsync);
     }
 };
-*/
+
 };
 
 
@@ -359,5 +362,7 @@ protected:
 // #error Undefined platform!
 // #endif
 
-#endif /* __SB7_H__ */
+*/
+#endif 
+
 

@@ -1,3 +1,4 @@
+/*
 #ifndef __VMATH_H__
 #define __VMATH_H__
 
@@ -669,13 +670,6 @@ public:
         return m;
     }
 
-    /*
-    inline T length() const
-    {
-        return vmath::length( Tvec4<T>(r, v) );
-    }
-    */
-
 private:
     union
     {
@@ -886,36 +880,6 @@ protected:
     }
 };
 
-/*
-template <typename T, const int N>
-class TmatN : public matNM<T,N,N>
-{
-public:
-    typedef matNM<T,N,N> base;
-    typedef TmatN<T,N> my_type;
-
-    inline TmatN() {}
-    inline TmatN(const my_type& that) : base(that) {}
-    inline TmatN(float f) : base(f) {}
-    inline TmatN(const vecN<T,4>& v) : base(v) {}
-
-    inline my_type transpose(void)
-    {
-        my_type result;
-        int x, y;
-
-        for (y = 0; y < h; y++)
-        {
-            for (x = 0; x < h; x++)
-            {
-                result[x][y] = data[y][x];
-            }
-        }
-
-        return result;
-    }
-};
-*/
 
 template <typename T>
 class Tmat4 : public matNM<T,4,4>
@@ -1262,32 +1226,6 @@ static inline vecN<T,N> operator/(const T s, const vecN<T,N>& v)
     return result;
 }
 
-/*
-template <typename T>
-static inline void quaternionToMatrix(const Tquaternion<T>& q, matNM<T,4,4>& m)
-{
-    m[0][0] = q[0] * q[0] + q[1] * q[1] - q[2] * q[2] - q[3] * q[3];
-    m[0][1] = T(2) * (q[1] * q[2] + q[0] * q[3]);
-    m[0][2] = T(2) * (q[1] * q[3] - q[0] * q[2]);
-    m[0][3] = 0.0f;
-
-    m[1][0] = T(2) * (q[1] * q[2] - q[0] * q[3]);
-    m[1][1] = q[0] * q[0] - q[1] * q[1] + q[2] * q[2] - q[3] * q[3];
-    m[1][2] = T(2) * (q[2] * q[3] + q[0] * q[1]);
-    m[1][3] = 0.0f;
-
-    m[2][0] = T(2) * (q[1] * q[3] + q[0] * q[2]);
-    m[2][1] = T(2) * (q[2] * q[3] - q[0] * q[1]);
-    m[2][2] = q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3];
-    m[2][3] = 0.0f;
-
-    m[3][0] = 0.0f;
-    m[3][1] = 0.0f;
-    m[3][2] = 0.0f;
-    m[3][3] = 1.0f;
-}
-*/
-
 template <typename T>
 static inline void quaternionToMatrix(const Tquaternion<T>& q, matNM<T,4,4>& m)
 {
@@ -1308,4 +1246,5 @@ static inline T mix(const T& A, const T& B, const T& t)
 
 };
 
-#endif /* __VMATH_H__ */
+#endif 
+*/

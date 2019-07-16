@@ -1,5 +1,5 @@
-#include <vmath.h>
-#include <sb7color.h>
+//#include <vmath.h>
+//#include <sb7color.h>
 /*
 namespace sb7
 {

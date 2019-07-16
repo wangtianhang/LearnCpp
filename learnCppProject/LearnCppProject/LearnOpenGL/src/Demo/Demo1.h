@@ -40,6 +40,7 @@ public:
 		};
 		*/
 
+		/*
 		std::string fragment_shader_source =
 		{
 		"#version 450 core \n"
@@ -51,8 +52,10 @@ public:
 		" color = vec4(0.0, 0.8, 1.0, 1.0); \n"
 		"} \n"
 		};
+		*/
 
 		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo1Vertex.txt");
+		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo1Pixel.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
 		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);

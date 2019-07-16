@@ -30,7 +30,7 @@
 
 /*#ifdef WIN32*/
     #pragma once
-    //#define _CRT_SECURE_NO_WARNINGS 1
+    #define _CRT_SECURE_NO_WARNINGS 1
 
     #define WIN32_LEAN_AND_MEAN 1
     #include <Windows.h>

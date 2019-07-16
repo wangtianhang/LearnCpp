@@ -15,6 +15,7 @@
 #include "./src/LearnOpengl/ApplicationBase.h"
 #include "./src/LearnOpengl/ShaderHelper.h"
 #include "./src/Demo/Demo1.h"
+#include "./src/Learn3D/Matrix4x4.h"
 
 // Derive my_application from sb7::application
 
@@ -27,6 +28,8 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine, 
 	int nCmdShow)                  
 {
+	Matrix4x4::Test();
+
 	int demoId = 1;
 	if (demoId == 1)
 	{

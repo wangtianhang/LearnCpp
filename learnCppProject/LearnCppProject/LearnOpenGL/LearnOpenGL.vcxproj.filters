@@ -37,6 +37,12 @@
     <Filter Include="源文件\src\IO">
       <UniqueIdentifier>{e78640fd-a30e-436d-adfb-addb3539b351}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\src\Learn3D">
+      <UniqueIdentifier>{030c4267-5bc7-43bc-9cda-bfa4408089ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\src\GUtil">
+      <UniqueIdentifier>{2fde86c0-d8a7-4397-975d-8840b4419f69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -96,6 +102,27 @@
     <ClInclude Include="src\IO\FileIO.h">
       <Filter>源文件\src\IO</Filter>
     </ClInclude>
+    <ClInclude Include="src\Learn3D\Mathf.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Matrix4x4.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Quaternion.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Test3DMath.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Vector3.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learn3D\Vector4.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUtil\GUtil.h">
+      <Filter>源文件\src\GUtil</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -133,6 +160,18 @@
     </ClCompile>
     <ClCompile Include="src\IO\FileIO.cpp">
       <Filter>源文件\src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Mathf.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Test3DMath.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Vector3.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learn3D\Vector4.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

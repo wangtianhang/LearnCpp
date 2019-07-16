@@ -4,6 +4,7 @@
 
 #include "../LearnOpengl/ApplicationBase.h"
 #include "../IO/FileIO.h"
+#include "../Learn3D/Mathf.h"
 
 class Demo1 : public application
 {
@@ -79,8 +80,15 @@ public:
 		glClearBufferfv(GL_COLOR, 0, red);
 
 		glUseProgram(m_rendering_program);
-		glPointSize(10);
-		glDrawArrays(GL_POINTS, 0, 1);
+		//glPointSize(10);
+
+		GLfloat attrib[] = { Mathf::Sin(m_accTime) * 0.5f,
+						Mathf::Cos(m_accTime) * 0.6f,
+						0.0f, 0.0f };
+		// Update the value of input attribute 0
+		glVertexAttrib4fv(0, attrib);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
 
 	virtual void shutdown()

@@ -176,6 +176,7 @@
     <ClInclude Include="src\Demo\Demo4.h" />
     <ClInclude Include="src\Demo\Demo5.h" />
     <ClInclude Include="src\Demo\Demo6.h" />
+    <ClInclude Include="src\GL\GLUtil.h" />
     <ClInclude Include="src\Graphic\Color.h" />
     <ClInclude Include="src\GUtil\GUtil.h" />
     <ClInclude Include="src\IO\FileIO.h" />
@@ -197,6 +198,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\GL\gl3w.c" />
+    <ClCompile Include="src\GL\GLUtil.cpp" />
     <ClCompile Include="src\Graphic\Color.cpp" />
     <ClCompile Include="src\IO\FileIO.cpp" />
     <ClCompile Include="src\Learn3D\Mathf.cpp" />

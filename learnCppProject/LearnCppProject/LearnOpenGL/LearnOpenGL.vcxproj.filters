@@ -144,6 +144,9 @@
     <ClInclude Include="src\Demo\Demo6.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\GL\GLUtil.h">
+      <Filter>源文件\src\GL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphic\Color.cpp">
       <Filter>源文件\src\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL\GLUtil.cpp">
+      <Filter>源文件\src\GL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

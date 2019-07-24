@@ -8,6 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
+#include "../GL/GLUtil.h"
 
 // uniform demo
 class Demo6 : public application
@@ -152,15 +153,7 @@ public:
 		RenderUpdate(delta);
 	}
 
-	static Matrix4x4 worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
-	{
-		Matrix4x4 worldToLocal = cameraLocalToWorld.inverse();
-		worldToLocal.m20 *= -1;
-		worldToLocal.m21 *= -1;
-		worldToLocal.m22 *= -1;
-		worldToLocal.m23 *= -1;
-		return worldToLocal;
-	}
+
 
 	void RenderUpdate(float delta)
 	{
@@ -174,7 +167,7 @@ public:
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
-		Matrix4x4 view = worldToCameraMatrix(cameraLocalToWorld);
+		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;

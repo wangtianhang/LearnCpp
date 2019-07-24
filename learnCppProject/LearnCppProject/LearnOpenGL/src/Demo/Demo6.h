@@ -118,19 +118,29 @@ public:
 		RenderUpdate(delta);
 	}
 
+	static Matrix4x4 worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
+	{
+		Matrix4x4 worldToLocal = cameraLocalToWorld.inverse();
+		worldToLocal.m20 *= -1;
+		worldToLocal.m21 *= -1;
+		worldToLocal.m22 *= -1;
+		worldToLocal.m23 *= -1;
+		return worldToLocal;
+	}
+
 	void RenderUpdate(float delta)
 	{
 		// Simply clear the window with red
 		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 
-		Vector3 euler = Vector3(Mathf::Sin(m_accTime), 0, 0);
-		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(euler), Vector3::one());
+		Vector3 euler = Vector3(Mathf::Sin(m_accTime) * 10, 0, 0);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(euler), Vector3::one() * 2);
 		Vector3 cameraPos = Vector3(0, 0, -10);
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
-		Matrix4x4 view = cameraLocalToWorld.inverse();
+		Matrix4x4 view = worldToCameraMatrix(cameraLocalToWorld);
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;

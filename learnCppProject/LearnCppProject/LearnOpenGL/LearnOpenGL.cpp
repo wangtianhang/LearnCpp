@@ -17,6 +17,7 @@
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"
 #include "./src/Demo/Demo3.h"
+#include "./src/Demo/Demo4.h"
 #include "./src/Learn3D/Matrix4x4.h"
 
 // Derive my_application from sb7::application
@@ -35,7 +36,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo3 *app = new Demo3;
+		Demo4 *app = new Demo4;
 		app->run(app);
 		delete app;
 	}                              

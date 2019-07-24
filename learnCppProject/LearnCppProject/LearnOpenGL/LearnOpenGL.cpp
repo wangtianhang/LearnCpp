@@ -15,6 +15,7 @@
 #include "./src/LearnOpengl/ApplicationBase.h"
 #include "./src/LearnOpengl/ShaderHelper.h"
 #include "./src/Demo/Demo1.h"
+#include "./src/Demo/Demo2.h"
 #include "./src/Learn3D/Matrix4x4.h"
 
 // Derive my_application from sb7::application
@@ -33,7 +34,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo1 *app = new Demo1;
+		Demo2 *app = new Demo2;
 		app->run(app);
 		delete app;
 	}                              

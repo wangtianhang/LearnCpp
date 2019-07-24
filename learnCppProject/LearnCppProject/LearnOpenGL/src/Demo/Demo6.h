@@ -198,5 +198,6 @@ public:
 
 		glDeleteProgram(m_rendering_program);
 		glDeleteVertexArrays(1, &m_vao);
+		glDeleteBuffers(1, &m_buffer);
 	}
 };

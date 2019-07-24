@@ -141,6 +141,9 @@
     <ClInclude Include="src\Demo\Demo5.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\Demo\Demo6.h">
+      <Filter>源文件\src\Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

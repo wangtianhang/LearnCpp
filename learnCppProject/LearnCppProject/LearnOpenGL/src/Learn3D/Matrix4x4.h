@@ -475,6 +475,29 @@ public:
 		return ret;
 	}
 
+	void GetMatrixArray(float matrixArray[16])
+	{
+		matrixArray[0] = m00;
+		matrixArray[1] = m01;
+		matrixArray[2] = m02;
+		matrixArray[3] = m03;
+
+		matrixArray[4] = m10;
+		matrixArray[5] = m11;
+		matrixArray[6] = m12;
+		matrixArray[7] = m13;
+
+		matrixArray[8] = m20;
+		matrixArray[9] = m21;
+		matrixArray[10] = m22;
+		matrixArray[11] = m23;
+
+		matrixArray[12] = m30;
+		matrixArray[13] = m31;
+		matrixArray[14] = m32;
+		matrixArray[15] = m33;
+	}
+
 #pragma region inverse
 	//ÇóÄæ https ://github.com/Phylliida/UnityMatrix/blob/master/Matrix.cs
 // 	static float[][] _MatrixCreate(int rows, int cols)

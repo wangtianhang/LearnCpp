@@ -7,21 +7,10 @@
 #include "../Learn3D/Mathf.h"
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
+#include "../Learn3D/Matrix4x4.h"
 
-struct vertex
-{
-	// Position
-	float x;
-	float y;
-	float z;
-	// Color
-	float r;
-	float g;
-	float b;
-};
-
-// array of structure demo
-class Demo4 : public application
+// uniform demo
+class Demo6 : public application
 {
 public:
 	// Our rendering function
@@ -37,7 +26,7 @@ public:
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo3Vertex.txt");
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo6Vertex.txt");
 		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo1Pixel.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
@@ -51,12 +40,12 @@ public:
 
 	void TestBufferWithVAO()
 	{
-		static const GLfloat positions[] = { 0.25, -0.25, 0.5,
-		-0.25, -0.25, 0.5,
-		0.25, 0.25, 0.5 };
-		static const GLfloat colors[] = { 1,0,0,
-		0,1,0,
-		0,0,1 };
+// 		static const GLfloat positions[] = { 0.25, -0.25, 0.5,
+// 		-0.25, -0.25, 0.5,
+// 		0.25, 0.25, 0.5 };
+// 		static const GLfloat colors[] = { 1,0,0,
+// 		0,1,0,
+// 		0,0,1 };
 // 		// Create the vertex array object
 // 		glCreateVertexArrays(1, &m_vao);
 // 		// Get create two buffers
@@ -79,26 +68,46 @@ public:
 // 		glVertexArrayAttribFormat(m_vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
 // 		glVertexArrayAttribBinding(m_vao, 1, 1);
 // 		glEnableVertexArrayAttrib(m_vao, 1);
+// 
+// 		GLuint uniformPos = glGetUniformLocation(m_rendering_program, "xoffset");
+// 		glUseProgram(m_rendering_program);
+// 		glUniform1f(uniformPos, 0.25);
 
-		static const vertex vertices[] = { 0.25, -0.25, 0.5,1,0,0,
-		-0.25, -0.25, 0.5, 0,1,0, 
-			0.25, 0.25, 0.5,0,0,1
+		static const GLfloat vertex_positions[] =
+		{
+		-0.25f, 0.25f, -0.25f,
+		-0.25f, -0.25f, -0.25f,
+		0.25f, -0.25f, -0.25f,
+		0.25f, -0.25f, -0.25f,
+		0.25f, 0.25f, -0.25f,
+		-0.25f, 0.25f, -0.25f,
+		/* MORE DATA HERE */
+		-0.25f, 0.25f, -0.25f,
+		0.25f, 0.25f, -0.25f,
+		0.25f, 0.25f, 0.25f,
+		0.25f, 0.25f, 0.25f,
+		-0.25f, 0.25f, 0.25f,
+		-0.25f, 0.25f, -0.25f
 		};
+
 		// Create the vertex array object
 		glCreateVertexArrays(1, &m_vao);
-		// Allocate and initialize a buffer object
+		// Get create two buffers
 		glCreateBuffers(1, &m_buffer);
-		glNamedBufferStorage(m_buffer, sizeof(vertices), vertices, 0);
-		// Set up two vertex attributes - first positions
+		// Initialize the first buffer
+		glNamedBufferStorage(m_buffer, sizeof(vertex_positions), vertex_positions, 0);
+		// Bind it to the vertex array - offset zero, stride = sizeof(vec3)
+		int tmp = sizeof(Vector3);
+		// tmp == 12 ....
+		glVertexArrayVertexBuffer(m_vao, 0, m_buffer, 0, sizeof(Vector3));
+		// Tell OpenGL what the format of the attribute is
+		glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+		// Tell OpenGL which vertex buffer binding to use for this attribute
 		glVertexArrayAttribBinding(m_vao, 0, 0);
-		glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, x));
+		// Enable the attribute
 		glEnableVertexArrayAttrib(m_vao, 0);
-		// Now colors
-		glVertexArrayAttribBinding(m_vao, 1, 0);
-		glVertexArrayAttribFormat(m_vao, 1, 3, GL_FLOAT, GL_FALSE, offsetof(vertex, r));
-		glEnableVertexArrayAttrib(m_vao, 1);
-		// Finally, bind our one and only buffer to the vertex array object
-		glVertexArrayVertexBuffer(m_vao, 0, m_buffer, 0, sizeof(vertex));
+
+		
 	}
 
 	virtual void render(double currentTime)
@@ -115,23 +124,28 @@ public:
 		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 
+		Vector3 euler = Vector3(Mathf::Sin(m_accTime), 0, 0);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(euler), Vector3::one());
+		Vector3 cameraPos = Vector3(0, 0, -10);
+		Vector3 cameraEuler = Vector3::zero();
+		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
+		// camera worldToLocal
+		Matrix4x4 view = cameraLocalToWorld.inverse();
+		float aspect = (float)info.windowWidth / info.windowHeight;
+		float fov = 60;
+		float nearPlane = 0.3;
+		float farPlane = 1000;
+		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
+		Matrix4x4 mvp = project * view * model_localToWorld;
 		glUseProgram(m_rendering_program);
-		//glPointSize(10);
-
-// 		GLfloat attrib[] = { Mathf::Sin(m_accTime) * 0.5f,
-// 						Mathf::Cos(m_accTime) * 0.6f,
-// 						0.0f, 0.0f };
-// 
-// 		GLfloat attrib2[] = { Mathf::Sin(m_accTime) * 0.5f,
-// 				Mathf::Cos(m_accTime) * 0.6f,
-// 				0.0f, 0.0f };
-// 		// Update the value of input attribute 0
-// 		glVertexAttrib4fv(0, attrib);
-// 		glVertexAttrib4fv(1, attrib2);
-// 
+		GLuint mvpLocation = glGetUniformLocation(m_rendering_program, "mvp_matrix");
+		float mvpMatrixArray[16];
+		mvp.GetMatrixArray(mvpMatrixArray);
+		glUniformMatrix4fv(mvpLocation, 1, false, mvpMatrixArray);
+		
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		//glDrawArrays(m_vertex_array_object, )
 	}
 

@@ -8,6 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 
+// …Ë÷√À´∂•µ„ Ù–‘demo
 class Demo3 : public application
 {
 public:

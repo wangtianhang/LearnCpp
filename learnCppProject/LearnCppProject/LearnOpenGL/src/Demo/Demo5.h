@@ -8,6 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 
+// uniform demo
 class Demo5 : public application
 {
 public:

@@ -174,6 +174,7 @@
     <ClInclude Include="src\Demo\Demo2.h" />
     <ClInclude Include="src\Demo\Demo3.h" />
     <ClInclude Include="src\Demo\Demo4.h" />
+    <ClInclude Include="src\Demo\Demo5.h" />
     <ClInclude Include="src\Graphic\Color.h" />
     <ClInclude Include="src\GUtil\GUtil.h" />
     <ClInclude Include="src\IO\FileIO.h" />

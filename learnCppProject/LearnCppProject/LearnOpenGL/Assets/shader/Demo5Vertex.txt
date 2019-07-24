@@ -1,0 +1,19 @@
+#version 450 core
+uniform float xoffset;
+// 'offset' is an input vertex attribute
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 color;
+// Declare VS_OUT as an output interface block
+out VS_OUT
+{
+vec4 color; // Send color to the next stage
+} vs_out;
+void main(void)
+{
+vec4 tmpPosition = vec4(position, 1);
+tmpPosition.x = tmpPosition.x + xoffset;
+gl_Position = tmpPosition;
+// Output a fixed value for vs_color
+vec4 tmpColor = vec4(color, 1);
+vs_out.color = tmpColor;
+}

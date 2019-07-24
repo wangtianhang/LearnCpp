@@ -134,8 +134,8 @@ public:
 		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 
-		Vector3 euler = Vector3(Mathf::Sin(m_accTime) * 10, 0, 0);
-		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(euler), Vector3::one() * 2);
+		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-1, 0, 0), Quaternion::Euler(euler), Vector3::one() * 2);
 		Vector3 cameraPos = Vector3(0, 0, -10);
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
@@ -147,16 +147,21 @@ public:
 		float farPlane = 1000;
 		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
 		Matrix4x4 mvp = project * view * model_localToWorld;
+		//Matrix4x4 mvp = model_localToWorld * view * project;
 		glUseProgram(m_rendering_program);
 		GLuint mvpLocation = glGetUniformLocation(m_rendering_program, "mvp_matrix");
 		float mvpMatrixArray[16];
 		mvp.GetMatrixArray(mvpMatrixArray);
-		glUniformMatrix4fv(mvpLocation, 1, false, mvpMatrixArray);
+		glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
 		
+		//glDisable(GL_CULL_FACE);
+
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		//glDrawArrays(m_vertex_array_object, )
+
+		
 	}
 
 	virtual void shutdown()

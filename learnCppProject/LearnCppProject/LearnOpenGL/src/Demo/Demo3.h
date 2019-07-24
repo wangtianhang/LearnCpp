@@ -24,7 +24,7 @@ public:
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo2Vertex.txt");
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo3Vertex.txt");
 		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo1Pixel.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
@@ -38,12 +38,12 @@ public:
 
 	void TestBufferWithVAO()
 	{
-		static const GLfloat positions[] = { 0.25, -0.25, 0.5,1,
-		-0.25, -0.25, 0.5,1,
-		0.25, 0.25, 0.5,1  };
-		static const GLfloat colors[] = { 1,0,0,1,
-		0,1,0,1,
-		0,0,1,1};
+		static const GLfloat positions[] = { 0.25, -0.25, 0.5,
+		-0.25, -0.25, 0.5,
+		0.25, 0.25, 0.5 };
+		static const GLfloat colors[] = { 1,0,0,
+		0,1,0,
+		0,0,1};
 		// Create the vertex array object
 		glCreateVertexArrays(1, &m_vao);
 		// Get create two buffers
@@ -51,17 +51,19 @@ public:
 		// Initialize the first buffer
 		glNamedBufferStorage(m_buffer[0], sizeof(positions), positions, 0);
 		// Bind it to the vertex array - offset zero, stride = sizeof(vec3)
-		glVertexArrayVertexBuffer(m_vao, 0, m_buffer[0], 0, sizeof(Vector4));
+		int tmp = sizeof(Vector3); 
+		// tmp == 12 ....
+		glVertexArrayVertexBuffer(m_vao, 0, m_buffer[0], 0, sizeof(Vector3));
 		// Tell OpenGL what the format of the attribute is
-		glVertexArrayAttribFormat(m_vao, 0, sizeof(Vector4), GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
 		// Tell OpenGL which vertex buffer binding to use for this attribute
 		glVertexArrayAttribBinding(m_vao, 0, 0);
 		// Enable the attribute
 		glEnableVertexArrayAttrib(m_vao, 0);
 		// Perform similar initialization for the second buffer
 		glNamedBufferStorage(m_buffer[1], sizeof(colors), colors, 0);
-		glVertexArrayVertexBuffer(m_vao, 1, m_buffer[1], 0, sizeof(Vector4));
-		glVertexArrayAttribFormat(m_vao, 1, sizeof(Vector4), GL_FLOAT, GL_FALSE, 0);
+		glVertexArrayVertexBuffer(m_vao, 1, m_buffer[1], 0, sizeof(Vector3));
+		glVertexArrayAttribFormat(m_vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
 		glVertexArrayAttribBinding(m_vao, 1, 1);
 		glEnableVertexArrayAttrib(m_vao, 1);
 	}

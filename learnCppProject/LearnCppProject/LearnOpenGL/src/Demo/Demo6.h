@@ -10,7 +10,7 @@
 #include "../Learn3D/Matrix4x4.h"
 #include "../GL/GLUtil.h"
 
-// uniform demo
+// Õ∏ ”Õ∂”∞ demo
 class Demo6 : public application
 {
 public:

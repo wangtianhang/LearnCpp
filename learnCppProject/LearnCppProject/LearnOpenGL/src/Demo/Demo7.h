@@ -170,8 +170,8 @@ public:
 		static const GLfloat colors[] = { 1,0,0,
 		0,1,0,
 		0,0,1,
-		1,0,0,
 		0,1,0,
+		1,0,0,
 		0,0,1};
 
 		static const GLfloat uvs[] = {

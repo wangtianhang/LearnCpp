@@ -47,16 +47,29 @@ public:
 
 	void TestLoadTexture()
 	{
-		int width = 0;
-		int height = 0;
-		GLubyte * texture = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
-		if (texture == NULL)
+		int width = 124;
+		int height = 124;
+		//GLubyte * texture = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
+
+		GLubyte * data = (GLubyte*)malloc(width * height * 4);
+
+		for (int i = 0; i < width; ++i)
+		{
+			for (int j = 0; j < height; ++j)
+			{
+				int index = i * 124 + j;
+				data[index] = 128;
+			}
+		}
+
+		if (data == NULL)
 		{
 			return;
 		}
 		GUtil::Log("加载纹理成功");
 		int length = width * height * 4;
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_texture);
+		glGenTextures(1, &m_texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		// Specify the amount of storage we want to use for the texture
 		glTextureStorage2D(m_texture, // Texture object
 			1, // 1 mipmap level
@@ -69,9 +82,9 @@ public:
 			width, height, // 256 x 256 texels, replace entire image
 			GL_RGBA_INTEGER, // Four-channel data
 			GL_UNSIGNED_BYTE, // 每个分量的结构
-			texture); // Pointer to data
+			data); // Pointer to data
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
-		free(texture);
+		free(data);
 
 
 	}
@@ -243,9 +256,19 @@ public:
 // 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		GLuint unit = 0;
 		glUseProgram(m_rendering_program);
+
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		int location = glGetUniformLocation(m_rendering_program, "texture1");
+		glUniform1i(location, unit);
+
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
-		glUniform1i(glGetUniformLocation(m_rendering_program, "s"), unit);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// set texture filtering parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glBindVertexArray(m_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

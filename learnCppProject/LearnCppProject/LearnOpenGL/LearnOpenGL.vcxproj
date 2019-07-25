@@ -92,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>.\include;.\include\GL;.\extern\glfw-3.0.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\include;.\include\GL;.\extern\glfw-3.0.4\include;.\extern\zlib-1.2.11;.\extern\lpng1637;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -178,6 +178,7 @@
     <ClInclude Include="src\Demo\Demo6.h" />
     <ClInclude Include="src\GL\GLUtil.h" />
     <ClInclude Include="src\Graphic\Color.h" />
+    <ClInclude Include="src\Graphic\PNGHelper.h" />
     <ClInclude Include="src\GUtil\GUtil.h" />
     <ClInclude Include="src\IO\FileIO.h" />
     <ClInclude Include="src\Learn3D\Mathf.h" />

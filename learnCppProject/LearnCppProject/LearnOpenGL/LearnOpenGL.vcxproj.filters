@@ -147,6 +147,9 @@
     <ClInclude Include="src\GL\GLUtil.h">
       <Filter>源文件\src\GL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphic\PNGHelper.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

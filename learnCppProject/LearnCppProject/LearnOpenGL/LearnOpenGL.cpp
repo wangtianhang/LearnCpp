@@ -21,6 +21,7 @@
 #include "./src/Demo/Demo5.h"
 #include "./src/Demo/Demo6.h"
 #include "./src/Learn3D/Matrix4x4.h"
+#include "./src/Graphic/PNGHelper.h"
 
 // Derive my_application from sb7::application
 

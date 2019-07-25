@@ -27,6 +27,9 @@
 // Our one and only instance of DECLARE_MAIN
 //DECLARE_MAIN(my_application);
 
+#pragma comment(lib,"libpng16d.lib")
+#pragma comment(lib,"zlibd.lib")
+
 //my_application *app = 0;
 int CALLBACK WinMain(HINSTANCE hInstance, 
 	HINSTANCE hPrevInstance, 

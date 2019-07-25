@@ -11,6 +11,7 @@
 #include "../GL/GLUtil.h"
 #include "../Graphic/PNGHelper.h"
 #include "../GUtil/GUtil.h"
+#include "../../include/sb7ktx.h"
 
 // pngŒ∆¿Ì demo
 class Demo7 : public application
@@ -26,6 +27,8 @@ public:
 	GLuint m_vao;
 
 	GLuint m_texture;
+
+	GLuint m_texture2;
 
 	virtual void startup()
 	{
@@ -89,7 +92,7 @@ public:
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
 		free(data);
 
-
+		m_texture2 = sb7::ktx::file::load("./Assets/texture/tree.ktx");
 	}
 
 	void TestBufferWithVAO()
@@ -162,12 +165,12 @@ public:
 // 		// Enable the attribute
 // 		glEnableVertexArrayAttrib(m_vao, 0);
 
-		static const GLfloat positions[] = { 0.25, -0.25, 0.5,
-		-0.25, -0.25, 0.5,
-		0.25, 0.25, 0.5,
-		-0.25, -0.25, 0.5,
-		-0.25, 0.25, 0.5,
-		0.25, 0.25, 0.5
+		static const GLfloat positions[] = { 0.5, -0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		0.5, 0.5, 0.5,
+		-0.5, -0.5, 0.5,
+		-0.5, 0.5, 0.5,
+		0.5, 0.5, 0.5
 		};
 		static const GLfloat colors[] = { 1,0,0,
 		0,1,0,
@@ -264,7 +267,7 @@ public:
 
 
 		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, m_texture);
+		glBindTexture(GL_TEXTURE_2D, m_texture2);
 		int location = glGetUniformLocation(m_rendering_program, "texture1");
 		glUniform1i(location, 0);
 

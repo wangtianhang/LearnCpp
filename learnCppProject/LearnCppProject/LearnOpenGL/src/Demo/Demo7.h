@@ -30,6 +30,8 @@ public:
 
 	GLuint m_texture2;
 
+	GLuint m_texture3;
+
 	virtual void startup()
 	{
 		application::startup();
@@ -52,20 +54,24 @@ public:
 	{
 		int width = 124;
 		int height = 124;
-		//GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
-
-		GLubyte * data = (GLubyte*)malloc(width * height * 4);
- 		for (int i = 0; i < width; ++i)
- 		{
- 			for (int j = 0; j < height; ++j)
- 			{
- 				int index = (i * 124 + j) * 4;
- 				data[index] = 255;
-				data[index + 1] = 0;
-				data[index + 2] = 0;
-				data[index + 3] = 128;
- 			}
- 		}
+		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/battleFont.png", width, height);
+// 		int width, height;
+// 		bool hasAlpha;
+// 		char filename[] = "./Assets/texture/story_aiji_LG_cn.png";
+// 		GLubyte *data;
+// 		PNGHelper::loadPngImage(filename, width, height, hasAlpha, &data);
+// 		GLubyte * data = (GLubyte*)malloc(width * height * 4);
+//  		for (int i = 0; i < width; ++i)
+//  		{
+//  			for (int j = 0; j < height; ++j)
+//  			{
+//  				int index = (i * 124 + j) * 4;
+//  				data[index] = 255;
+// 				data[index + 1] = 0;
+// 				data[index + 2] = 0;
+// 				data[index + 3] = 128;
+//  			}
+//  		}
 
 		if (data == NULL)
 		{
@@ -88,11 +94,19 @@ public:
 // 			GL_RGBA_INTEGER, // Four-channel data
 // 			GL_UNSIGNED_BYTE, // 每个分量的结构
 // 			data); // Pointer to data
+		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glEnable(GL_TEXTURE_2D);
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
 		free(data);
 
 		m_texture2 = sb7::ktx::file::load("./Assets/texture/tree.ktx");
+
+		//m_texture3 = PNGHelper::ReadPngFile2("./Assets/texture/story_aiji_LG_cn.png", width, height);
 	}
 
 	void TestBufferWithVAO()
@@ -232,7 +246,7 @@ public:
 	void RenderUpdate(float delta)
 	{
 		// Simply clear the window with red
-		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		static const GLfloat white[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 
 // 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
@@ -260,6 +274,9 @@ public:
 // 		// 这种先bind再draw很蛋疼。。
 // 		glBindVertexArray(m_vao);
 // 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		GLuint unit = 0;
 		glUseProgram(m_rendering_program);
 
@@ -267,15 +284,15 @@ public:
 
 
 		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, m_texture2);
+		glBindTexture(GL_TEXTURE_2D, m_texture);
 		int location = glGetUniformLocation(m_rendering_program, "texture1");
 		glUniform1i(location, 0);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		// set texture filtering parameters
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		glBindVertexArray(m_vao);
 		glDrawArrays(GL_TRIANGLES, 0, 6);

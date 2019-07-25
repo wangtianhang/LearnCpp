@@ -5,10 +5,12 @@ in VS_OUT
 vec4 color; // Send color to the next stage
 vec2 uv;
 } fs_in;
+uniform sampler2D s;
 // Output to the framebuffer
 out vec4 color;
 void main(void)
 {
 // Simply assign the color we were given by the vertex shader to our output
-color = fs_in.color;
+//color = fs_in.color;
+color = texture2D(s,fs_in.uv);
 }

@@ -47,20 +47,22 @@ public:
 
 	void TestLoadTexture()
 	{
-		int width = 0;
-		int height = 0;
-		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
+		int width = 124;
+		int height = 124;
+		//GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
 
-		//GLubyte * data = (GLubyte*)malloc(width * height * 4);
-
-// 		for (int i = 0; i < width; ++i)
-// 		{
-// 			for (int j = 0; j < height; ++j)
-// 			{
-// 				int index = i * 124 + j;
-// 				data[index] = 128;
-// 			}
-// 		}
+		GLubyte * data = (GLubyte*)malloc(width * height * 4);
+ 		for (int i = 0; i < width; ++i)
+ 		{
+ 			for (int j = 0; j < height; ++j)
+ 			{
+ 				int index = (i * 124 + j) * 4;
+ 				data[index] = 255;
+				data[index + 1] = 0;
+				data[index + 2] = 0;
+				data[index + 3] = 128;
+ 			}
+ 		}
 
 		if (data == NULL)
 		{

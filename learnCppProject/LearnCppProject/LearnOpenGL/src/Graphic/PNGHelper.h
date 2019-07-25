@@ -146,6 +146,12 @@ public:
 		int height = 0;
 		bool isAlpha = false;
 		GLubyte * data = PNGHelper::ReadPngFile(filename, width, height, isAlpha);
+		if (data == NULL)
+		{
+			return 0;
+		}
+		std::string str = std::string("加载纹理成功") + std::string(filename);
+		GUtil::Log(str);
 		int size = isAlpha ? 4 : 3;
 		int length = width * height * size;
 		glGenTextures(1, &texture);

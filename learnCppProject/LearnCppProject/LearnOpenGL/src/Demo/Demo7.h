@@ -52,10 +52,10 @@ public:
 
 	void TestLoadTexture()
 	{
-		int width = 0;
-		int height = 0;
-		bool isAlpha = false;
-		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height, isAlpha);
+//		int width = 0;
+//		int height = 0;
+//		bool isAlpha = false;
+//		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height, isAlpha);
 		//GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/battleFont.png", width, height, isAlpha);
 // 		int width, height;
 // 		bool hasAlpha;
@@ -75,15 +75,15 @@ public:
 //  			}
 //  		}
 
-		if (data == NULL)
-		{
-			return;
-		}
-		GUtil::Log("加载纹理成功");
-		int size = isAlpha ? 4 : 3;
-		int length = width * height * size;
-		glGenTextures(1, &m_texture);
-		glBindTexture(GL_TEXTURE_2D, m_texture);
+// 		if (data == NULL)
+// 		{
+// 			return;
+// 		}
+// 		GUtil::Log("加载纹理成功");
+// 		int size = isAlpha ? 4 : 3;
+// 		int length = width * height * size;
+// 		glGenTextures(1, &m_texture);
+// 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		// Specify the amount of storage we want to use for the texture
 // 		glTextureStorage2D(m_texture, // Texture object
 // 			1, // 1 mipmap level
@@ -98,14 +98,16 @@ public:
 // 			GL_UNSIGNED_BYTE, // 每个分量的结构
 // 			data); // Pointer to data
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, isAlpha ? GL_RGBA : GL_RGB, width, height, 0, isAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
+		//glTexImage2D(GL_TEXTURE_2D, 0, isAlpha ? GL_RGBA : GL_RGB, width, height, 0, isAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		//glEnable(GL_TEXTURE_2D);
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
-		free(data);
+		//free(data);
+
+		m_texture = PNGHelper::LoadPngAsGLTexture("./Assets/texture/story_aiji_LG_cn.png");
 
 		m_texture2 = sb7::ktx::file::load("./Assets/texture/tree.ktx");
 

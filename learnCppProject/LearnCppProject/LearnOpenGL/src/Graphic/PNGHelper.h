@@ -10,7 +10,7 @@
 struct PNGHelper
 {
 public:
-	static GLubyte * ReadPngFile(const char * filename, int & width, int & height)
+	static GLubyte * ReadPngFile(const char * filename, int & width, int & height, bool & isAlpha)
 	{
 		unsigned char header[8];     //8
 		int k;   //用于循环
@@ -82,6 +82,7 @@ public:
 		width = png_get_image_width(png_ptr, info_ptr);
 		height = png_get_image_height(png_ptr, info_ptr);
 		color_type = png_get_color_type(png_ptr, info_ptr);
+		isAlpha = (color_type == PNG_COLOR_TYPE_RGBA);
 		//如果图片带有alpha通道就需要
 	   // if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
 
@@ -97,7 +98,10 @@ public:
 			fclose(fp);
 			return 0;
 		}
-		rgba = (GLubyte*)malloc(width * height * 4);
+
+		int size = isAlpha ? 4 : 3;
+
+		rgba = (GLubyte*)malloc(width * height * size);
 		//使用动态数组  设置长度
 		row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
 
@@ -113,17 +117,20 @@ public:
 		//读图片
 		png_read_image(png_ptr, row_pointers);
 
-		pos = (width * height * 4) - (4 * width);
+		pos = (width * height * size) - (size * width);
 		for (row = 0; row < height; row++)
 		{
-			for (col = 0; col < (4 * width); col += 4)
+			for (col = 0; col < (size * width); col += size)
 			{
 				rgba[pos++] = row_pointers[row][col];        // red
 				rgba[pos++] = row_pointers[row][col + 1];    // green
 				rgba[pos++] = row_pointers[row][col + 2];    // blue
-				rgba[pos++] = row_pointers[row][col + 3];    // alpha
+				if (isAlpha)
+				{
+					rgba[pos++] = row_pointers[row][col + 3];    // alpha
+				}
 			}
-			pos = (pos - (width * 4) * 2);
+			pos = (pos - (width * size) * 2);
 		}
 
 		//length = width * height * 4;
@@ -132,6 +139,22 @@ public:
 		return rgba;
 	}
 
+	static GLuint LoadPngAsGLTexture(const char * filename)
+	{
+		GLuint texture;
+		int width = 0;
+		int height = 0;
+		bool isAlpha = false;
+		GLubyte * data = PNGHelper::ReadPngFile(filename, width, height, isAlpha);
+		int size = isAlpha ? 4 : 3;
+		int length = width * height * size;
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, isAlpha ? GL_RGBA : GL_RGB, width, height, 0, isAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		free(data);
+		return texture;
+	}
 	
 // 	static bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 // 		png_structp png_ptr;

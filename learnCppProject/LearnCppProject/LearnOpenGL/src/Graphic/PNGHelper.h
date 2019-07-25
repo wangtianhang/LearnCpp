@@ -7,7 +7,7 @@
 struct PNGHelper
 {
 public:
-	static const GLubyte * ReadPngFile(const char * filename)
+	static const GLubyte * ReadPngFile(const char * filename, int & length)
 	{
 		unsigned char header[8];     //8
 		int k;   //”√”⁄—≠ª∑
@@ -123,6 +123,8 @@ public:
 			pos = (pos - (width * 4) * 2);
 		}
 
+		length = width * height * 4;
+		fclose(fp);
 		return rgba;
 	}
 };

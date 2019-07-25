@@ -14,14 +14,16 @@
 //#include "sb7.h"
 #include "./src/LearnOpengl/ApplicationBase.h"
 #include "./src/LearnOpengl/ShaderHelper.h"
+#include "./src/Learn3D/Matrix4x4.h"
+#include "./src/Graphic/PNGHelper.h"
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"
 #include "./src/Demo/Demo3.h"
 #include "./src/Demo/Demo4.h"
 #include "./src/Demo/Demo5.h"
 #include "./src/Demo/Demo6.h"
-#include "./src/Learn3D/Matrix4x4.h"
-#include "./src/Graphic/PNGHelper.h"
+#include "./src/Demo/Demo7.h"
+
 
 // Derive my_application from sb7::application
 
@@ -42,7 +44,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo6 *app = new Demo6;
+		Demo7 *app = new Demo7;
 		app->run(app);
 		delete app;
 	}                              

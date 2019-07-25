@@ -47,20 +47,20 @@ public:
 
 	void TestLoadTexture()
 	{
-		int width = 124;
-		int height = 124;
-		//GLubyte * texture = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
+		int width = 0;
+		int height = 0;
+		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
 
-		GLubyte * data = (GLubyte*)malloc(width * height * 4);
+		//GLubyte * data = (GLubyte*)malloc(width * height * 4);
 
-		for (int i = 0; i < width; ++i)
-		{
-			for (int j = 0; j < height; ++j)
-			{
-				int index = i * 124 + j;
-				data[index] = 128;
-			}
-		}
+// 		for (int i = 0; i < width; ++i)
+// 		{
+// 			for (int j = 0; j < height; ++j)
+// 			{
+// 				int index = i * 124 + j;
+// 				data[index] = 128;
+// 			}
+// 		}
 
 		if (data == NULL)
 		{
@@ -71,18 +71,19 @@ public:
 		glGenTextures(1, &m_texture);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
 		// Specify the amount of storage we want to use for the texture
-		glTextureStorage2D(m_texture, // Texture object
-			1, // 1 mipmap level
-			GL_RGBA8UI, // 32-bit floating-point RGBA data
-			width, height); // 256 x 256 texels
-		// Assume that "texture" is a 2D texture that we created earlier
-		glTextureSubImage2D(m_texture, // Texture object
-			0, // Level 0
-			0, 0, // Offset 0, 0
-			width, height, // 256 x 256 texels, replace entire image
-			GL_RGBA_INTEGER, // Four-channel data
-			GL_UNSIGNED_BYTE, // 每个分量的结构
-			data); // Pointer to data
+// 		glTextureStorage2D(m_texture, // Texture object
+// 			1, // 1 mipmap level
+// 			GL_RGBA8UI, // 32-bit floating-point RGBA data
+// 			width, height); // 256 x 256 texels
+// 		// Assume that "texture" is a 2D texture that we created earlier
+// 		glTextureSubImage2D(m_texture, // Texture object
+// 			0, // Level 0
+// 			0, 0, // Offset 0, 0
+// 			width, height, // 256 x 256 texels, replace entire image
+// 			GL_RGBA_INTEGER, // Four-channel data
+// 			GL_UNSIGNED_BYTE, // 每个分量的结构
+// 			data); // Pointer to data
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
 		free(data);
 
@@ -258,11 +259,12 @@ public:
 		glUseProgram(m_rendering_program);
 
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		int location = glGetUniformLocation(m_rendering_program, "texture1");
-		glUniform1i(location, unit);
+
 
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_texture);
+		int location = glGetUniformLocation(m_rendering_program, "texture1");
+		glUniform1i(location, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

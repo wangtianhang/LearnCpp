@@ -25,6 +25,8 @@ public:
 	GLuint m_buffer[2];
 	GLuint m_vao;
 
+	GLuint m_texture;
+
 	virtual void startup()
 	{
 		application::startup();
@@ -40,17 +42,36 @@ public:
 
 		TestBufferWithVAO();
 
-		LoadTexture();
+		TestLoadTexture();
 	}
 
-	void LoadTexture()
+	void TestLoadTexture()
 	{
-		int length = 0;
-		const GLubyte * texture = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", length);
-		if (texture != NULL)
+		int width = 0;
+		int height = 0;
+		GLubyte * texture = PNGHelper::ReadPngFile("./Assets/texture/story_aiji_LG_cn.png", width, height);
+		if (texture == NULL)
 		{
-			GUtil::Log("加载纹理成功");
+			return;
 		}
+		GUtil::Log("加载纹理成功");
+		int length = width * height * 4;
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_texture);
+		// Specify the amount of storage we want to use for the texture
+		glTextureStorage2D(m_texture, // Texture object
+			1, // 1 mipmap level
+			GL_RGBA8UI, // 32-bit floating-point RGBA data
+			width, height); // 256 x 256 texels
+		// Assume that "texture" is a 2D texture that we created earlier
+		glTextureSubImage2D(m_texture, // Texture object
+			0, // Level 0
+			0, 0, // Offset 0, 0
+			width, height, // 256 x 256 texels, replace entire image
+			GL_RGBA, // Four-channel data
+			GL_UNSIGNED_BYTE, // Floating-point data
+			texture); // Pointer to data
+		//glBindTexture(GL_TEXTURE_2D, m_texture);
+		free(texture);
 	}
 
 	void TestBufferWithVAO()

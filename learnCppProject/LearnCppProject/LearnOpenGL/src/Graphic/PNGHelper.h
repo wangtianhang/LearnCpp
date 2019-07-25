@@ -7,12 +7,12 @@
 struct PNGHelper
 {
 public:
-	static const GLubyte * ReadPngFile(const char * filename, int & length)
+	static GLubyte * ReadPngFile(const char * filename, int & width, int & height)
 	{
 		unsigned char header[8];     //8
 		int k;   //用于循环
 		GLuint textureID; //贴图名字
-		int width, height; //记录图片到宽和高
+		//int width, height; //记录图片到宽和高
 		png_byte color_type; //图片到类型（可能会用在是否是开启来通道）
 		png_byte bit_depth; //字节深度
 
@@ -123,8 +123,9 @@ public:
 			pos = (pos - (width * 4) * 2);
 		}
 
-		length = width * height * 4;
+		//length = width * height * 4;
 		fclose(fp);
+		free(row_pointers);
 		return rgba;
 	}
 };

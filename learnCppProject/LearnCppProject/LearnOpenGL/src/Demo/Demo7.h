@@ -30,7 +30,7 @@ public:
 
 	GLuint m_texture2;
 
-	GLuint m_texture3;
+	//GLuint m_texture3;
 
 	virtual void startup()
 	{
@@ -52,8 +52,8 @@ public:
 
 	void TestLoadTexture()
 	{
-		int width = 124;
-		int height = 124;
+		int width = 0;
+		int height = 0;
 		GLubyte * data = PNGHelper::ReadPngFile("./Assets/texture/battleFont.png", width, height);
 // 		int width, height;
 // 		bool hasAlpha;
@@ -96,9 +96,9 @@ public:
 // 			data); // Pointer to data
 		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		//glEnable(GL_TEXTURE_2D);
 		//glBindTexture(GL_TEXTURE_2D, m_texture);

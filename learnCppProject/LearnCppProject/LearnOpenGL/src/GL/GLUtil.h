@@ -12,6 +12,12 @@ struct GLUtil
 		Vector3 cameraPos, Vector3 cameraEuler, float fov, float aspect, float nearZ, float farZ);
 
 	static void SetMVP(int shaderProgramId, int mvpLocation, Matrix4x4 mvp);
+
+	// »­Ïß¿ò
+	static void SetDrawOutLine()
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 };
 
 

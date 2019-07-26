@@ -311,5 +311,6 @@ public:
 		glDeleteVertexArrays(1, &m_vao);
 		glDeleteBuffers(3, m_buffer);
 		glDeleteTextures(1, &m_texture);
+		glDeleteTextures(1, &m_texture2);
 	}
 };

@@ -177,6 +177,7 @@
     <ClInclude Include="src\Demo\Demo5.h" />
     <ClInclude Include="src\Demo\Demo6.h" />
     <ClInclude Include="src\Demo\Demo7.h" />
+    <ClInclude Include="src\Demo\Demo8.h" />
     <ClInclude Include="src\GL\GLUtil.h" />
     <ClInclude Include="src\Graphic\Color.h" />
     <ClInclude Include="src\Graphic\PNGHelper.h" />

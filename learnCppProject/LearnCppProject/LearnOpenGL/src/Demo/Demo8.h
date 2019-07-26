@@ -81,8 +81,8 @@ public:
 
 		static const GLushort vertex_indices[] =
 		{
-			1,2,3,
-			2,4,3
+			0,1,2,
+			1,3,2
 		};
 
 		// Create the vertex array object

@@ -36,95 +36,90 @@ public:
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo7Vertex.txt");
-		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo7Pixel.txt");
-
-		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
-		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
-		m_rendering_program = CreateShaderProgram(vertex, pixel, true, true);
-		//glCreateVertexArrays(1, &m_vertex_array_object);
-		//glBindVertexArray(m_vertex_array_object);
-
-		TestBufferWithVAO();
-
-		TestLoadTexture();
+// 		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo7Vertex.txt");
+// 		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo7Pixel.txt");
+// 
+// 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
+// 		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
+// 		m_rendering_program = CreateShaderProgram(vertex, pixel, true, true);
+// 
+// 		TestBufferWithVAO();
+// 
+ 		TestLoadTexture();
 	}
 
 	void TestLoadTexture()
 	{
 		m_texture = PNGHelper::LoadPngAsGLTexture("./Assets/texture/story_aiji_LG_cn.png");
-
-		//m_texture2 = sb7::ktx::file::load("./Assets/texture/tree.ktx");
-
 	}
 
-	void TestBufferWithVAO()
-	{
-		static const GLfloat vertex_positions[] = {
-			1, -1, 0.5,
-		-1, -1, 0.5,
-		1, 1, 0.5,
-		-1, 1, 0.5
-		};
-		static const GLfloat colors[] = {
-		1,0,0,
-		0,1,0,
-		0,0,1,
-		1,0,0 };
-
-		static const GLfloat uvs[] = {
-			1,0,
-			0,0,
-			1,1,
-			0,1
-		};
-
-		static const GLushort vertex_indices[] =
-		{
-			0,1,2,
-			1,3,2
-		};
-
-		// Create the vertex array object
-		glCreateVertexArrays(1, &m_vao);
-		glBindVertexArray(m_vao);
-
-		// Get create two buffers
-		glCreateBuffers(3, &m_buffer[0]);
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
-		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(vertex_positions),
-			vertex_positions,
-			GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-		glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
-		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(colors),
-			colors,
-			GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
-		glBufferData(GL_ARRAY_BUFFER,
-			sizeof(uvs),
-			uvs,
-			GL_STATIC_DRAW);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-		glEnableVertexAttribArray(2);
-
-
-		glGenBuffers(1, &m_index_buffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
-		int tmp2 = sizeof(vertex_indices);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-			tmp2,
-			vertex_indices,
-			GL_STATIC_DRAW);
-
-	}
+// 	void TestBufferWithVAO()
+// 	{
+// 		static const GLfloat vertex_positions[] = {
+// 			1, -1, 0.5,
+// 		-1, -1, 0.5,
+// 		1, 1, 0.5,
+// 		-1, 1, 0.5
+// 		};
+// 		static const GLfloat colors[] = {
+// 		1,0,0,
+// 		0,1,0,
+// 		0,0,1,
+// 		1,0,0 };
+// 
+// 		static const GLfloat uvs[] = {
+// 			1,0,
+// 			0,0,
+// 			1,1,
+// 			0,1
+// 		};
+// 
+// 		static const GLushort vertex_indices[] =
+// 		{
+// 			0,1,2,
+// 			1,3,2
+// 		};
+// 
+// 		// Create the vertex array object
+// 		glCreateVertexArrays(1, &m_vao);
+// 		glBindVertexArray(m_vao);
+// 
+// 		// Get create two buffers
+// 		glCreateBuffers(3, &m_buffer[0]);
+// 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
+// 		glBufferData(GL_ARRAY_BUFFER,
+// 			sizeof(vertex_positions),
+// 			vertex_positions,
+// 			GL_STATIC_DRAW);
+// 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+// 		glEnableVertexAttribArray(0);
+// 
+// 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
+// 		glBufferData(GL_ARRAY_BUFFER,
+// 			sizeof(colors),
+// 			colors,
+// 			GL_STATIC_DRAW);
+// 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+// 		glEnableVertexAttribArray(1);
+// 
+// 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
+// 		glBufferData(GL_ARRAY_BUFFER,
+// 			sizeof(uvs),
+// 			uvs,
+// 			GL_STATIC_DRAW);
+// 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+// 		glEnableVertexAttribArray(2);
+// 
+// 
+// 		glGenBuffers(1, &m_index_buffer);
+// 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
+// 		int tmp2 = sizeof(vertex_indices);
+// 		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+// 			tmp2,
+// 			vertex_indices,
+// 			GL_STATIC_DRAW);
+// 
+// 	}
 
 	virtual void render(double currentTime)
 	{
@@ -140,19 +135,34 @@ public:
 		static const GLfloat white[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		GLuint unit = 0;
-		glUseProgram(m_rendering_program);
+		//GLuint unit = 0;
+		//glUseProgram(m_rendering_program);
 
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, m_texture);
-		int location = glGetUniformLocation(m_rendering_program, "texture1");
-		glUniform1i(location, unit);
+		//glActiveTexture(GL_TEXTURE0 + unit);
+		//glBindTexture(GL_TEXTURE_2D, m_texture);
+		//int location = glGetUniformLocation(m_rendering_program, "texture1");
+		//glUniform1i(location, unit);
 
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		GLUtil::DrawTextureToScreen(m_texture);
+	}
+
+	void InitFbo()
+	{
+
+	}
+
+	void OpenFbo()
+	{
+
+	}
+
+	void CloseFbo()
+	{
+		
 	}
 
 	virtual void shutdown()

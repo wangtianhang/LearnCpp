@@ -110,7 +110,8 @@ struct GLUtil
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
-	static void DrawTexture(GLuint texture)
+	// œÚ∆¡ƒªª≠Œ∆¿Ì
+	static void DrawTextureToScreen(GLuint texture)
 	{
 		Init();
 

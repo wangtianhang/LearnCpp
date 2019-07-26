@@ -152,7 +152,7 @@ public:
 		glUniform1i(location, unit);
 
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		GLUtil::DrawTexture(m_texture);
+		GLUtil::DrawTextureToScreen(m_texture);
 	}
 
 	virtual void shutdown()

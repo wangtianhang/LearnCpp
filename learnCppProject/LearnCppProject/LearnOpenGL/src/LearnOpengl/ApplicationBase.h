@@ -252,9 +252,10 @@ public:
 		} flags;
 	};
 
-protected:
 	APPINFO     info;
 	static      application * app;
+protected:
+	
 	GLFWwindow* window;
 
 	static void glfw_onResize(GLFWwindow* window, int w, int h)

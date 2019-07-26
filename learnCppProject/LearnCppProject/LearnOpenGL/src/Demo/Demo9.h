@@ -61,10 +61,10 @@ public:
 	void TestBufferWithVAO()
 	{
 		static const GLfloat vertex_positions[] = {
-			0.5, -0.5, 0.5,
-		-0.5, -0.5, 0.5,
-		0.5, 0.5, 0.5,
-		-0.5, 0.5, 0.5
+			1, -1, 0.5,
+		-1, -1, 0.5,
+		1, 1, 0.5,
+		-1, 1, 0.5
 		};
 		static const GLfloat colors[] = {
 		1,0,0,
@@ -99,20 +99,6 @@ public:
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(0);
 
-
-		// Perform similar initialization for the second buffer
-//  		glNamedBufferStorage(m_buffer[1], sizeof(colors), colors, 0);
-//  		glVertexArrayVertexBuffer(m_vao, 1, m_buffer[1], 0, sizeof(Vector3));
-//  		glVertexArrayAttribFormat(m_vao, 1, 3, GL_FLOAT, GL_FALSE, 0);
-//  		glVertexArrayAttribBinding(m_vao, 1, 1);
-//  		glEnableVertexArrayAttrib(m_vao, 1);
-
-//  		glNamedBufferStorage(m_buffer[2], sizeof(uvs), uvs, 0);
-//  		int sizeofvector2 = 8;
-//  		glVertexArrayVertexBuffer(m_vao, 2, m_buffer[2], 0, sizeofvector2);
-//  		glVertexArrayAttribFormat(m_vao, 2, 2, GL_FLOAT, GL_FALSE, 0);
-//  		glVertexArrayAttribBinding(m_vao, 2, 2);
-//  		glEnableVertexArrayAttrib(m_vao, 2);
 		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
 		glBufferData(GL_ARRAY_BUFFER,
 			sizeof(colors),
@@ -165,9 +151,8 @@ public:
 		int location = glGetUniformLocation(m_rendering_program, "texture1");
 		glUniform1i(location, unit);
 
-		//glBindVertexArray(m_vao);
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		GLUtil::DrawTexture(m_texture);
 	}
 
 	virtual void shutdown()

@@ -2,6 +2,11 @@
 
 #include "./GLUtil.h"
 
+bool GLUtil::m_hasInit = false;
+GLuint GLUtil::m_drawTexture_program = 0;
+GLuint GLUtil::m_vao = 0;
+GLuint GLUtil::m_index_buffer = 0;
+GLuint GLUtil::m_buffer[3] = {0, 0, 0};
 
 Matrix4x4 GLUtil::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
 {

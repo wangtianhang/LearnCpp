@@ -111,11 +111,19 @@ struct GLUtil
 	}
 
 	// ÏòÆÁÄ»»­ÎÆÀí
-	static void DrawTextureToScreen(GLuint texture)
+// 	static void DrawTextureToScreen(GLuint texture)
+// 	{
+// 		Init();
+// 
+// 		//glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+// 		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+// 
+// 		DrawFullTexture(texture);
+// 	}
+
+	static void DrawFullTexture(GLuint texture)
 	{
 		Init();
-
-		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

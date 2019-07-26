@@ -147,7 +147,7 @@ public:
 		//glUniform1i(location, unit);
 
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-		GLUtil::DrawTextureToScreen(m_texture);
+		GLUtil::DrawFullTexture(m_texture);
 	}
 
 	void InitFbo()
@@ -157,12 +157,14 @@ public:
 
 	void OpenFbo()
 	{
-
+		// …Ë÷√viewPort
+		// bind fbo
 	}
 
 	void CloseFbo()
 	{
-		
+		// ª÷∏¥viewPort
+		// unbind fbo
 	}
 
 	virtual void shutdown()

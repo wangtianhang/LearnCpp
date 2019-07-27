@@ -7,6 +7,7 @@
 #include "../Learn3D/Mathf.h"
 #include "../Learn3D/Vector4.h"
 
+// …Ë÷√∂•µ„ Ù–‘≤‚ ‘
 class Demo2 : public application
 {
 public:

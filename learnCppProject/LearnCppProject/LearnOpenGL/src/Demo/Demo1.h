@@ -6,6 +6,7 @@
 #include "../IO/FileIO.h"
 #include "../Learn3D/Mathf.h"
 
+// øÚº‹≤‚ ‘
 class Demo1 : public application
 {
 public:

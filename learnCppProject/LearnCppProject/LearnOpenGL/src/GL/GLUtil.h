@@ -141,6 +141,8 @@ struct GLUtil
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
+
+
 		if (!isBlendEnable)
 		{
 			glDisable(GL_BLEND);

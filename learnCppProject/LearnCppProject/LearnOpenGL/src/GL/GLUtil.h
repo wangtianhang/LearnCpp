@@ -125,7 +125,10 @@ struct GLUtil
 	{
 		Init();
 
+		GLboolean isBlendEnable = false;
+		glGetBooleanv(GL_BLEND, &isBlendEnable);
 		glEnable(GL_BLEND);
+		//glGetBooleanv(GL_BLEND, &isBlendEnable);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		GLuint unit = 0;
@@ -137,6 +140,11 @@ struct GLUtil
 		glUniform1i(location, unit);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+		if (!isBlendEnable)
+		{
+			glDisable(GL_BLEND);
+		}
 	}
 };
 

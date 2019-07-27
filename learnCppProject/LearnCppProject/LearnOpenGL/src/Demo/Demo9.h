@@ -20,17 +20,21 @@ public:
 	// Our rendering function
 
 	double m_accTime = 0;
-	GLuint m_rendering_program = 0;
+	//GLuint m_rendering_program = 0;
 	//GLuint m_vertex_array_object = 0;
 
-	GLuint m_buffer[3];
-	GLuint m_vao;
+	//GLuint m_buffer[3];
+	//GLuint m_vao;
 
 	GLuint m_texture;
-	GLuint m_index_buffer;
+	//GLuint m_index_buffer;
 	//GLuint m_texture2;
 
 	//GLuint m_texture3;
+	GLuint          m_fbo;
+	GLuint          m_color_texture;
+	GLuint          m_depth_texture;
+	int m_fboSize = 512;
 
 	virtual void startup()
 	{
@@ -46,6 +50,8 @@ public:
 // 		TestBufferWithVAO();
 // 
  		TestLoadTexture();
+
+		InitFbo();
 	}
 
 	void TestLoadTexture()
@@ -147,34 +153,66 @@ public:
 		//glUniform1i(location, unit);
 
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		OpenFbo();
+
 		GLUtil::DrawFullTexture(m_texture);
+
+		CloseFbo();
+
+		GLUtil::DrawFullTexture(m_color_texture);
 	}
 
 	void InitFbo()
 	{
+		//int size = 512;
+		glGenFramebuffers(1, &m_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 
+		glGenTextures(1, &m_color_texture);
+		glBindTexture(GL_TEXTURE_2D, m_color_texture);
+		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, m_fboSize, m_fboSize);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glGenTextures(1, &m_depth_texture);
+		glBindTexture(GL_TEXTURE_2D, m_depth_texture);
+		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, m_fboSize, m_fboSize);
+
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_color_texture, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_texture, 0);
+
+		static const GLenum draw_buffers[] = { GL_COLOR_ATTACHMENT0 };
+		glDrawBuffers(1, draw_buffers);
 	}
 
 	void OpenFbo()
 	{
 		// ÉèÖÃviewPort
 		// bind fbo
+		glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
+		glViewport(0, 0, m_fboSize, m_fboSize);
+		static const GLfloat white[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		glClearBufferfv(GL_COLOR, 0, white);
+		glClearBufferfi(GL_DEPTH_STENCIL, 0, 1.0f, 0);
 	}
 
 	void CloseFbo()
 	{
 		// »Ö¸´viewPort
 		// unbind fbo
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
 	}
 
 	virtual void shutdown()
 	{
 		application::shutdown();
 
-		glDeleteProgram(m_rendering_program);
-		glDeleteVertexArrays(1, &m_vao);
-		glDeleteBuffers(3, m_buffer);
+		//glDeleteProgram(m_rendering_program);
+		//glDeleteVertexArrays(1, &m_vao);
+		//glDeleteBuffers(3, m_buffer);
 		glDeleteTextures(1, &m_texture);
-		glDeleteBuffers(1, &m_index_buffer);
+		//glDeleteBuffers(1, &m_index_buffer);
 	}
 };

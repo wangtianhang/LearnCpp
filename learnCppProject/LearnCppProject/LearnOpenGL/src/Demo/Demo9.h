@@ -215,4 +215,6 @@ public:
 		glDeleteTextures(1, &m_texture);
 		//glDeleteBuffers(1, &m_index_buffer);
 	}
+
+
 };

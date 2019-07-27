@@ -246,4 +246,16 @@ public:
 		glDeleteTextures(3, m_color_texture);
 		glDeleteTextures(1, &m_depth_texture);
 	}
+
+	virtual void onKey(int key, int action)
+	{
+		std::string keyStr = std::to_string(key);
+		std::string actionStr = std::to_string(action);
+		GUtil::Log("onKey key " + keyStr + " action " + actionStr);
+		if (key == GLFW_KEY_S && action == 1)
+		{
+			GLUtil::SaveScreen("screenShot");
+			GUtil::Log("save screen shot");
+		}
+	}
 };

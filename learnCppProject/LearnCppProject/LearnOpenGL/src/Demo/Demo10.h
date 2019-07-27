@@ -254,8 +254,8 @@ public:
 		GUtil::Log("onKey key " + keyStr + " action " + actionStr);
 		if (key == GLFW_KEY_S && action == 1)
 		{
-			GLUtil::SaveScreen("screenShot");
-			GUtil::Log("save screen shot");
+			//GLUtil::SaveScreen("screenShot");
+			//GUtil::Log("save screen shot");
 		}
 	}
 };

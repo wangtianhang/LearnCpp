@@ -8,10 +8,15 @@
 struct GLUtil 
 {
 	static bool m_hasInit;
+
 	static GLuint m_drawTexture_program;
+	static GLuint m_drawTexVao;
+	static GLuint m_drawTex_index_buffer;
+	static GLuint m_drawTex_buffer[3];
+
 	static GLuint m_vao;
+	static GLuint m_position_buffer;
 	static GLuint m_index_buffer;
-	static GLuint m_buffer[3];
 
 	static void Init()
 	{
@@ -22,6 +27,8 @@ struct GLUtil
 		m_hasInit = true;
 
 		InitDrawTextureData();
+
+		InitCubeData();
 	}
 
 	static void InitDrawTextureData()
@@ -56,12 +63,12 @@ struct GLUtil
 		};
 
 		// Create the vertex array object
-		glCreateVertexArrays(1, &m_vao);
-		glBindVertexArray(m_vao);
+		glCreateVertexArrays(1, &m_drawTexVao);
+		glBindVertexArray(m_drawTexVao);
 
 		// Get create two buffers
-		glCreateBuffers(3, &m_buffer[0]);
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[0]);
+		glCreateBuffers(3, &m_drawTex_buffer[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_drawTex_buffer[0]);
 		glBufferData(GL_ARRAY_BUFFER,
 			sizeof(vertex_positions),
 			vertex_positions,
@@ -69,7 +76,7 @@ struct GLUtil
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[1]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_drawTex_buffer[1]);
 		glBufferData(GL_ARRAY_BUFFER,
 			sizeof(colors),
 			colors,
@@ -77,7 +84,7 @@ struct GLUtil
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(1);
 
-		glBindBuffer(GL_ARRAY_BUFFER, m_buffer[2]);
+		glBindBuffer(GL_ARRAY_BUFFER, m_drawTex_buffer[2]);
 		glBufferData(GL_ARRAY_BUFFER,
 			sizeof(uvs),
 			uvs,
@@ -86,11 +93,63 @@ struct GLUtil
 		glEnableVertexAttribArray(2);
 
 
-		glGenBuffers(1, &m_index_buffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
+		glGenBuffers(1, &m_drawTex_index_buffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_drawTex_index_buffer);
 		int tmp2 = sizeof(vertex_indices);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
 			tmp2,
+			vertex_indices,
+			GL_STATIC_DRAW);
+	}
+
+	static void InitCubeData()
+	{
+		
+		glGenVertexArrays(1, &m_vao);
+		glBindVertexArray(m_vao);
+
+
+		static const GLushort vertex_indices[] =
+		{
+			0, 1, 2,
+			2, 1, 3,
+			2, 3, 4,
+			4, 3, 5,
+			4, 5, 6,
+			6, 5, 7,
+			6, 7, 0,
+			0, 7, 1,
+			6, 0, 2,
+			2, 4, 6,
+			7, 5, 3,
+			7, 3, 1
+		};
+
+		static const GLfloat vertex_positions[] =
+		{
+			-0.25f, -0.25f, -0.25f,
+			-0.25f,  0.25f, -0.25f,
+			 0.25f, -0.25f, -0.25f,
+			 0.25f,  0.25f, -0.25f,
+			 0.25f, -0.25f,  0.25f,
+			 0.25f,  0.25f,  0.25f,
+			-0.25f, -0.25f,  0.25f,
+			-0.25f,  0.25f,  0.25f,
+		};
+
+		glGenBuffers(1, &m_position_buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_position_buffer);
+		glBufferData(GL_ARRAY_BUFFER,
+			sizeof(vertex_positions),
+			vertex_positions,
+			GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+		glEnableVertexAttribArray(0);
+
+		glGenBuffers(1, &m_index_buffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+			sizeof(vertex_indices),
 			vertex_indices,
 			GL_STATIC_DRAW);
 	}
@@ -139,6 +198,7 @@ struct GLUtil
 		int location = glGetUniformLocation(m_drawTexture_program, "texture1");
 		glUniform1i(location, unit);
 
+		glBindVertexArray(m_drawTexVao);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
 
@@ -185,6 +245,11 @@ struct GLUtil
 		fwrite(data, data_size, 1, f_out);
 		fclose(f_out);
 		delete[] data;
+	}
+
+	static GLuint CreateCubeVAO()
+	{
+
 	}
 };
 

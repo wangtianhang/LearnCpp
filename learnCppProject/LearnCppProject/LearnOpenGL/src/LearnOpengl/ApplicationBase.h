@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <cstdlib>
 
+#include "../GL/GLUtil.h"
+
 GL3WglProc sb6GetProcAddress(const char * funcname);
 int sb6IsExtensionSupported(const char * extname);
 
@@ -121,6 +123,8 @@ public:
 			}
 		}
 
+		GLUtil::Init();
+
 		startup();
 
 		do
@@ -172,7 +176,7 @@ public:
 
 	virtual void shutdown()
 	{
-
+		GLUtil::UnInit();
 	}
 
 	void setWindowTitle(const char * title)

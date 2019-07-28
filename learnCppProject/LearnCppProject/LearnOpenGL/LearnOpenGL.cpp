@@ -45,13 +45,17 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 {
 	Matrix4x4::Test();
 
+	//GLUtil::Init();
+
 	int demoId = 1;
 	if (demoId == 1)
 	{
 		Demo11 *app = new Demo11;
 		app->run(app);
 		delete app;
-	}                              
+	}
+
+	//GLUtil::UnInit();
 	return 0;                                       
 }
 

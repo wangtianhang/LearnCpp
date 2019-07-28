@@ -165,6 +165,9 @@
     <ClInclude Include="src\Demo\Demo11.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\GL\MeshFiler.h">
+      <Filter>源文件\src\GL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

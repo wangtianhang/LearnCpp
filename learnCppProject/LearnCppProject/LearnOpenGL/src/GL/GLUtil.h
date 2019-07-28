@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Learn3D/Matrix4x4.h"
-#include "../LearnOpenGL/ApplicationBase.h"
+//#include "../LearnOpenGL/ApplicationBase.h"
 #include "../LearnOpenGL/ShaderHelper.h"
 #include "../IO/FileIO.h"
 
@@ -14,9 +14,9 @@ struct GLUtil
 	static GLuint m_drawTex_index_buffer;
 	static GLuint m_drawTex_buffer[3];
 
-	static GLuint m_vao;
-	static GLuint m_position_buffer;
-	static GLuint m_index_buffer;
+	static GLuint m_cubeVao;
+	static GLuint m_cube_Position_buffer;
+	static GLuint m_cube_index_buffer;
 
 	static void Init()
 	{
@@ -29,6 +29,11 @@ struct GLUtil
 		InitDrawTextureData();
 
 		InitCubeData();
+	}
+
+	static void UnInit()
+	{
+
 	}
 
 	static void InitDrawTextureData()
@@ -105,8 +110,8 @@ struct GLUtil
 	static void InitCubeData()
 	{
 		
-		glGenVertexArrays(1, &m_vao);
-		glBindVertexArray(m_vao);
+		glGenVertexArrays(1, &m_cubeVao);
+		glBindVertexArray(m_cubeVao);
 
 
 		static const GLushort vertex_indices[] =
@@ -137,8 +142,8 @@ struct GLUtil
 			-0.25f,  0.25f,  0.25f,
 		};
 
-		glGenBuffers(1, &m_position_buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_position_buffer);
+		glGenBuffers(1, &m_cube_Position_buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_cube_Position_buffer);
 		glBufferData(GL_ARRAY_BUFFER,
 			sizeof(vertex_positions),
 			vertex_positions,
@@ -146,8 +151,8 @@ struct GLUtil
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(0);
 
-		glGenBuffers(1, &m_index_buffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_index_buffer);
+		glGenBuffers(1, &m_cube_index_buffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cube_index_buffer);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
 			sizeof(vertex_indices),
 			vertex_indices,
@@ -182,7 +187,7 @@ struct GLUtil
 
 	static void DrawFullTexture(GLuint texture)
 	{
-		Init();
+		//Init();
 
 		GLboolean isBlendEnable = false;
 		glGetBooleanv(GL_BLEND, &isBlendEnable);
@@ -209,47 +214,11 @@ struct GLUtil
 		}
 	}
 
-	static void SaveScreen(std::string fileName)
-	{
-		int row_size = ((application::app->info.windowWidth * 3 + 3) & ~3);
-		int data_size = row_size * application::app->info.windowHeight;
-		unsigned char * data = new unsigned char[data_size];
-#pragma pack (push, 1)
-		struct
-		{
-			unsigned char identsize; // Size of following ID field
-			unsigned char cmaptype; // Color map type 0 = none
-			unsigned char imagetype; // Image type 2 = rgb
-			short cmapstart; // First entry in palette
-			short cmapsize; // Number of entries in palette
-			unsigned char cmapbpp; // Number of bits per palette entry
-			short xorigin; // X origin
-			short yorigin; // Y origin
-			short width; // Width in pixels
-			short height; // Height in pixels
-			unsigned char bpp; // Bits per pixel
-			unsigned char descriptor; // Descriptor bits
-		} tga_header;
-#pragma pack (pop)
-		glReadPixels(0, 0, // Origin
-			application::app->info.windowWidth, application::app->info.windowHeight, // Size
-			GL_BGR, GL_UNSIGNED_BYTE, // Format, type
-			data); // Data
-		memset(&tga_header, 0, sizeof(tga_header));
-		tga_header.imagetype = 2;
-		tga_header.width = (short)application::app->info.windowWidth;
-		tga_header.height = (short)application::app->info.windowHeight;
-		tga_header.bpp = 24;
-		FILE * f_out = fopen((fileName + ".tga").c_str(), "wb");
-		fwrite(&tga_header, sizeof(tga_header), 1, f_out);
-		fwrite(data, data_size, 1, f_out);
-		fclose(f_out);
-		delete[] data;
-	}
+	static void SaveScreen(std::string fileName);
 
 	static GLuint CreateCubeVAO()
 	{
-
+		return m_cubeVao;
 	}
 };
 

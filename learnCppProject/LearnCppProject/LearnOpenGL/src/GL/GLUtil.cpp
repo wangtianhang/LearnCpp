@@ -13,7 +13,21 @@ GLuint GLUtil::m_cubeVao = 0;
 
 GLuint GLUtil::m_cube_Position_buffer = 0;
 
+GLuint GLUtil::m_cube_uv_buffer = 0;
+
+GLuint GLUtil::m_cube_normal_buffer = 0;
+
 GLuint GLUtil::m_cube_index_buffer = 0;
+
+GLuint GLUtil::m_sphere_Vao = 0;
+
+GLuint GLUtil::m_sphere_Position_buffer = 0;
+
+GLuint GLUtil::m_sphere_uv_buffer = 0;
+
+GLuint GLUtil::m_sphere_normal_buffer = 0;
+
+GLuint GLUtil::m_sphere_index_buffer = 0;
 
 Matrix4x4 GLUtil::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
 {

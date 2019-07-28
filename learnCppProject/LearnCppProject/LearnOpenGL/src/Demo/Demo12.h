@@ -150,6 +150,8 @@ public:
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
+		//glEnable(GL_DEPTH_TEST);
+		//glDepthFunc(GL_LEQUAL);
 
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);

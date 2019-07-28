@@ -173,6 +173,7 @@
     <ClInclude Include="src\Demo\Demo10.h" />
     <ClInclude Include="src\Demo\Demo1.h" />
     <ClInclude Include="src\Demo\Demo11.h" />
+    <ClInclude Include="src\Demo\Demo12.h" />
     <ClInclude Include="src\Demo\Demo2.h" />
     <ClInclude Include="src\Demo\Demo3.h" />
     <ClInclude Include="src\Demo\Demo4.h" />

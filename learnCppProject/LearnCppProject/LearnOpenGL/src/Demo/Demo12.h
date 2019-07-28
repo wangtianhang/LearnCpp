@@ -126,7 +126,9 @@ public:
 	{
 		// Simply clear the window with red
 		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		static const GLfloat ones[] = { 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
+		glClearBufferfv(GL_DEPTH, 0, ones);
 
 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
 		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-1, 0, 0), Quaternion::Euler(euler), Vector3::one() * 2);
@@ -150,8 +152,8 @@ public:
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-		//glEnable(GL_DEPTH_TEST);
-		//glDepthFunc(GL_LEQUAL);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);

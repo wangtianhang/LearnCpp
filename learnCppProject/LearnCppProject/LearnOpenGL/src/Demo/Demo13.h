@@ -24,12 +24,15 @@ public:
 	GLuint m_vao;
 	int m_sphereDrawVertexCount = 0;
 
+	GLuint m_albedo = 0;
+	GLuint m_normal = 0;
+		
 	virtual void startup()
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
-		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo13Vertex.txt");
+		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo13Pixel.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
 		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
@@ -40,6 +43,9 @@ public:
 		//TestBufferWithVAO();
 
 		m_vao = GLUtil::CreateSphereVAO(m_sphereDrawVertexCount);
+
+		m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
+		m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 	}
 
 	virtual void render(double currentTime)
@@ -83,10 +89,10 @@ public:
 		mv.GetMatrixArray(mvMatrixArray);
 		glUniformMatrix4fv(mvLocation, 1, true, mvMatrixArray);
 
-		GLuint viewLocation = glGetUniformLocation(m_rendering_program, "view_matrix");
-		float viewMatrixArray[16];
-		view.GetMatrixArray(viewMatrixArray);
-		glUniformMatrix4fv(viewLocation, 1, true, viewMatrixArray);
+// 		GLuint viewLocation = glGetUniformLocation(m_rendering_program, "view_matrix");
+// 		float viewMatrixArray[16];
+// 		view.GetMatrixArray(viewMatrixArray);
+// 		glUniformMatrix4fv(viewLocation, 1, true, viewMatrixArray);
 
 		GLuint projLocation = glGetUniformLocation(m_rendering_program, "proj_matrix");
 		float projMatrixArray[16];
@@ -96,8 +102,18 @@ public:
 		//GLuint lightPosLocation = glGetUniformLocation(m_rendering_program, "light_pos");
 		//Vector3 mvLightPos = view.MultiplyPoint(Vector3(-20, 20, -20));
 		//glUniform3f(lightPosLocation, mvLightPos.x, mvLightPos.y, mvLightPos.z);
-		Vector3 test = mv.MultiplyPoint(Vector3(0, 0, 0));
+		//Vector3 test = mv.MultiplyPoint(Vector3(0, 0, 0));
+		GLuint unit = 0;
+		glActiveTexture(GL_TEXTURE0 + unit);
+		glBindTexture(GL_TEXTURE_2D, m_albedo);
+		int location = glGetUniformLocation(m_rendering_program, "tex_color");
+		glUniform1i(location, unit);
 
+		unit = 1;
+		glActiveTexture(GL_TEXTURE1 + unit);
+		glBindTexture(GL_TEXTURE_2D, m_normal);
+		int location2 = glGetUniformLocation(m_rendering_program, "tex_normal");
+		glUniform1i(location2, unit);
 
 		glEnable(GL_CULL_FACE);
 		// unityÄÚ²¿Ë³Ê±Õë
@@ -119,7 +135,7 @@ public:
 		application::shutdown();
 
 		glDeleteProgram(m_rendering_program);
-		glDeleteVertexArrays(1, &m_vao);
+		//glDeleteVertexArrays(1, &m_vao);
 		//glDeleteBuffers(1, &m_buffer);
 	}
 };

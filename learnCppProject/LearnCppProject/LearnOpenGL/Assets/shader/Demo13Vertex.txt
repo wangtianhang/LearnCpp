@@ -1,4 +1,4 @@
-#version 410 core
+#version 450 core
 
 layout (location = 0) in vec4 position;
 layout (location = 2) in vec2 texcoord;
@@ -20,7 +20,7 @@ out VS_OUT
 
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
-uniform vec3 light_pos = vec3(0.0, 0.0, 100.0);
+uniform vec3 light_pos = vec3(-20.0, 20.0, 20.0);
 
 void main(void)
 {

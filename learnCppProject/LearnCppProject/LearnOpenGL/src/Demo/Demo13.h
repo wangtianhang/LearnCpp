@@ -110,7 +110,7 @@ public:
 		glUniform1i(location, unit);
 
 		unit = 1;
-		glActiveTexture(GL_TEXTURE1 + unit);
+		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_normal);
 		int location2 = glGetUniformLocation(m_rendering_program, "tex_normal");
 		glUniform1i(location2, unit);
@@ -121,6 +121,9 @@ public:
 		glCullFace(GL_BACK);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);

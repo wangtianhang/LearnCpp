@@ -169,8 +169,11 @@ public:
 		//GLuint lightPosLocation = glGetUniformLocation(m_rendering_program, "light_pos");
 		//Vector3 mvLightPos = view.MultiplyPoint(Vector3(-20, 20, -20));
 		//glUniform3f(lightPosLocation, mvLightPos.x, mvLightPos.y, mvLightPos.z);
+		Vector3 test = mv.MultiplyPoint(Vector3(0, 0, 0));
+
 
 		glEnable(GL_CULL_FACE);
+		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);

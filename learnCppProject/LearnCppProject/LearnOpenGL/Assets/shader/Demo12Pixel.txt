@@ -33,5 +33,6 @@ void main(void)
     color = vec4(diffuse + specular, 1.0);
 	//color = vec4(N, 1);
 	//color = vec4(V, 1.0);
-	color = vec4(specular, 1);
+	//vec3 h2 = normalize(vec3(-20, 20, 40));
+	//color = vec4(nh, nh, nh, 1);
 }

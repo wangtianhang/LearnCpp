@@ -18,12 +18,14 @@ struct GLUtil
 	static GLuint m_cube_Position_buffer;
 	static GLuint m_cube_uv_buffer;
 	static GLuint m_cube_normal_buffer;
+	static GLuint m_cube_tangent_buffer;
 	static GLuint m_cube_index_buffer;
 
 	static GLuint m_sphere_Vao;
 	static GLuint m_sphere_Position_buffer;
 	static GLuint m_sphere_uv_buffer;
 	static GLuint m_sphere_normal_buffer;
+	static GLuint m_sphere_tangent_buffer;
 	static GLuint m_sphere_index_buffer;
 	static int m_sphereDrawVertexCount;
 
@@ -222,6 +224,33 @@ struct GLUtil
 			1, 0, 0
 		};
 
+		static const GLfloat vertex_tangents[] = {
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			-1,0,0,-1,
+			0,0,-1,-1,
+			0,0,-1,-1,
+			0,0,-1,-1,
+			0,0,-1,-1,
+			0,0,1,-1,
+			0,0,1,-1,
+			0,0,1,-1,
+			0,0,1,-1,
+		};
+
 		glGenVertexArrays(1, &m_cubeVao);
 		glBindVertexArray(m_cubeVao);
 
@@ -251,6 +280,15 @@ struct GLUtil
 			GL_STATIC_DRAW);
 		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 		glEnableVertexAttribArray(3);
+
+		glGenBuffers(1, &m_cube_tangent_buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_cube_tangent_buffer);
+		glBufferData(GL_ARRAY_BUFFER,
+			sizeof(vertex_tangents),
+			vertex_tangents,
+			GL_STATIC_DRAW);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+		glEnableVertexAttribArray(4);
 
 		glGenBuffers(1, &m_cube_index_buffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cube_index_buffer);

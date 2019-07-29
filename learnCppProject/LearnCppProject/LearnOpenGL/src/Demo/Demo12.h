@@ -134,7 +134,7 @@ public:
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
-		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-2, 2, 0), Quaternion::Euler(euler), Vector3::one() * 2);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 3);
 		Vector3 cameraPos = Vector3(0, 0, -10);
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
@@ -166,9 +166,9 @@ public:
 		project.GetMatrixArray(projMatrixArray);
 		glUniformMatrix4fv(projLocation, 1, true, projMatrixArray);
 
-		GLuint lightPosLocation = glGetUniformLocation(m_rendering_program, "light_pos");
-		Vector3 mvLightPos = mv.MultiplyPoint(Vector3(-20, 20, -20));
-		glUniform3f(lightPosLocation, mvLightPos.x, mvLightPos.y, mvLightPos.z);
+		//GLuint lightPosLocation = glGetUniformLocation(m_rendering_program, "light_pos");
+		//Vector3 mvLightPos = view.MultiplyPoint(Vector3(-20, 20, -20));
+		//glUniform3f(lightPosLocation, mvLightPos.x, mvLightPos.y, mvLightPos.z);
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);

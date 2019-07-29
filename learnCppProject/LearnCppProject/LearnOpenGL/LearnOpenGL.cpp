@@ -28,6 +28,7 @@
 #include "./src/Demo/Demo10.h"
 #include "./src/Demo/Demo11.h"
 #include "./src/Demo/Demo12.h"
+#include "./src/Demo/Demo13.h"
 
 
 // Derive my_application from sb7::application
@@ -51,7 +52,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo12 *app = new Demo12;
+		Demo13 *app = new Demo13;
 		app->run(app);
 		delete app;
 	}

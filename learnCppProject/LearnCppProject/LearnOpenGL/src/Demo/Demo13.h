@@ -10,8 +10,8 @@
 #include "../Learn3D/Matrix4x4.h"
 #include "../GL/GLUtil.h"
 
-// blinnphong demo
-class Demo12 : public application
+// normalmap demo
+class Demo13 : public application
 {
 public:
 	// Our rendering function
@@ -38,82 +38,9 @@ public:
 		//glBindVertexArray(m_vertex_array_object);
 
 		//TestBufferWithVAO();
-		
+
 		m_vao = GLUtil::CreateSphereVAO(m_sphereDrawVertexCount);
 	}
-
-// 	void TestBufferWithVAO()
-// 	{
-// 		static const GLfloat vertex_positions[] =
-// 		{
-// 			-0.25f,  0.25f, -0.25f,
-// 			-0.25f, -0.25f, -0.25f,
-// 			 0.25f, -0.25f, -0.25f,
-// 
-// 			 0.25f, -0.25f, -0.25f,
-// 			 0.25f,  0.25f, -0.25f,
-// 			-0.25f,  0.25f, -0.25f,
-// 
-// 			 0.25f, -0.25f, -0.25f,
-// 			 0.25f, -0.25f,  0.25f,
-// 			 0.25f,  0.25f, -0.25f,
-// 
-// 			 0.25f, -0.25f,  0.25f,
-// 			 0.25f,  0.25f,  0.25f,
-// 			 0.25f,  0.25f, -0.25f,
-// 
-// 			 0.25f, -0.25f,  0.25f,
-// 			-0.25f, -0.25f,  0.25f,
-// 			 0.25f,  0.25f,  0.25f,
-// 
-// 			-0.25f, -0.25f,  0.25f,
-// 			-0.25f,  0.25f,  0.25f,
-// 			 0.25f,  0.25f,  0.25f,
-// 
-// 			-0.25f, -0.25f,  0.25f,
-// 			-0.25f, -0.25f, -0.25f,
-// 			-0.25f,  0.25f,  0.25f,
-// 
-// 			-0.25f, -0.25f, -0.25f,
-// 			-0.25f,  0.25f, -0.25f,
-// 			-0.25f,  0.25f,  0.25f,
-// 
-// 			-0.25f, -0.25f,  0.25f,
-// 			 0.25f, -0.25f,  0.25f,
-// 			 0.25f, -0.25f, -0.25f,
-// 
-// 			 0.25f, -0.25f, -0.25f,
-// 			-0.25f, -0.25f, -0.25f,
-// 			-0.25f, -0.25f,  0.25f,
-// 
-// 			-0.25f,  0.25f, -0.25f,
-// 			 0.25f,  0.25f, -0.25f,
-// 			 0.25f,  0.25f,  0.25f,
-// 
-// 			 0.25f,  0.25f,  0.25f,
-// 			-0.25f,  0.25f,  0.25f,
-// 			-0.25f,  0.25f, -0.25f
-// 		};
-// 
-// 		// Create the vertex array object
-// 		glCreateVertexArrays(1, &m_vao);
-// 		// Get create two buffers
-// 		glCreateBuffers(1, &m_buffer);
-// 		// Initialize the first buffer
-// 		glNamedBufferStorage(m_buffer, sizeof(vertex_positions), vertex_positions, 0);
-// 		// Bind it to the vertex array - offset zero, stride = sizeof(vec3)
-// 		int tmp = sizeof(Vector3);
-// 		// tmp == 12 ....
-// 		glVertexArrayVertexBuffer(m_vao, 0, m_buffer, 0, sizeof(Vector3));
-// 		// Tell OpenGL what the format of the attribute is
-// 		glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
-// 		// Tell OpenGL which vertex buffer binding to use for this attribute
-// 		glVertexArrayAttribBinding(m_vao, 0, 0);
-// 		// Enable the attribute
-// 		glEnableVertexArrayAttrib(m_vao, 0);
-// 
-// 
-// 	}
 
 	virtual void render(double currentTime)
 	{
@@ -150,7 +77,7 @@ public:
 		//Matrix4x4 mvp = model_localToWorld * view * project;
 		glUseProgram(m_rendering_program);
 
-		
+
 		GLuint mvLocation = glGetUniformLocation(m_rendering_program, "mv_matrix");
 		float mvMatrixArray[16];
 		mv.GetMatrixArray(mvMatrixArray);

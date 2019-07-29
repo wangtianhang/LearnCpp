@@ -1,13 +1,14 @@
 #version 410 core
 
 layout (location = 0) in vec4 position;
-layout (location = 1) in vec3 normal;
-layout (location = 2) in vec3 tangent;
+layout (location = 2) in vec2 texcoord;
+layout (location = 3) in vec3 normal;
+layout (location = 4) in vec3 tangent;
 // Although the model file used in this example includes
 // a bitangent, we're not using it and will calculate our
 // own from the normal and tangent.
 // layout (location = 3) in vec3 bitangent;
-layout (location = 4) in vec2 texcoord;
+
 
 out VS_OUT
 {

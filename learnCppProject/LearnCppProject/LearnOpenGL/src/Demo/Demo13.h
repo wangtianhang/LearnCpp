@@ -61,7 +61,7 @@ public:
 	void RenderUpdate(float delta)
 	{
 		// Simply clear the window with red
-		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		static const GLfloat white[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 		static const GLfloat ones[] = { 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
@@ -110,7 +110,7 @@ public:
 		glUniform1i(location, unit);
 
 		unit = 1;
-		glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_normal);
 		int location2 = glGetUniformLocation(m_rendering_program, "tex_normal");
 		glUniform1i(location2, unit);
@@ -122,8 +122,8 @@ public:
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);

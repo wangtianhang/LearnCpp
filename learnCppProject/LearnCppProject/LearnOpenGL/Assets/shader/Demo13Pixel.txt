@@ -42,10 +42,12 @@ void main(void)
 
     // Final color is diffuse + specular
 	
-    color = vec4(diffuse + specular, 1.0);
+	// 感觉没有镜面光效果更好 先关掉
+    //color = vec4(diffuse + specular, 1.0);
+	color = vec4(diffuse, 1);
 	//color = vec4(0.3, 0.3, 0.3, 0) + vec4(diffuse, 1.0);
 	//color = vec4(texture(tex_normal, fs_in.texcoord).rgb, 1);
 	//color = vec4(fs_in.texcoord, 0, 1);
-	//color = vec4(diffuse, 1) * 5;
+	
 	//color = vec4(diffuse_albedo, 1);
 }

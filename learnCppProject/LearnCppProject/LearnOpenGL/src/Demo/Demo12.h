@@ -173,6 +173,7 @@ public:
 
 
 		glEnable(GL_CULL_FACE);
+		// unityÄÚ²¿Ë³Ê±Õë
 		glFrontFace(GL_CW);
 		glCullFace(GL_BACK);
 		glEnable(GL_DEPTH_TEST);

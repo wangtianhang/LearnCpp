@@ -14,7 +14,7 @@ in VS_OUT
 // Material properties
 uniform vec3 diffuse_albedo = vec3(0.5, 0.2, 0.7);
 uniform vec3 specular_albedo = vec3(0.7);
-uniform float specular_power = 200.0;
+uniform float specular_power = 30.0;
 
 void main(void)
 {
@@ -30,4 +30,6 @@ void main(void)
 
     // Write final color to the framebuffer
     color = vec4(diffuse + specular, 1.0);
+	//color = vec4(N, 1);
+	//color = vec4(V, 1.0);
 }

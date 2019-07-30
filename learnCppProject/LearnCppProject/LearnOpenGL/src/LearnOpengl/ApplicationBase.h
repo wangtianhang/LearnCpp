@@ -258,9 +258,10 @@ public:
 
 	APPINFO     info;
 	static      application * app;
+	GLFWwindow* window;
 protected:
 	
-	GLFWwindow* window;
+	
 
 	static void glfw_onResize(GLFWwindow* window, int w, int h)
 	{

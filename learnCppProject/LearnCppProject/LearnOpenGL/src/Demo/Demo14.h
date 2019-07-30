@@ -9,6 +9,7 @@
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
 #include "../GL/GLUtil.h"
+#include "../LearnOpenGL/Camera.h"
 
 // rimlight demo
 class Demo14 : public application
@@ -26,6 +27,11 @@ public:
 
 	GLuint m_albedo = 0;
 	GLuint m_normal = 0;
+
+	Camera m_camera;
+	bool m_firstMouse = true;
+	float m_lastX = 0;
+	float m_lastY = 0;
 
 	virtual void startup()
 	{
@@ -46,6 +52,9 @@ public:
 
 		m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
+
+		m_camera.Init(window);
+		m_camera.m_transform.SetPosition(Vector3(0, 0, -10));
 	}
 
 	virtual void render(double currentTime)
@@ -66,6 +75,7 @@ public:
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
+		//UpdateInput(delta);
 		
 		GLboolean isSRGBEnable = false;
 		glGetBooleanv(GL_BLEND, &isSRGBEnable);
@@ -73,11 +83,12 @@ public:
 
 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
 		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 5);
-		Vector3 cameraPos = Vector3(0, 0, -10);
-		Vector3 cameraEuler = Vector3(0 * 10, 0, 0);
-		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
+		//Vector3 cameraPos = Vector3(0, 0, -10);
+		//Vector3 cameraEuler = Vector3(0 * 10, 0, 0);
+		//Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
-		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+		//Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+		Matrix4x4 view = m_camera.GetViewMatrix();
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;
@@ -135,8 +146,31 @@ public:
 		glDrawElements(GL_TRIANGLES, m_sphereDrawVertexCount, GL_UNSIGNED_SHORT, 0);
 		//glDrawArrays(m_vertex_array_object, )
 
-
+		m_camera.Update(delta);
 	}
+
+// 	void UpdateInput(float deltaTime)
+// 	{
+// 
+// 	}
+
+// 	virtual void onMouseMove(int xpos, int ypos)
+// 	{
+// 		if (m_firstMouse)
+// 		{
+// 			m_lastX = xpos;
+// 			m_lastY = ypos;
+// 			m_firstMouse = false;
+// 		}
+// 
+// 		float xoffset = xpos - m_lastX;
+// 		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+// 
+// 		m_lastX = xpos;
+// 		m_lastY = ypos;
+// 
+// 		m_camera.ProcessMouseMovement(xoffset, yoffset);
+// 	}
 
 	virtual void shutdown()
 	{

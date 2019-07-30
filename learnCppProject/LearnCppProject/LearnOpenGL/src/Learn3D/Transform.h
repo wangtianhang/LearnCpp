@@ -241,7 +241,7 @@ public:
 		return GetRotation().eulerAngles();
 	}
 
-	Vector3 SetEulerAngles(Vector3 value)
+	void SetEulerAngles(Vector3 value)
 	{
 		SetRotation(Quaternion::Euler(value));
 	}

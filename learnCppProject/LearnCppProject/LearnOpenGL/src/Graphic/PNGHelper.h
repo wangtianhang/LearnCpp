@@ -164,6 +164,34 @@ public:
 		free(data);
 		return texture;
 	}
+
+	static GLuint LoadCubemap(std::vector<std::string> faces)
+	{
+		GLuint textureID;
+		glGenTextures(1, &textureID);
+
+		int width, height;
+		bool isAlpha = false;
+		unsigned char* image;
+
+		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+		for (GLuint i = 0; i < faces.size(); i++)
+		{
+			std::string iter = faces[i];
+			image = ReadPngFile(iter.c_str(), width, height, isAlpha);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+			free(image);
+		}
+
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+		return textureID;
+	}
 	
 // 	static bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 // 		png_structp png_ptr;
@@ -280,4 +308,6 @@ public:
 // 		/* That's it */
 // 		return true;
 // 	}
+
+
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "../Learn3D/Matrix4x4.h"
 //#include "../LearnOpenGL/ApplicationBase.h"
 #include "../LearnOpenGL/ShaderHelper.h"
@@ -369,6 +371,8 @@ struct GLUtil
 		drawVertexCount = m_sphereDrawVertexCount;
 		return m_sphere_Vao;
 	}
+
+
 };
 
 

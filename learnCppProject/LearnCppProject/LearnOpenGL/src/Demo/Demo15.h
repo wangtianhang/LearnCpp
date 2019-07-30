@@ -26,10 +26,10 @@ public:
 
 	//GLuint m_albedo = 0;
 	//GLuint m_normal = 0;
-	GLuint m_skyBoxCubemap = 0;
+	//GLuint m_skyBoxCubemap = 0;
 
-	GLuint m_skyBoxVao = 0;
-	GLuint m_skyBoxVbo = 0;
+	//GLuint m_skyBoxVao = 0;
+	//GLuint m_skyBoxVbo = 0;
 
 	virtual void startup()
 	{
@@ -142,68 +142,68 @@ public:
 
 	void InitSkyBox()
 	{
-		std::vector<std::string> facesList;
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_1_Right+X.png");
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_3_Left-X.png");
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_4_Top+Y.png");
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_5_Down-Y.png");
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_0_Front+Z.png");
-		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_2_Back-Z.png");
-		m_skyBoxCubemap = PNGHelper::LoadCubemap(facesList);
-
-		GLfloat skyboxVertices[] = {
-			// Positions          
-			-1.0f,  1.0f, -1.0f,
-			-1.0f, -1.0f, -1.0f,
-			 1.0f, -1.0f, -1.0f,
-			 1.0f, -1.0f, -1.0f,
-			 1.0f,  1.0f, -1.0f,
-			-1.0f,  1.0f, -1.0f,
-
-			-1.0f, -1.0f,  1.0f,
-			-1.0f, -1.0f, -1.0f,
-			-1.0f,  1.0f, -1.0f,
-			-1.0f,  1.0f, -1.0f,
-			-1.0f,  1.0f,  1.0f,
-			-1.0f, -1.0f,  1.0f,
-
-			 1.0f, -1.0f, -1.0f,
-			 1.0f, -1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			 1.0f,  1.0f, -1.0f,
-			 1.0f, -1.0f, -1.0f,
-
-			-1.0f, -1.0f,  1.0f,
-			-1.0f,  1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			 1.0f, -1.0f,  1.0f,
-			-1.0f, -1.0f,  1.0f,
-
-			-1.0f,  1.0f, -1.0f,
-			 1.0f,  1.0f, -1.0f,
-			 1.0f,  1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			-1.0f,  1.0f,  1.0f,
-			-1.0f,  1.0f, -1.0f,
-
-			-1.0f, -1.0f, -1.0f,
-			-1.0f, -1.0f,  1.0f,
-			 1.0f, -1.0f, -1.0f,
-			 1.0f, -1.0f, -1.0f,
-			-1.0f, -1.0f,  1.0f,
-			 1.0f, -1.0f,  1.0f
-		};
-
-		glGenVertexArrays(1, &m_skyBoxVao);
-		glGenBuffers(1, &m_skyBoxVbo);
-		glBindVertexArray(m_skyBoxVao);
-		glBindBuffer(GL_ARRAY_BUFFER, m_skyBoxVbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-		glBindVertexArray(0);
+// 		std::vector<std::string> facesList;
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_1_Right+X.png");
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_3_Left-X.png");
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_4_Top+Y.png");
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_5_Down-Y.png");
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_0_Front+Z.png");
+// 		facesList.push_back("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_2_Back-Z.png");
+// 		m_skyBoxCubemap = PNGHelper::LoadCubemap(facesList);
+// 
+// 		GLfloat skyboxVertices[] = {
+// 			// Positions          
+// 			-1.0f,  1.0f, -1.0f,
+// 			-1.0f, -1.0f, -1.0f,
+// 			 1.0f, -1.0f, -1.0f,
+// 			 1.0f, -1.0f, -1.0f,
+// 			 1.0f,  1.0f, -1.0f,
+// 			-1.0f,  1.0f, -1.0f,
+// 
+// 			-1.0f, -1.0f,  1.0f,
+// 			-1.0f, -1.0f, -1.0f,
+// 			-1.0f,  1.0f, -1.0f,
+// 			-1.0f,  1.0f, -1.0f,
+// 			-1.0f,  1.0f,  1.0f,
+// 			-1.0f, -1.0f,  1.0f,
+// 
+// 			 1.0f, -1.0f, -1.0f,
+// 			 1.0f, -1.0f,  1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			 1.0f,  1.0f, -1.0f,
+// 			 1.0f, -1.0f, -1.0f,
+// 
+// 			-1.0f, -1.0f,  1.0f,
+// 			-1.0f,  1.0f,  1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			 1.0f, -1.0f,  1.0f,
+// 			-1.0f, -1.0f,  1.0f,
+// 
+// 			-1.0f,  1.0f, -1.0f,
+// 			 1.0f,  1.0f, -1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			 1.0f,  1.0f,  1.0f,
+// 			-1.0f,  1.0f,  1.0f,
+// 			-1.0f,  1.0f, -1.0f,
+// 
+// 			-1.0f, -1.0f, -1.0f,
+// 			-1.0f, -1.0f,  1.0f,
+// 			 1.0f, -1.0f, -1.0f,
+// 			 1.0f, -1.0f, -1.0f,
+// 			-1.0f, -1.0f,  1.0f,
+// 			 1.0f, -1.0f,  1.0f
+// 		};
+// 
+// 		glGenVertexArrays(1, &m_skyBoxVao);
+// 		glGenBuffers(1, &m_skyBoxVbo);
+// 		glBindVertexArray(m_skyBoxVao);
+// 		glBindBuffer(GL_ARRAY_BUFFER, m_skyBoxVbo);
+// 		glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+// 		glEnableVertexAttribArray(0);
+// 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+// 		glBindVertexArray(0);
 
 	}
 
@@ -214,50 +214,50 @@ public:
 
 	void DrawSkyBox()
 	{
-		glDepthMask(GL_FALSE);
-		glDisable(GL_DEPTH_TEST);
-
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-		glFrontFace(GL_CW);
-
-		glUseProgram(m_rendering_program);
-
-		Vector3 cameraPos = Vector3(0, 0, 0);
-		//Vector3 cameraEuler = Vector3(0, -m_accTime * 10, 0);
-		//Vector3 cameraEuler = Vector3(-m_accTime * 10, 0, 0);
-		Vector3 cameraEuler = Vector3(0, 0, 0);
-		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
-		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
-		// 移除位移分量
-		view = Matrix4x4::RemoveTranslationComponent(view);
-
-		float aspect = (float)info.windowWidth / info.windowHeight;
-		float fov = 60;
-		float nearPlane = 0.3;
-		float farPlane = 1000;
-		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
-
-		Vector3 test = view.MultiplyPoint(Vector3(-1, 1, 1));
-		Matrix4x4 pv = project * view;
-		Vector3 test2 = pv.MultiplyPoint(Vector3(-1, 1, 1));
-
-		float viewArray[16];
-		float projectArray[16];
-		view.GetMatrixArray(viewArray);
-		project.GetMatrixArray(projectArray);
-		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "view"), 1, true, viewArray);
-		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "projection"), 1, true, projectArray);
-
-		glBindVertexArray(GLUtil::CreateCubeVAO());
-		glActiveTexture(GL_TEXTURE0);
-		glUniform1i(glGetUniformLocation(m_rendering_program, "skybox"), 0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_skyBoxCubemap);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
-
-		glBindVertexArray(0);
-		glDepthMask(GL_TRUE);
+// 		glDepthMask(GL_FALSE);
+// 		glDisable(GL_DEPTH_TEST);
+// 
+// 		glEnable(GL_CULL_FACE);
+// 		glCullFace(GL_FRONT);
+// 		glFrontFace(GL_CW);
+// 
+// 		glUseProgram(m_rendering_program);
+// 
+// 		Vector3 cameraPos = Vector3(0, 0, 0);
+// 		Vector3 cameraEuler = Vector3(0, -m_accTime * 10, 0);
+// 		//Vector3 cameraEuler = Vector3(-m_accTime * 10, 0, 0);
+// 		//Vector3 cameraEuler = Vector3(0, 0, 0);
+// 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
+// 		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+// 		// 移除位移分量
+// 		view = Matrix4x4::RemoveTranslationComponent(view);
+// 
+// 		float aspect = (float)info.windowWidth / info.windowHeight;
+// 		float fov = 60;
+// 		float nearPlane = 0.3;
+// 		float farPlane = 1000;
+// 		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
+// 
+// 		Vector3 test = view.MultiplyPoint(Vector3(-1, 1, 1));
+// 		Matrix4x4 pv = project * view;
+// 		Vector3 test2 = pv.MultiplyPoint(Vector3(-1, 1, 1));
+// 
+// 		float viewArray[16];
+// 		float projectArray[16];
+// 		view.GetMatrixArray(viewArray);
+// 		project.GetMatrixArray(projectArray);
+// 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "view"), 1, true, viewArray);
+// 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "projection"), 1, true, projectArray);
+// 
+// 		glBindVertexArray(GLUtil::CreateCubeVAO());
+// 		glActiveTexture(GL_TEXTURE0);
+// 		glUniform1i(glGetUniformLocation(m_rendering_program, "skybox"), 0);
+// 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_skyBoxCubemap);
+// 		//glDrawArrays(GL_TRIANGLES, 0, 36);
+// 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
+// 
+// 		glBindVertexArray(0);
+// 		glDepthMask(GL_TRUE);
 	}
 
 	virtual void shutdown()

@@ -160,21 +160,35 @@ public:
 
 	virtual void onMouseMove(int xpos, int ypos)
 	{
-		if (m_firstMouse)
-		{
-			m_lastX = xpos;
-			m_lastY = ypos;
-			m_firstMouse = false;
-		}
-
-		float xoffset = xpos - m_lastX;
-		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-		m_lastX = xpos;
-		m_lastY = ypos;
-
-		m_camera.ProcessMouseMovement(xoffset, yoffset, m_cacheDelta);
+// 		if (m_firstMouse)
+// 		{
+// 			m_lastX = xpos;
+// 			m_lastY = ypos;
+// 			m_firstMouse = false;
+// 		}
+// 
+// 		float xoffset = xpos - m_lastX;
+// 		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+// 
+// 		m_lastX = xpos;
+// 		m_lastY = ypos;
+// 
+// 		m_camera.ProcessMouseMovement(xoffset, yoffset, m_cacheDelta);
+		m_camera.onMouseMove(xpos, ypos);
  	}
+
+	virtual void onMouseButton(int button, int action)
+	{
+		GUtil::Log("onMouseButton " + std::to_string(button) + " action " + std::to_string(action));
+		if (button == GLFW_MOUSE_BUTTON_1 && action == 1)
+		{
+			m_camera.OnMouseDown();
+		}
+		else if (button == GLFW_MOUSE_BUTTON_1 && action == 0)
+		{
+			m_camera.OnMouseUp();
+		}
+	}
 
 	virtual void shutdown()
 	{

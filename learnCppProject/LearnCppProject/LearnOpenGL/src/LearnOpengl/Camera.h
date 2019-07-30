@@ -26,19 +26,59 @@ public:
 	GLFWwindow* m_window = NULL;
 	void Init(GLFWwindow* window);
 
+	bool m_pressDownMouseBtn = false;
+
+	bool m_firstMouse = true;
+	float m_lastX = 0;
+	float m_lastY = 0;
+
 	Matrix4x4 GetViewMatrix()
 	{
 		return GLUtil::worldToCameraMatrix(m_transform.GetLocalToWorldMatrix());
 	}
 
-	void ProcessMouseMovement(float xoffset, float yoffset, float delta, GLboolean constrainPitch = true)
+	void onMouseMove(int xpos, int ypos)
+	{
+		if (!m_pressDownMouseBtn)
+		{
+			return;
+		}
+
+		if (m_firstMouse)
+		{
+			m_lastX = xpos;
+			m_lastY = ypos;
+			m_firstMouse = false;
+		}
+
+		float xoffset = xpos - m_lastX;
+		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+		m_lastX = xpos;
+		m_lastY = ypos;
+
+		ProcessMouseMovement(xoffset, yoffset);
+	}
+
+	void OnMouseDown()
+	{
+		m_pressDownMouseBtn = true;
+	}
+
+	void OnMouseUp()
+	{
+		m_pressDownMouseBtn = false;
+		m_firstMouse = true;
+	}
+
+	void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
 	{
 		xoffset *= m_MouseSensitivity;
 		yoffset *= m_MouseSensitivity;
 
 		Vector3 euler = NormalizeAngles(m_transform.GetLocalEulerAngles());
 		euler.y += xoffset;
-		euler.x += yoffset;
+		euler.x -= yoffset;
 
 		// Make sure that when pitch is out of bounds, screen doesn't get flipped
 		if (constrainPitch)

@@ -224,7 +224,7 @@ public:
 		glUseProgram(m_rendering_program);
 
 		Vector3 cameraPos = Vector3(0, 0, -10);
-		Vector3 cameraEuler = Vector3::zero();
+		Vector3 cameraEuler = Vector3(0, -m_accTime * 10, 0);
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
 		// ÒÆ³ýÎ»ÒÆ·ÖÁ¿

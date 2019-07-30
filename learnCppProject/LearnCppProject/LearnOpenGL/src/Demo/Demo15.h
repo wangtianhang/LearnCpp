@@ -197,7 +197,7 @@ public:
 		};
 
 		glGenVertexArrays(1, &m_skyBoxVao);
-		glGenBuffers(1, &m_skyBoxVao);
+		glGenBuffers(1, &m_skyBoxVbo);
 		glBindVertexArray(m_skyBoxVao);
 		glBindBuffer(GL_ARRAY_BUFFER, m_skyBoxVbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
@@ -218,7 +218,7 @@ public:
 		glDisable(GL_DEPTH_TEST);
 
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+		glCullFace(GL_FRONT);
 		glFrontFace(GL_CCW);
 
 		glUseProgram(m_rendering_program);

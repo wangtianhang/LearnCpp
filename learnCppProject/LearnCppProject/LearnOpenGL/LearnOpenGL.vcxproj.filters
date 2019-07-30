@@ -180,6 +180,9 @@
     <ClInclude Include="src\GL\Obj.h">
       <Filter>源文件\src\GL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Learn3D\Transform.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

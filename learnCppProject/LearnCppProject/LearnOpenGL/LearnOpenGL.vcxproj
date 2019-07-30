@@ -196,6 +196,7 @@
     <ClInclude Include="src\Learn3D\Matrix4x4.h" />
     <ClInclude Include="src\Learn3D\Quaternion.h" />
     <ClInclude Include="src\Learn3D\Test3DMath.h" />
+    <ClInclude Include="src\Learn3D\Transform.h" />
     <ClInclude Include="src\Learn3D\Vector3.h" />
     <ClInclude Include="src\Learn3D\Vector4.h" />
     <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />

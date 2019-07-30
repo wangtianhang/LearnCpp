@@ -50,6 +50,8 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 {
 	Matrix4x4::Test();
 
+	Transform::Test();
+
 	//GLUtil::Init();
 
 	int demoId = 1;

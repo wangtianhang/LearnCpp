@@ -5,6 +5,7 @@
 #include "./Vector3.h"
 #include "./Quaternion.h"
 #include "./Matrix4x4.h"
+#include "../GUtil/GUtil.h"
 
 class Transform
 {
@@ -25,6 +26,33 @@ public:
 
 	Vector3 m_worldPosition;
 	bool m_isWorldPositionNeedUpdate = true;
+
+	static Vector3 NormalizeAngles(Vector3 angles)
+	{
+		angles.x = NormalizeAngle(angles.x);
+		angles.y = NormalizeAngle(angles.y);
+		angles.z = NormalizeAngle(angles.z);
+		return angles;
+	}
+
+	static float NormalizeAngle(float angle)
+	{
+		while (angle > 180)
+			angle -= 360;
+		while (angle < -180)
+			angle += 360;
+		return angle;
+	}
+
+	static void Test()
+	{
+		Transform test;
+		Vector3 euler = Vector3(-87.729256, 0.000000, 0.000000);
+		GUtil::Log(euler.toString());
+		test.SetEulerAngles(euler);
+		Vector3 euler2 = NormalizeAngles(test.GetEulerAngles());
+		GUtil::Log(euler2.toString());
+	}
 
 	Vector3 GetPosition()
 	{

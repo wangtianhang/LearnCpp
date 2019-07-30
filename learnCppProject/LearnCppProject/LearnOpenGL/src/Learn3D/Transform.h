@@ -4,7 +4,7 @@
 
 #include "./Vector3.h"
 #include "./Quaternion.h"
-
+#include "./Matrix4x4.h"
 
 class Transform
 {
@@ -342,7 +342,7 @@ public:
 		return matrix;
 	}
 
-	Matrix4x4 GetLocalToWorld()
+	Matrix4x4 GetLocalToWorldMatrix()
 	{
 		return GetSelfTransform();
 	}

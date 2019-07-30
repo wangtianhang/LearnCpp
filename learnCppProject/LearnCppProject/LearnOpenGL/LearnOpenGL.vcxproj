@@ -199,6 +199,7 @@
     <ClInclude Include="src\Learn3D\Transform.h" />
     <ClInclude Include="src\Learn3D\Vector3.h" />
     <ClInclude Include="src\Learn3D\Vector4.h" />
+    <ClInclude Include="src\LearnOpengl\Camera.h" />
     <ClInclude Include="src\LearnOpengl\ShaderHelper.h" />
     <ClInclude Include="src\LearnOpengl\ApplicationBase.h" />
   </ItemGroup>
@@ -218,6 +219,7 @@
     <ClCompile Include="src\Learn3D\Test3DMath.cpp" />
     <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\Learn3D\Vector4.cpp" />
+    <ClCompile Include="src\LearnOpengl\Camera.cpp" />
     <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp" />
     <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />

@@ -183,6 +183,9 @@
     <ClInclude Include="src\Learn3D\Transform.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\LearnOpengl\Camera.h">
+      <Filter>源文件\src\LearnOpengl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="src\GL\GLUtil.cpp">
       <Filter>源文件\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LearnOpengl\Camera.cpp">
+      <Filter>源文件\src\LearnOpengl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

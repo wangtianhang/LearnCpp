@@ -33,6 +33,8 @@ public:
 	float m_lastX = 0;
 	float m_lastY = 0;
 
+	float m_cacheDelta = 0;
+
 	virtual void startup()
 	{
 		application::startup();
@@ -147,6 +149,8 @@ public:
 		//glDrawArrays(m_vertex_array_object, )
 
 		m_camera.Update(delta);
+
+		m_cacheDelta = delta;
 	}
 
 // 	void UpdateInput(float deltaTime)
@@ -154,23 +158,23 @@ public:
 // 
 // 	}
 
-// 	virtual void onMouseMove(int xpos, int ypos)
-// 	{
-// 		if (m_firstMouse)
-// 		{
-// 			m_lastX = xpos;
-// 			m_lastY = ypos;
-// 			m_firstMouse = false;
-// 		}
-// 
-// 		float xoffset = xpos - m_lastX;
-// 		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
-// 
-// 		m_lastX = xpos;
-// 		m_lastY = ypos;
-// 
-// 		m_camera.ProcessMouseMovement(xoffset, yoffset);
-// 	}
+	virtual void onMouseMove(int xpos, int ypos)
+	{
+		if (m_firstMouse)
+		{
+			m_lastX = xpos;
+			m_lastY = ypos;
+			m_firstMouse = false;
+		}
+
+		float xoffset = xpos - m_lastX;
+		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+		m_lastX = xpos;
+		m_lastY = ypos;
+
+		m_camera.ProcessMouseMovement(xoffset, yoffset, m_cacheDelta);
+ 	}
 
 	virtual void shutdown()
 	{

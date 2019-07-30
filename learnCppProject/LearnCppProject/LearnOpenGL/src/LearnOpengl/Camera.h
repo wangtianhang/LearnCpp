@@ -31,28 +31,28 @@ public:
 		return GLUtil::worldToCameraMatrix(m_transform.GetLocalToWorldMatrix());
 	}
 
-//	void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
-//	{
-// 		xoffset *= m_MouseSensitivity;
-// 		yoffset *= m_MouseSensitivity;
-// 
-// 		Vector3 euler = m_transform.GetLocalEulerAngles();
-// 		euler.y += xoffset;
-// 		euler.x += yoffset;
-// 		
-// 		// Make sure that when pitch is out of bounds, screen doesn't get flipped
-// 		if (constrainPitch)
-// 		{
-// 			if (euler.x > 89.0f)
-// 				euler.x = 89.0f;
-// 			if (euler.x < -89.0f)
-// 				euler.x = -89.0f;
-// 		}
-// 		m_transform.SetLocalEulerAngles(euler);
+	void ProcessMouseMovement(float xoffset, float yoffset, float delta, GLboolean constrainPitch = true)
+	{
+		xoffset *= m_MouseSensitivity;
+		yoffset *= m_MouseSensitivity;
+
+		Vector3 euler = NormalizeAngles(m_transform.GetLocalEulerAngles());
+		euler.y += xoffset;
+		euler.x += yoffset;
+
+		// Make sure that when pitch is out of bounds, screen doesn't get flipped
+		if (constrainPitch)
+		{
+			if (euler.x > 89.0f)
+				euler.x = 89.0f;
+			if (euler.x < -89.0f)
+				euler.x = -89.0f;
+		}
+		m_transform.SetLocalEulerAngles(euler);
 
 		// Update Front, Right and Up Vectors using the updated Euler angles
 		//updateCameraVectors();
-//	}
+	}
 
 	void ProcessKeyboard(Camera_Movement direction, float deltaTime)
 	{

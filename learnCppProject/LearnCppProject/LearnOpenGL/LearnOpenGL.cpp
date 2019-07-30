@@ -16,6 +16,7 @@
 #include "./src/LearnOpengl/ShaderHelper.h"
 #include "./src/Learn3D/Matrix4x4.h"
 #include "./src/Graphic/PNGHelper.h"
+#include "./src/GL/Obj.h"
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"
 #include "./src/Demo/Demo3.h"

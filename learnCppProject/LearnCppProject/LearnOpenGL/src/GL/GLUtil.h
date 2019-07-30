@@ -372,7 +372,10 @@ struct GLUtil
 		return m_sphere_Vao;
 	}
 
-
+	static void UseLinearSpace()
+	{
+		glDisable(GL_FRAMEBUFFER_SRGB);
+	}
 };
 
 

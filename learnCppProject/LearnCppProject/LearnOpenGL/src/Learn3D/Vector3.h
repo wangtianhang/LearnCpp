@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "./Mathf.h"
 
 struct Vector3
@@ -25,6 +26,11 @@ public:
 
 		float g = 2;
 		Vector3 h = g * Vector3::one();
+	}
+
+	std::string toString()
+	{
+		return "(" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + ")";
 	}
 
 	float x;

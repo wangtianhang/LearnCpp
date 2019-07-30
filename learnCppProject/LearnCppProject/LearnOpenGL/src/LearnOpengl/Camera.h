@@ -4,6 +4,7 @@
 #include "../Learn3D/Matrix4x4.h"
 #include "../GL/GLUtil.h"
 #include "GLFW/glfw3.h"
+#include "../GUtil/GUtil.h"
 
 enum Camera_Movement {
 	FORWARD,
@@ -66,6 +67,23 @@ public:
 			m_transform.SetPosition(m_transform.GetPosition() + m_transform.GetRight() * velocity);
 	}
 
+	Vector3 NormalizeAngles(Vector3 angles)
+	{
+		angles.x = NormalizeAngle(angles.x);
+		angles.y = NormalizeAngle(angles.y);
+		angles.z = NormalizeAngle(angles.z);
+		return angles;
+	}
+
+	float NormalizeAngle(float angle)
+	{
+		while (angle > 180)
+			angle -= 360;
+		while (angle < -180)
+			angle += 360;
+		return angle;
+	}
+
 	void Update(float deltaTime)
 	{
 		if (glfwGetKey(m_window, GLFW_KEY_W) == GLFW_PRESS)
@@ -78,29 +96,49 @@ public:
 			ProcessKeyboard(RIGHT, deltaTime);
 
 		
+		Vector3 euler = m_transform.GetEulerAngles();
+		Vector3 normalEuler = NormalizeAngles(euler);
 		if (glfwGetKey(m_window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
-			Vector3 euler = m_transform.GetEulerAngles();
-			euler.y -= m_rotateSpeed * deltaTime;
-			m_transform.SetEulerAngles(euler);
+			normalEuler.y -= m_rotateSpeed * deltaTime;
+
+			GUtil::Log("normalEuler " + normalEuler.toString());
+			m_transform.SetEulerAngles(normalEuler);
 		}
 		if (glfwGetKey(m_window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			Vector3 euler = m_transform.GetEulerAngles();
-			euler.y += m_rotateSpeed * deltaTime;
-			m_transform.SetEulerAngles(euler);
+			//Vector3 euler = m_transform.GetEulerAngles();
+			normalEuler.y += m_rotateSpeed * deltaTime;
+
+			//m_transform.SetEulerAngles(euler);
+			GUtil::Log("normalEuler " + normalEuler.toString());
+			m_transform.SetEulerAngles(normalEuler);
 		}
 		if (glfwGetKey(m_window, GLFW_KEY_UP) == GLFW_PRESS)
 		{
-			Vector3 euler = m_transform.GetEulerAngles();
-			euler.x -= m_rotateSpeed * deltaTime;
-			m_transform.SetEulerAngles(euler);
+			//Vector3 euler = m_transform.GetEulerAngles();
+			normalEuler.x -= m_rotateSpeed * deltaTime;
+			//m_transform.SetEulerAngles(euler);
+			if (normalEuler.x < -89)
+			{
+				normalEuler.x = -89;
+			}
+			GUtil::Log("normalEuler1 " + normalEuler.toString());
+			m_transform.SetEulerAngles(normalEuler);
+			GUtil::Log("normalEuler2 " + NormalizeAngles(m_transform.GetEulerAngles()).toString());
 		}
 		if (glfwGetKey(m_window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
-			Vector3 euler = m_transform.GetEulerAngles();
-			euler.x += m_rotateSpeed * deltaTime;
-			m_transform.SetEulerAngles(euler);
+			//Vector3 euler = m_transform.GetEulerAngles();
+			normalEuler.x += m_rotateSpeed * deltaTime;
+			//m_transform.SetEulerAngles(euler);
+			if (normalEuler.x > 89)
+			{
+				normalEuler.x = 89;
+			}
+			GUtil::Log("normalEuler " + normalEuler.toString());
+			m_transform.SetEulerAngles(normalEuler);
 		}
+
 	}
 };

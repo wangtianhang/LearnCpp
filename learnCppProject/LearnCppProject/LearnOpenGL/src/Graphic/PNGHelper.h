@@ -10,7 +10,8 @@
 struct PNGHelper
 {
 public:
-	static GLubyte * ReadPngFile(const char * filename, int & width, int & height, bool & isAlpha)
+	// 默认不应该rotatey
+	static GLubyte * ReadPngFile(const char * filename, bool rotateY, int & width, int & height, bool & isAlpha)
 	{
 		unsigned char header[8];     //8
 		int k;   //用于循环
@@ -118,19 +119,39 @@ public:
 		png_read_image(png_ptr, row_pointers);
 
 		pos = (width * height * size) - (size * width);
-		for (row = 0; row < height; row++)
+		if (rotateY)
 		{
-			for (col = 0; col < (size * width); col += size)
+			for (row = height - 1; row >= 0; row--)
 			{
-				rgba[pos++] = row_pointers[row][col];        // red
-				rgba[pos++] = row_pointers[row][col + 1];    // green
-				rgba[pos++] = row_pointers[row][col + 2];    // blue
-				if (isAlpha)
+				for (col = 0; col < (size * width); col += size)
 				{
-					rgba[pos++] = row_pointers[row][col + 3];    // alpha
+					rgba[pos++] = row_pointers[row][col];        // red
+					rgba[pos++] = row_pointers[row][col + 1];    // green
+					rgba[pos++] = row_pointers[row][col + 2];    // blue
+					if (isAlpha)
+					{
+						rgba[pos++] = row_pointers[row][col + 3];    // alpha
+					}
 				}
+				pos = (pos - (width * size) * 2);
 			}
-			pos = (pos - (width * size) * 2);
+		}
+		else
+		{
+			for (row = 0; row < height; row++)
+			{
+				for (col = 0; col < (size * width); col += size)
+				{
+					rgba[pos++] = row_pointers[row][col];        // red
+					rgba[pos++] = row_pointers[row][col + 1];    // green
+					rgba[pos++] = row_pointers[row][col + 2];    // blue
+					if (isAlpha)
+					{
+						rgba[pos++] = row_pointers[row][col + 3];    // alpha
+					}
+				}
+				pos = (pos - (width * size) * 2);
+			}
 		}
 
 		//length = width * height * 4;
@@ -139,13 +160,13 @@ public:
 		return rgba;
 	}
 
-	static GLuint LoadPngAsGLTexture(const char * filename)
+	static GLuint LoadPngAsGLTexture(const char * filename, bool rotateY = false)
 	{
 		GLuint texture;
 		int width = 0;
 		int height = 0;
 		bool isAlpha = false;
-		GLubyte * data = PNGHelper::ReadPngFile(filename, width, height, isAlpha);
+		GLubyte * data = PNGHelper::ReadPngFile(filename, rotateY, width, height, isAlpha);
 		if (data == NULL)
 		{
 			return 0;
@@ -165,33 +186,34 @@ public:
 		return texture;
 	}
 
-// 	static GLuint LoadCubemap(std::vector<std::string> faces)
-// 	{
-// 		GLuint textureID;
-// 		glGenTextures(1, &textureID);
-// 
-// 		int width, height;
-// 		bool isAlpha = false;
-// 		unsigned char* image;
-// 
-// 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
-// 		for (GLuint i = 0; i < faces.size(); i++)
-// 		{
-// 			std::string iter = faces[i];
-// 			image = ReadPngFile(iter.c_str(), width, height, isAlpha);
-// 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-// 			free(image);
-// 		}
-// 
-// 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-// 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-// 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-// 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-// 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-// 		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-// 
-// 		return textureID;
-// 	}
+	static GLuint LoadCubemap(std::vector<std::string> faces)
+	{
+		GLuint textureID;
+		glGenTextures(1, &textureID);
+
+		int width, height;
+		bool isAlpha = false;
+		unsigned char* image;
+
+		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+		for (GLuint i = 0; i < faces.size(); i++)
+		{
+			std::string iter = faces[i];
+			// 不知道这里为什么必须翻转下图片y才行
+			image = ReadPngFile(iter.c_str(), true, width, height, isAlpha);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+			free(image);
+		}
+
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+		return textureID;
+ 	}
 	
 // 	static bool loadPngImage(char *name, int &outWidth, int &outHeight, bool &outHasAlpha, GLubyte **outData) {
 // 		png_structp png_ptr;

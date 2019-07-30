@@ -5,7 +5,7 @@ layout (location = 2) in vec2 texcoord;
 out VS_OUT
 {
     vec3 texcoord;
-	vec2 texcoord2;
+	//vec2 texcoord2;
 } vs_out;
 
 uniform mat4 projection;
@@ -14,7 +14,7 @@ uniform mat4 view;
 void main()
 {
     vs_out.texcoord = aPos;
-	vs_out.texcoord2 = texcoord;
+	//vs_out.texcoord2 = texcoord;
     vec4 pos = projection * view * vec4(aPos, 1.0);
     gl_Position = pos.xyww;
 }  

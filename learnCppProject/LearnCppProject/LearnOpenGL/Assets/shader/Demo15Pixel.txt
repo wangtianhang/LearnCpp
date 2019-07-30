@@ -4,23 +4,24 @@ out vec4 FragColor;
 in VS_OUT
 {
     vec3 texcoord;
-	vec2 texcoord2;
+	//vec2 texcoord2;
 } vs_out;
 
 uniform samplerCube skybox;
 
 void main()
 {    
-	vec3 tmp = vec3(vs_out.texcoord2.x, vs_out.texcoord2.y, 0.1);
+	//vec3 tmp = vec3(vs_out.texcoord2.x, vs_out.texcoord2.y, 0.1);
 	//vec3 tmp2 = vec3(0, 0, 1);
     //FragColor = texture(skybox, tmp2);
 	//FragColor = vec4(vs_out.texcoord2, 0, 1);
-	FragColor = vec4(normalize(vs_out.texcoord), 1);
-	if(vs_out.texcoord.y > 0
-	&& vs_out.texcoord.z > 0
-	&& vs_out.texcoord.x > 0)
+	//FragColor = vec4(normalize(vs_out.texcoord), 1);
+	FragColor = texture(skybox, vs_out.texcoord);
+	//if(vs_out.texcoord.y > 0
+	//&& vs_out.texcoord.z > 0
+	//&& vs_out.texcoord.x > 0)
 	{
-		FragColor = vec4(1, 0, 0, 1);
-		FragColor = texture(skybox, vs_out.texcoord);
+		//FragColor = vec4(1, 0, 0, 1);
+		//FragColor = texture(skybox, vs_out.texcoord);
 	}
 }

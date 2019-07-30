@@ -107,7 +107,7 @@ public:
 		//glBindTexture(GL_TEXTURE_2D, m_texture);
 		//free(data);
 
-		m_texture = PNGHelper::LoadPngAsGLTexture("./Assets/texture/story_aiji_LG_cn.png");
+		m_texture = PNGHelper::LoadPngAsGLTexture("./Assets/texture/skybox/Sky_Day Sun High ClearHazy_Cam_0_Front+Z.png");
 
 		m_texture2 = sb7::ktx::file::load("./Assets/texture/tree.ktx");
 

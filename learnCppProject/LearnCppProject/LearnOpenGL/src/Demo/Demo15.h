@@ -219,12 +219,14 @@ public:
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_FRONT);
-		glFrontFace(GL_CCW);
+		glFrontFace(GL_CW);
 
 		glUseProgram(m_rendering_program);
 
-		Vector3 cameraPos = Vector3(0, 0, -10);
-		Vector3 cameraEuler = Vector3(0, -m_accTime * 10, 0);
+		Vector3 cameraPos = Vector3(0, 0, 0);
+		//Vector3 cameraEuler = Vector3(0, -m_accTime * 10, 0);
+		//Vector3 cameraEuler = Vector3(-m_accTime * 10, 0, 0);
+		Vector3 cameraEuler = Vector3(0, 0, 0);
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
 		// ÒÆ³ýÎ»ÒÆ·ÖÁ¿
@@ -236,6 +238,10 @@ public:
 		float farPlane = 1000;
 		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
 
+		Vector3 test = view.MultiplyPoint(Vector3(-1, 1, 1));
+		Matrix4x4 pv = project * view;
+		Vector3 test2 = pv.MultiplyPoint(Vector3(-1, 1, 1));
+
 		float viewArray[16];
 		float projectArray[16];
 		view.GetMatrixArray(viewArray);
@@ -243,11 +249,12 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "view"), 1, true, viewArray);
 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "projection"), 1, true, projectArray);
 
-		glBindVertexArray(m_skyBoxVao);
+		glBindVertexArray(GLUtil::CreateCubeVAO());
 		glActiveTexture(GL_TEXTURE0);
 		glUniform1i(glGetUniformLocation(m_rendering_program, "skybox"), 0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_skyBoxCubemap);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
 
 		glBindVertexArray(0);
 		glDepthMask(GL_TRUE);

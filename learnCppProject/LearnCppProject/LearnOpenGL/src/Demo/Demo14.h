@@ -69,7 +69,7 @@ public:
 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
 		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 5);
 		Vector3 cameraPos = Vector3(0, 0, -10);
-		Vector3 cameraEuler = Vector3::zero();
+		Vector3 cameraEuler = Vector3(-m_accTime * 10, 0, 0);
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
 		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);

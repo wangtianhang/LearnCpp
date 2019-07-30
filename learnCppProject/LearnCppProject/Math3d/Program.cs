@@ -30,8 +30,11 @@ namespace Math3d
         {
             UnityEngine.Matrix4x4.Test();
 
+            Vector3 euler0 = new Vector3(-86, 0.000000f, 0.000000f);
+            Quaternion qua0 = Quaternion.Euler(euler0);
             Vector3 euler = new Vector3(-88, 0.000000f, 0.000000f);
             Quaternion qua = Quaternion.Euler(euler);
+            Vector3 euler4 = qua0.eulerAngles;
             Vector3 euler3 = qua.eulerAngles;
             Debug.Log(NormalizeAngles(euler3));
 

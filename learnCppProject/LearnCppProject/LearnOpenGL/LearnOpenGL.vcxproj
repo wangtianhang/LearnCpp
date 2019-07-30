@@ -23,7 +23,7 @@
     <ProjectGuid>{491A2FC1-B9A9-4D13-A240-E6832F4A1604}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LearnOpenGL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -177,6 +177,7 @@
     <ClInclude Include="src\Demo\Demo12.h" />
     <ClInclude Include="src\Demo\Demo13.h" />
     <ClInclude Include="src\Demo\Demo14.h" />
+    <ClInclude Include="src\Demo\Demo15.h" />
     <ClInclude Include="src\Demo\Demo2.h" />
     <ClInclude Include="src\Demo\Demo3.h" />
     <ClInclude Include="src\Demo\Demo4.h" />

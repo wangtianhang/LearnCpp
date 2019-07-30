@@ -21,7 +21,9 @@ public:
 	GLenum m_cullFaceType = GL_BACK;
 	GLenum m_frontFace = GL_CW;
 
+	bool m_useOutProgram = false;
 	GLuint m_renderProgram = 0;
+	GLuint m_outProgram = 0;
 
 	void InitShader(std::string vertexShader, std::string pixelShader)
 	{

@@ -669,4 +669,20 @@ public:
 	}
 	// ==================½áÊøÇóÄæ====================================
 #pragma endregion
+
+	static Matrix4x4 Ortho(float left, float right, float bottom, float top, float zNear, float zFar)
+	{
+		Matrix4x4 ret = Matrix4x4::zero();
+		ret[3, 3] = 1;
+
+		ret[0, 0] = 2 / (right - left);
+		ret[1, 1] = 2 / (top - bottom);
+		ret[2, 2] = -2 / (zFar - zNear);
+
+		ret[0, 3] = -(right + left) / (right - left);
+		ret[1, 3] = -(top + bottom) / (top - bottom);
+		ret[2, 3] = -(zFar + zNear) / (zFar - zNear);
+
+		return ret;
+	}
 };

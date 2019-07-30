@@ -475,6 +475,15 @@ public:
 		return ret;
 	}
 
+	// ÒÆ³ıTranslation·ÖÁ¿
+	static Matrix4x4 RemoveTranslationComponent(Matrix4x4 input)
+	{
+		input.m03 = 0;
+		input.m13 = 0;
+		input.m23 = 0;
+		return input;
+	}
+
 	void GetMatrixArray(float matrixArray[16])
 	{
 		matrixArray[0] = m00;

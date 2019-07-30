@@ -27,6 +27,21 @@ public:
 	Vector3 m_worldPosition;
 	bool m_isWorldPositionNeedUpdate = true;
 
+	static void Test()
+	{
+		Transform test;
+		//Vector3 euler = Vector3(-87.729256, 0.000000, 0.000000);
+		Vector3 euler = Vector3(-88, 0.000000, 0.000000);
+		GUtil::Log(euler.toString());
+		test.SetEulerAngles(euler);
+		Vector3 euler2 = NormalizeAngles(test.GetEulerAngles());
+		GUtil::Log(euler2.toString());
+
+		Quaternion qua = Quaternion::Euler(euler);
+		Vector3 euler3 = qua.eulerAngles();
+		GUtil::Log(NormalizeAngles(euler3).toString());
+	}
+
 	static Vector3 NormalizeAngles(Vector3 angles)
 	{
 		angles.x = NormalizeAngle(angles.x);
@@ -42,16 +57,6 @@ public:
 		while (angle < -180)
 			angle += 360;
 		return angle;
-	}
-
-	static void Test()
-	{
-		Transform test;
-		Vector3 euler = Vector3(-87.729256, 0.000000, 0.000000);
-		GUtil::Log(euler.toString());
-		test.SetEulerAngles(euler);
-		Vector3 euler2 = NormalizeAngles(test.GetEulerAngles());
-		GUtil::Log(euler2.toString());
 	}
 
 	Vector3 GetPosition()

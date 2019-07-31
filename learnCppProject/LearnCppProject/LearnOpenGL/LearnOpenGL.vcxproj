@@ -187,7 +187,7 @@
     <ClInclude Include="src\Demo\Demo8.h" />
     <ClInclude Include="src\Demo\Demo9.h" />
     <ClInclude Include="src\GL\GLUtil.h" />
-    <ClInclude Include="src\GL\Obj.h" />
+    <ClInclude Include="src\GL\RenderObject.h" />
     <ClInclude Include="src\Graphic\Color.h" />
     <ClInclude Include="src\Graphic\MeshData.h" />
     <ClInclude Include="src\Graphic\ObjFileHelper.h" />

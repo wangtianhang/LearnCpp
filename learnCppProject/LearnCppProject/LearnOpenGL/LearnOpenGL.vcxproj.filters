@@ -177,9 +177,6 @@
     <ClInclude Include="src\Demo\Demo15.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
-    <ClInclude Include="src\GL\Obj.h">
-      <Filter>源文件\src\GL</Filter>
-    </ClInclude>
     <ClInclude Include="src\Learn3D\Transform.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
@@ -191,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="src\Graphic\MeshData.h">
       <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL\RenderObject.h">
+      <Filter>源文件\src\GL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

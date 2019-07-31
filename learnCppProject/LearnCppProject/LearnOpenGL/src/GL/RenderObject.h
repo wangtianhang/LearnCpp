@@ -3,7 +3,7 @@
 #include "gl3w.h"
 #include "../Graphic/MeshData.h"
 
-struct Obj
+struct RenderObject
 {
 public:
 	//bool m_isIndex = true;

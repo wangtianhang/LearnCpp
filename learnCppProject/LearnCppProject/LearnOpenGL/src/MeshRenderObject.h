@@ -2,8 +2,9 @@
 
 #include "gl3w.h"
 #include "./MeshFliter.h"
+#include "./Material.h"
 
-struct RenderObject
+struct MeshRenderObject
 {
 public:
 	//bool m_isIndex = true;
@@ -11,21 +12,7 @@ public:
 	//int m_vertexCount = 0; // indexÊýÁ¿
 	MeshFliter m_meshData;
 	
-	bool m_isOpaque = true;
-	GLenum m_blendFactor1 = GL_SRC_ALPHA;
-	GLenum m_blendFactor2 = GL_ONE_MINUS_SRC_ALPHA;
-	
-	bool m_zwrite = true;
-	bool m_ztest = true;
-	GLenum m_zTestOp = GL_LEQUAL;
-
-	bool m_cullFace = true;
-	GLenum m_cullFaceType = GL_BACK;
-	//GLenum m_frontFace = GL_CW;
-
-	bool m_useOutProgram = false;
-	GLuint m_renderProgram = 0;
-	GLuint m_outProgram = 0;
+	Material m_material;
 
 // 	void InitShader(std::string vertexShader, std::string pixelShader)
 // 	{
@@ -39,17 +26,17 @@ public:
 
 	void RenderObj()
 	{
-		if (m_isOpaque)
+		if (m_material.m_isOpaque)
 		{
 			glDisable(GL_BLEND);
 		}
 		else
 		{
 			glEnable(GL_BLEND);
-			glBlendFunc(m_blendFactor1, m_blendFactor2);
+			glBlendFunc(m_material.m_blendFactor1, m_material.m_blendFactor2);
 		}
 
-		if (m_zwrite)
+		if (m_material.m_zwrite)
 		{
 			glDepthMask(true);
 		}
@@ -58,20 +45,20 @@ public:
 			glDepthMask(false);
 		}
 
-		if (m_ztest)
+		if (m_material.m_ztest)
 		{
 			glEnable(GL_DEPTH_TEST);
-			glDepthFunc(m_zTestOp);
+			glDepthFunc(m_material.m_zTestOp);
 		}
 		else
 		{
 			glDisable(GL_DEPTH_TEST);
 		}
 
-		if (m_cullFace)
+		if (m_material.m_cullFace)
 		{
 			glEnable(GL_CULL_FACE);
-			glCullFace(m_cullFaceType);
+			glCullFace(m_material.m_cullFaceType);
 		}
 		else
 		{
@@ -79,13 +66,13 @@ public:
 		}
 
 		
-		if (m_useOutProgram)
+		if (m_material.m_useOutProgram)
 		{
-			glUseProgram(m_outProgram);
+			glUseProgram(m_material.m_outProgram);
 		}
 		else
 		{
-			glUseProgram(m_renderProgram);
+			glUseProgram(m_material.m_renderProgram);
 		}
 		
 		glFrontFace(m_meshData.m_frontFace);
@@ -103,5 +90,7 @@ public:
 	void UnInit()
 	{
 		m_meshData.UnInit();
+
+		m_material.UnInit();
 	}
 };

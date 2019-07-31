@@ -186,11 +186,14 @@
     <ClInclude Include="src\PNGHelper.h">
       <Filter>源文件\src\IO</Filter>
     </ClInclude>
-    <ClInclude Include="src\RenderObject.h">
-      <Filter>源文件\src\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\ShaderHelper.h">
       <Filter>源文件\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshRenderObject.h">
+      <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

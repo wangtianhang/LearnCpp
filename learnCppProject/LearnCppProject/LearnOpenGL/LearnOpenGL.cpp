@@ -16,7 +16,7 @@
 #include "./src/ShaderHelper.h"
 #include "./src/Learn3D/Matrix4x4.h"
 #include "./src/PNGHelper.h"
-#include "./src/RenderObject.h"
+#include "./src/MeshRenderObject.h"
 #include "./src/Learn3D/Transform.h"
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"

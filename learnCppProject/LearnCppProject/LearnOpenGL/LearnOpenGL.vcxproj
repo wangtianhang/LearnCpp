@@ -199,10 +199,11 @@
     <ClInclude Include="src\Learn3D\Transform.h" />
     <ClInclude Include="src\Learn3D\Vector3.h" />
     <ClInclude Include="src\Learn3D\Vector4.h" />
+    <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\MeshFliter.h" />
     <ClInclude Include="src\ObjFileHelper.h" />
     <ClInclude Include="src\PNGHelper.h" />
-    <ClInclude Include="src\RenderObject.h" />
+    <ClInclude Include="src\MeshRenderObject.h" />
     <ClInclude Include="src\ShaderHelper.h" />
   </ItemGroup>
   <ItemGroup>

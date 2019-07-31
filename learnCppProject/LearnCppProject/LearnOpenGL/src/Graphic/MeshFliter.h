@@ -36,5 +36,21 @@ public:
 		{
 			glDeleteBuffers(1, &m_colorVBO);
 		}
+		if (m_uvVBO != 0)
+		{
+			glDeleteBuffers(1, &m_uvVBO);
+		}
+		if (m_normalVBO != 0)
+		{
+			glDeleteBuffers(1, &m_normalVBO);
+		}
+		if (m_tangentVBO != 0)
+		{
+			glDeleteBuffers(1, &m_tangentVBO);
+		}
+		if (m_indexVBO != 0)
+		{
+			glDeleteBuffers(1, &m_indexVBO);
+		}
 	}
 };

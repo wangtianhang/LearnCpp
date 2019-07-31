@@ -186,6 +186,12 @@
     <ClInclude Include="src\LearnOpengl\Camera.h">
       <Filter>源文件\src\LearnOpengl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphic\ObjFileHelper.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphic\MeshData.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -244,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="src\LearnOpengl\Camera.cpp">
       <Filter>源文件\src\LearnOpengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphic\ObjFileHelper.cpp">
+      <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

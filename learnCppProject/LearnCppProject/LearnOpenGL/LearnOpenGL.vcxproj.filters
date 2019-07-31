@@ -195,6 +195,9 @@
     <ClInclude Include="src\MeshRenderObject.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="src\SceneRenderMgr.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

@@ -204,6 +204,7 @@
     <ClInclude Include="src\ObjFileHelper.h" />
     <ClInclude Include="src\PNGHelper.h" />
     <ClInclude Include="src\MeshRenderObject.h" />
+    <ClInclude Include="src\SceneRenderMgr.h" />
     <ClInclude Include="src\ShaderHelper.h" />
   </ItemGroup>
   <ItemGroup>

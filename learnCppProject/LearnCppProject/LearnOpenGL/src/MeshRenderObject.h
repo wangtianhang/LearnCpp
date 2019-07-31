@@ -3,6 +3,7 @@
 #include "gl3w.h"
 #include "./MeshFliter.h"
 #include "./Material.h"
+#include "./Learn3D/Transform.h"
 
 struct MeshRenderObject
 {
@@ -10,6 +11,8 @@ public:
 	//bool m_isIndex = true;
 	//GLuint m_vao = 0;
 	//int m_vertexCount = 0; // indexÊıÁ¿
+	Transform m_transform;
+
 	MeshFliter m_meshData;
 	
 	Material m_material;

@@ -18,6 +18,7 @@
 #include "./src/PNGHelper.h"
 #include "./src/MeshRenderObject.h"
 #include "./src/Learn3D/Transform.h"
+#include "./src/SceneRenderMgr.h"
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"
 #include "./src/Demo/Demo3.h"

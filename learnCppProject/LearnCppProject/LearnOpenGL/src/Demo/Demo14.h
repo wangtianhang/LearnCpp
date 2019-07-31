@@ -8,7 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 #include "../LearnOpenGL/Camera.h"
 
 // rimlight demo
@@ -50,7 +50,7 @@ public:
 
 		//TestBufferWithVAO();
 
-		m_vao = GLUtil::CreateSphereVAO(m_sphereDrawVertexCount);
+		m_vao = GLHelper::CreateSphereVAO(m_sphereDrawVertexCount);
 
 		m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");

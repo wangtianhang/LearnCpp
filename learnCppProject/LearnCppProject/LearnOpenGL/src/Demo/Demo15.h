@@ -8,7 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 
 // skybox demo
 class Demo15 : public application
@@ -257,7 +257,7 @@ public:
 		Vector3 cameraEuler = Vector3(-m_accTime * 10, 0, 0);
 		//Vector3 cameraEuler = Vector3(0, 0, 0);
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
-		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+		Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
 		// ÒÆ³ýÎ»ÒÆ·ÖÁ¿
 		view = Matrix4x4::RemoveTranslationComponent(view);
 
@@ -278,7 +278,7 @@ public:
 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "view"), 1, true, viewArray);
 		glUniformMatrix4fv(glGetUniformLocation(m_rendering_program, "projection"), 1, true, projectArray);
 
-		glBindVertexArray(GLUtil::CreateCubeVAO());
+		glBindVertexArray(GLHelper::CreateCubeVAO());
 		glActiveTexture(GL_TEXTURE0);
 		glUniform1i(glGetUniformLocation(m_rendering_program, "skybox"), 0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, m_skyBoxCubemap);

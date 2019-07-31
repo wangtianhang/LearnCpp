@@ -1,41 +1,41 @@
 #include "./gl3w.h"
 
-#include "./GLUtil.h"
+#include "./GLHelper.h"
 #include "../LearnOpenGL/ApplicationBase.h"
 
-bool GLUtil::m_hasInit = false;
-GLuint GLUtil::m_drawTexture_program = 0;
-GLuint GLUtil::m_drawTexVao = 0;
-GLuint GLUtil::m_drawTex_index_buffer = 0;
-GLuint GLUtil::m_drawTex_buffer[3] = {0, 0, 0};
+bool GLHelper::m_hasInit = false;
+GLuint GLHelper::m_drawTexture_program = 0;
+GLuint GLHelper::m_drawTexVao = 0;
+GLuint GLHelper::m_drawTex_index_buffer = 0;
+GLuint GLHelper::m_drawTex_buffer[3] = {0, 0, 0};
 
-GLuint GLUtil::m_cubeVao = 0;
+GLuint GLHelper::m_cubeVao = 0;
 
-GLuint GLUtil::m_cube_Position_buffer = 0;
+GLuint GLHelper::m_cube_Position_buffer = 0;
 
-GLuint GLUtil::m_cube_uv_buffer = 0;
+GLuint GLHelper::m_cube_uv_buffer = 0;
 
-GLuint GLUtil::m_cube_normal_buffer = 0;
+GLuint GLHelper::m_cube_normal_buffer = 0;
 
-GLuint GLUtil::m_cube_tangent_buffer = 0;
+GLuint GLHelper::m_cube_tangent_buffer = 0;
 
-GLuint GLUtil::m_cube_index_buffer = 0;
+GLuint GLHelper::m_cube_index_buffer = 0;
 
-GLuint GLUtil::m_sphere_Vao = 0;
+GLuint GLHelper::m_sphere_Vao = 0;
 
-GLuint GLUtil::m_sphere_Position_buffer = 0;
+GLuint GLHelper::m_sphere_Position_buffer = 0;
 
-GLuint GLUtil::m_sphere_uv_buffer = 0;
+GLuint GLHelper::m_sphere_uv_buffer = 0;
 
-GLuint GLUtil::m_sphere_normal_buffer = 0;
+GLuint GLHelper::m_sphere_normal_buffer = 0;
 
-GLuint GLUtil::m_sphere_tangent_buffer = 0;
+GLuint GLHelper::m_sphere_tangent_buffer = 0;
 
-GLuint GLUtil::m_sphere_index_buffer = 0;
+GLuint GLHelper::m_sphere_index_buffer = 0;
 
-int GLUtil::m_sphereDrawVertexCount = 0;
+int GLHelper::m_sphereDrawVertexCount = 0;
 
-Matrix4x4 GLUtil::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
+Matrix4x4 GLHelper::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
 {
 	Matrix4x4 worldToLocal = cameraLocalToWorld.inverse();
 	worldToLocal.m20 *= -1;
@@ -45,14 +45,14 @@ Matrix4x4 GLUtil::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
 	return worldToLocal;
 }
 
-Matrix4x4 GLUtil::GenViewMatrix(Vector3 cameraPos, Vector3 cameraEuler)
+Matrix4x4 GLHelper::GenViewMatrix(Vector3 cameraPos, Vector3 cameraEuler)
 {
 	Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
-	Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+	Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
 	return view;
 }
 
-Matrix4x4 GLUtil::GenMVP(Vector3 modelPos, Vector3 modelEuler, Vector3 modelScale, Vector3 cameraPos, Vector3 cameraEuler, float fov, float aspect, float nearZ, float farZ)
+Matrix4x4 GLHelper::GenMVP(Vector3 modelPos, Vector3 modelEuler, Vector3 modelScale, Vector3 cameraPos, Vector3 cameraEuler, float fov, float aspect, float nearZ, float farZ)
 {
 	//Vector3 euler = Vector3(m_accTime * 10, 0, 0);
 	Matrix4x4 model_localToWorld = Matrix4x4::TRS(modelPos, Quaternion::Euler(modelEuler), modelScale);
@@ -61,7 +61,7 @@ Matrix4x4 GLUtil::GenMVP(Vector3 modelPos, Vector3 modelEuler, Vector3 modelScal
 	//Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 	// camera worldToLocal
 	//Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
-	Matrix4x4 view = GLUtil::GenViewMatrix(cameraPos, cameraEuler);
+	Matrix4x4 view = GLHelper::GenViewMatrix(cameraPos, cameraEuler);
 	//float aspect = (float)info.windowWidth / info.windowHeight;
 	//float fov = 60;
 	//float nearPlane = 0.3;
@@ -71,7 +71,7 @@ Matrix4x4 GLUtil::GenMVP(Vector3 modelPos, Vector3 modelEuler, Vector3 modelScal
 	return mvp;
 }
 
-void GLUtil::SetMVP(int shaderProgramId, int mvpLocation, Matrix4x4 mvp)
+void GLHelper::SetMVP(int shaderProgramId, int mvpLocation, Matrix4x4 mvp)
 {
 	glUseProgram(shaderProgramId);
 	//GLuint mvpLocation = glGetUniformLocation(m_rendering_program, "mvp_matrix");
@@ -80,7 +80,7 @@ void GLUtil::SetMVP(int shaderProgramId, int mvpLocation, Matrix4x4 mvp)
 	glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
 }
 
-void GLUtil::SaveScreen(std::string fileName)
+void GLHelper::SaveScreen(std::string fileName)
 {
 	
 		int row_size = ((application::app->info.windowWidth * 3 + 3) & ~3);
@@ -120,7 +120,7 @@ void GLUtil::SaveScreen(std::string fileName)
 	
 }
 
-void GLUtil::InitSphere()
+void GLHelper::InitSphere()
 {
 
 #pragma region sphereData
@@ -3017,5 +3017,5 @@ void GLUtil::InitSphere()
 		vertex_indices,
 		GL_STATIC_DRAW);
 
-	GLUtil::m_sphereDrawVertexCount = sizeof(vertex_indices) / 2;
+	GLHelper::m_sphereDrawVertexCount = sizeof(vertex_indices) / 2;
 }

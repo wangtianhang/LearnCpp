@@ -2,7 +2,7 @@
 
 #include "../Learn3D/Transform.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 #include "GLFW/glfw3.h"
 #include "../GUtil/GUtil.h"
 
@@ -34,7 +34,7 @@ public:
 
 	Matrix4x4 GetViewMatrix()
 	{
-		return GLUtil::worldToCameraMatrix(m_transform.GetLocalToWorldMatrix());
+		return GLHelper::worldToCameraMatrix(m_transform.GetLocalToWorldMatrix());
 	}
 
 	void onMouseMove(int xpos, int ypos)

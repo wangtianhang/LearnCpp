@@ -8,7 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 
 // normalmap demo
 class Demo13 : public application
@@ -42,7 +42,7 @@ public:
 
 		//TestBufferWithVAO();
 
-		m_vao = GLUtil::CreateSphereVAO(m_sphereDrawVertexCount);
+		m_vao = GLHelper::CreateSphereVAO(m_sphereDrawVertexCount);
 
 		m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
@@ -72,7 +72,7 @@ public:
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
-		Matrix4x4 view = GLUtil::worldToCameraMatrix(cameraLocalToWorld);
+		Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;

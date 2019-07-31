@@ -7,7 +7,7 @@
 #include "../LearnOpenGL/ShaderHelper.h"
 #include "../IO/FileIO.h"
 
-struct GLUtil 
+struct GLHelper 
 {
 	static bool m_hasInit;
 

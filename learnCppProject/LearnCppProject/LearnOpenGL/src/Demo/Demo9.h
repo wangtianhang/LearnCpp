@@ -8,7 +8,7 @@
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 #include "../Graphic/PNGHelper.h"
 #include "../GUtil/GUtil.h"
 #include "../../include/sb7ktx.h"
@@ -155,11 +155,11 @@ public:
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		OpenFbo();
 
-		GLUtil::DrawFullTexture(m_texture);
+		GLHelper::DrawFullTexture(m_texture);
 
 		CloseFbo();
 
-		GLUtil::DrawFullTexture(m_color_texture);
+		GLHelper::DrawFullTexture(m_color_texture);
 	}
 
 	void InitFbo()

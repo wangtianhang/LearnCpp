@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <cstdlib>
 
-#include "../GL/GLUtil.h"
+#include "../GL/GLHelper.h"
 
 GL3WglProc sb6GetProcAddress(const char * funcname);
 int sb6IsExtensionSupported(const char * extname);
@@ -123,7 +123,7 @@ public:
 			}
 		}
 
-		GLUtil::Init();
+		GLHelper::Init();
 
 		startup();
 
@@ -176,7 +176,7 @@ public:
 
 	virtual void shutdown()
 	{
-		GLUtil::UnInit();
+		GLHelper::UnInit();
 	}
 
 	void setWindowTitle(const char * title)

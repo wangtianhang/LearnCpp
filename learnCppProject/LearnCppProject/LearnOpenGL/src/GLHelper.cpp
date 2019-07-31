@@ -1,7 +1,7 @@
 #include "./gl3w.h"
 
 #include "./GLHelper.h"
-#include "../LearnOpenGL/ApplicationBase.h"
+#include "./ApplicationBase.h"
 
 bool GLHelper::m_hasInit = false;
 GLuint GLHelper::m_drawTexture_program = 0;

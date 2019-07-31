@@ -5,7 +5,7 @@
 #include "./Vector4.h"
 #include "./Quaternion.h"
 
-#include "../GUtil/GUtil.h"
+#include "../GUtil.h"
 
 struct Matrix4x4
 {

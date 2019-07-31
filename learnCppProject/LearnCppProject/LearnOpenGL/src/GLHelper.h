@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "../Learn3D/Matrix4x4.h"
+#include "./Learn3D/Matrix4x4.h"
 //#include "../LearnOpenGL/ApplicationBase.h"
-#include "../LearnOpenGL/ShaderHelper.h"
-#include "../IO/FileIO.h"
+#include "./ShaderHelper.h"
+#include "./FileIO.h"
 
 struct GLHelper 
 {

@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "../GL/gl3w.h"
-#include "../Learn3D/Vector3.h"
+#include "./Learn3D/Vector3.h"
 
 #include "./MeshFliter.h"
 

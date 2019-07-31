@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "../LearnOpengl/ApplicationBase.h"
-#include "../IO/FileIO.h"
+#include "../ApplicationBase.h"
+#include "../FileIO.h"
 #include "../Learn3D/Mathf.h"
 #include "../Learn3D/Vector4.h"
 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Learn3D/Transform.h"
-#include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLHelper.h"
+#include "./Learn3D/Transform.h"
+#include "./Learn3D/Matrix4x4.h"
+#include "./GLHelper.h"
 #include "GLFW/glfw3.h"
-#include "../GUtil/GUtil.h"
+#include "./GUtil.h"
 
 enum Camera_Movement {
 	FORWARD,

@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <cstdlib>
 
-#include "../GL/GLHelper.h"
+#include "./GLHelper.h"
 
 GL3WglProc sb6GetProcAddress(const char * funcname);
 int sb6IsExtensionSupported(const char * extname);

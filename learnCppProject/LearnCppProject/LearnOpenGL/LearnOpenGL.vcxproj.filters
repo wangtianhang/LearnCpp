@@ -28,9 +28,6 @@
     <Filter Include="源文件\src\GL">
       <UniqueIdentifier>{0d0d7379-2849-4873-aa34-ecbef3497532}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\src\LearnOpengl">
-      <UniqueIdentifier>{cf4c1b11-d9d0-4dc2-8344-30e0f03122d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\src\Demo">
       <UniqueIdentifier>{fd017716-39e2-42ad-80de-eeeba4b84006}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="源文件\src\Graphic">
       <UniqueIdentifier>{39685857-9757-4fc3-b255-11532d0d2105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\src\Application">
+      <UniqueIdentifier>{cf4c1b11-d9d0-4dc2-8344-30e0f03122d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,17 +93,8 @@
     <ClInclude Include="include\vmath.h">
       <Filter>源文件\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\LearnOpengl\ShaderHelper.h">
-      <Filter>源文件\src\LearnOpengl</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LearnOpengl\ApplicationBase.h">
-      <Filter>源文件\src\LearnOpengl</Filter>
-    </ClInclude>
     <ClInclude Include="src\Demo\Demo1.h">
       <Filter>源文件\src\Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IO\FileIO.h">
-      <Filter>源文件\src\IO</Filter>
     </ClInclude>
     <ClInclude Include="src\Learn3D\Mathf.h">
       <Filter>源文件\src\Learn3D</Filter>
@@ -123,12 +114,6 @@
     <ClInclude Include="src\Learn3D\Vector4.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUtil\GUtil.h">
-      <Filter>源文件\src\GUtil</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphic\Color.h">
-      <Filter>源文件\src\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\Demo\Demo2.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
@@ -143,9 +128,6 @@
     </ClInclude>
     <ClInclude Include="src\Demo\Demo6.h">
       <Filter>源文件\src\Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphic\PNGHelper.h">
-      <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="src\Demo\Demo7.h">
       <Filter>源文件\src\Demo</Filter>
@@ -177,19 +159,37 @@
     <ClInclude Include="src\Learn3D\Transform.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
-    <ClInclude Include="src\LearnOpengl\Camera.h">
-      <Filter>源文件\src\LearnOpengl</Filter>
+    <ClInclude Include="src\ApplicationBase.h">
+      <Filter>源文件\src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphic\ObjFileHelper.h">
+    <ClInclude Include="src\Camera.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\GL\RenderObject.h">
-      <Filter>源文件\src\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Graphic\MeshFliter.h">
+    <ClInclude Include="src\Color.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\GL\GLHelper.h">
+    <ClInclude Include="src\FileIO.h">
+      <Filter>源文件\src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GLHelper.h">
+      <Filter>源文件\src\GUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUtil.h">
+      <Filter>源文件\src\GUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshFliter.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjFileHelper.h">
+      <Filter>源文件\src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PNGHelper.h">
+      <Filter>源文件\src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderObject.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderHelper.h">
       <Filter>源文件\src\GL</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,15 +221,6 @@
     <ClCompile Include="src\GL\gl3w.c">
       <Filter>源文件\src\GL</Filter>
     </ClCompile>
-    <ClCompile Include="src\LearnOpengl\ShaderHelper.cpp">
-      <Filter>源文件\src\LearnOpengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LearnOpengl\ApplicationBase.cpp">
-      <Filter>源文件\src\LearnOpengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IO\FileIO.cpp">
-      <Filter>源文件\src\IO</Filter>
-    </ClCompile>
     <ClCompile Include="src\Learn3D\Mathf.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
@@ -242,16 +233,25 @@
     <ClCompile Include="src\Learn3D\Vector4.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphic\Color.cpp">
+    <ClCompile Include="src\ApplicationBase.cpp">
+      <Filter>源文件\src\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
       <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\LearnOpengl\Camera.cpp">
-      <Filter>源文件\src\LearnOpengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphic\ObjFileHelper.cpp">
+    <ClCompile Include="src\Color.cpp">
       <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="src\GL\GLHelper.cpp">
+    <ClCompile Include="src\FileIO.cpp">
+      <Filter>源文件\src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GLHelper.cpp">
+      <Filter>源文件\src\GUtil</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjFileHelper.cpp">
+      <Filter>源文件\src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderHelper.cpp">
       <Filter>源文件\src\GL</Filter>
     </ClCompile>
   </ItemGroup>

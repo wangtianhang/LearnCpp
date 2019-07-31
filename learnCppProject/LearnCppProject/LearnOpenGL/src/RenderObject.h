@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl3w.h"
-#include "../Graphic/MeshFliter.h"
+#include "./MeshFliter.h"
 
 struct RenderObject
 {

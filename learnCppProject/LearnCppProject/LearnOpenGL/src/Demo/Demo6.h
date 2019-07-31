@@ -2,13 +2,13 @@
 
 #include <string>
 
-#include "../LearnOpengl/ApplicationBase.h"
-#include "../IO/FileIO.h"
+#include "../ApplicationBase.h"
+#include "../FileIO.h"
 #include "../Learn3D/Mathf.h"
 #include "../Learn3D/Vector4.h"
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
-#include "../GL/GLHelper.h"
+#include "../GLHelper.h"
 
 // Õ∏ ”Õ∂”∞ demo
 class Demo6 : public application

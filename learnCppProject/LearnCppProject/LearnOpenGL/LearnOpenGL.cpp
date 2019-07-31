@@ -12,11 +12,11 @@
 //#define _CRT_SECURE_NO_WARNINGS 1
 
 //#include "sb7.h"
-#include "./src/LearnOpengl/ApplicationBase.h"
-#include "./src/LearnOpengl/ShaderHelper.h"
+#include "./src/ApplicationBase.h"
+#include "./src/ShaderHelper.h"
 #include "./src/Learn3D/Matrix4x4.h"
-#include "./src/Graphic/PNGHelper.h"
-#include "./src/GL/RenderObject.h"
+#include "./src/PNGHelper.h"
+#include "./src/RenderObject.h"
 #include "./src/Learn3D/Transform.h"
 #include "./src/Demo/Demo1.h"
 #include "./src/Demo/Demo2.h"

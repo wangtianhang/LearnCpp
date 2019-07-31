@@ -1,7 +1,7 @@
 #pragma once
 
 #include <exception>
-#include "../Learn3D/Mathf.h"
+#include "./Learn3D/Mathf.h"
 
 struct Color
 {

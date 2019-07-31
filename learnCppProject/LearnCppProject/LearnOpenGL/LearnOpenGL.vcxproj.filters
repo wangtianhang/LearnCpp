@@ -198,6 +198,9 @@
     <ClInclude Include="src\SceneRenderMgr.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="src\Demo\Demo16.h">
+      <Filter>源文件\src\Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

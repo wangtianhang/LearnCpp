@@ -17,6 +17,11 @@ public:
 		// step2 draw opaque render go with shadow
 
 		// step3 draw skybox
+		for (int i = 0; i < m_renderGoVec.size(); ++i)
+		{
+			MeshRenderObject iter = m_renderGoVec[i];
+			iter.RenderObj();
+		}
 	}
 };
 

@@ -10,4 +10,5 @@ public:
 	GLuint m_normalVBO = 0;
 	GLuint m_indexVBO = 0;
 	int drawVerticesCount = 0;
+	GLenum m_frontFace = GL_CCW;
 };

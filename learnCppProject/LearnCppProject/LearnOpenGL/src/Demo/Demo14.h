@@ -71,7 +71,7 @@ public:
 
 	virtual void RenderUpdate(float delta)
 	{
-		application::RenderUpdate(delta);
+		application::RenderCamera(delta);
 
 		// Simply clear the window with red
 		static const GLfloat white[] = { 0.2f, 0.2f, 0.2f, 1.0f };

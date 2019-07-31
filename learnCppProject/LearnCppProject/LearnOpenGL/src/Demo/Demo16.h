@@ -33,12 +33,12 @@ public:
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo13Vertex.txt");
-		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo14Pixel.txt");
+		//std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo13Vertex.txt");
+		//std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo14Pixel.txt");
 
-		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
-		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
-		m_rendering_program = CreateShaderProgram(vertex, pixel, true, true);
+		//GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
+		//GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
+		m_rendering_program = GLHelper::CreateShader("./Assets/shader/Demo13Vertex.txt", "./Assets/shader/Demo14Pixel.txt");
 
 		m_vao = GLHelper::CreateSphereVAO(m_sphereDrawVertexCount);
 
@@ -58,7 +58,8 @@ public:
 
 	virtual void RenderUpdate(float delta)
 	{
-		application::RenderUpdate(delta);
+		// 进入渲染流程时 应该已经全部移动完毕 相机应该在稳定后计算位置
+		application::RenderCamera(delta);
 
 		// Simply clear the window with red
 		static const GLfloat white[] = { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -66,6 +67,7 @@ public:
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
+		application::RenderScene(delta);
 
 		Vector3 euler = Vector3(m_accTime * 10, 0, 0);
 		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 5);
@@ -114,8 +116,6 @@ public:
 		// 这种先bind再draw很蛋疼。。
 		glBindVertexArray(m_vao);
 		glDrawElements(GL_TRIANGLES, m_sphereDrawVertexCount, GL_UNSIGNED_SHORT, 0);
-
-		
 
 	}
 

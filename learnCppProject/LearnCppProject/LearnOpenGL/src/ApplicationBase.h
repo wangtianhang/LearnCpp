@@ -178,9 +178,14 @@ public:
 
 	}
 
-	virtual void RenderUpdate(float delta)
+	void RenderCamera(float delta)
 	{
 		m_camera.Update(delta);
+	}
+
+	void RenderScene(float delta)
+	{
+		m_sceneRenderMgr.Update(delta);
 	}
 
 	virtual void shutdown()

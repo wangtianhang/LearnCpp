@@ -201,6 +201,9 @@
     <ClInclude Include="src\Demo\Demo16.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\ResourcesMgr.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="src\ShaderHelper.cpp">
       <Filter>源文件\src\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshFliter.cpp">
+      <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

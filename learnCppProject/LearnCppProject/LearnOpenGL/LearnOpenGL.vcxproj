@@ -205,6 +205,7 @@
     <ClInclude Include="src\ObjFileHelper.h" />
     <ClInclude Include="src\PNGHelper.h" />
     <ClInclude Include="src\MeshRenderObject.h" />
+    <ClInclude Include="src\ResourcesMgr.h" />
     <ClInclude Include="src\SceneRenderMgr.h" />
     <ClInclude Include="src\ShaderHelper.h" />
   </ItemGroup>
@@ -226,6 +227,7 @@
     <ClCompile Include="src\Learn3D\Test3DMath.cpp" />
     <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\Learn3D\Vector4.cpp" />
+    <ClCompile Include="src\MeshFliter.cpp" />
     <ClCompile Include="src\ObjFileHelper.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />
     <ClCompile Include="src\sb7\sb7color.cpp" />

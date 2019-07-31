@@ -16,6 +16,9 @@
 #include <cstdlib>
 
 #include "./GLHelper.h"
+#include "./SceneRenderMgr.h"
+#include "./ResourcesMgr.h"
+#include "./Camera.h"
 
 GL3WglProc sb6GetProcAddress(const char * funcname);
 int sb6IsExtensionSupported(const char * extname);
@@ -166,12 +169,18 @@ public:
 
 	virtual void startup()
 	{
-
+		m_camera.Init(window);
+		m_camera.m_transform.SetPosition(Vector3(0, 0, -10));
 	}
 
 	virtual void render(double currentTime)
 	{
 
+	}
+
+	virtual void RenderUpdate(float delta)
+	{
+		m_camera.Update(delta);
 	}
 
 	virtual void shutdown()
@@ -197,12 +206,19 @@ public:
 
 	virtual void onMouseButton(int button, int action)
 	{
-
+		if (button == GLFW_MOUSE_BUTTON_1 && action == 1)
+		{
+			m_camera.OnMouseDown();
+		}
+		else if (button == GLFW_MOUSE_BUTTON_1 && action == 0)
+		{
+			m_camera.OnMouseUp();
+		}
 	}
 
 	virtual void onMouseMove(int x, int y)
 	{
-
+		m_camera.onMouseMove(x, y);
 	}
 
 	virtual void onMouseWheel(int pos)
@@ -259,6 +275,9 @@ public:
 	APPINFO     info;
 	static      application * app;
 	GLFWwindow* window;
+	SceneRenderMgr m_sceneRenderMgr;
+	ResourcesMgr m_resourceMgr;
+	Camera m_camera;
 protected:
 	
 	

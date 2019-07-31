@@ -21,17 +21,21 @@ struct Material
 	bool m_useOutProgram = false;
 	GLuint m_outProgram = 0;
 
-	int m_ShareCount = 1;
+	//bool m_isShared = false;
+	//int m_ShareCount = 1;
 
 	void UnInit()
 	{
-		if (m_ShareCount -= 1)
-		{
-			if (m_ShareCount > 0)
-			{
-				return;
-			}
-		}
+// 		if (m_isShared)
+// 		{
+// 			if (m_ShareCount -= 1)
+// 			{
+// 				if (m_ShareCount > 0)
+// 				{
+// 					return;
+// 				}
+// 			}
+// 		}
 
 		// todo É¾³ýshaderÊ²Ã´µÄ
 	}

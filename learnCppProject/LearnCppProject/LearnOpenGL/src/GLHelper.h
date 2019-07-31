@@ -6,6 +6,7 @@
 //#include "../LearnOpenGL/ApplicationBase.h"
 #include "./ShaderHelper.h"
 #include "./FileIO.h"
+#include "./MeshFliter.h"
 
 struct GLHelper 
 {
@@ -22,6 +23,7 @@ struct GLHelper
 	static GLuint m_cube_normal_buffer;
 	static GLuint m_cube_tangent_buffer;
 	static GLuint m_cube_index_buffer;
+	//static int m_cubeSharedCount;
 
 	static GLuint m_sphere_Vao;
 	static GLuint m_sphere_Position_buffer;
@@ -375,6 +377,19 @@ struct GLHelper
 	static void UseLinearSpace()
 	{
 		glDisable(GL_FRAMEBUFFER_SRGB);
+	}
+
+	static MeshFliter CreateCubeMesh()
+	{
+		MeshFliter mesh;
+		mesh.m_vao = m_cubeVao;
+		mesh.m_isIndex = true;
+		mesh.drawVerticesCount = 36;
+		mesh.m_frontFace = GL_CCW;
+
+		//mesh.m_isShared = true;
+
+		return mesh;
 	}
 };
 

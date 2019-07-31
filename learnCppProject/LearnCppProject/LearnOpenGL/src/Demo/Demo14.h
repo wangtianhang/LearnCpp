@@ -28,10 +28,10 @@ public:
 	GLuint m_albedo = 0;
 	GLuint m_normal = 0;
 
-	Camera m_camera;
-	bool m_firstMouse = true;
-	float m_lastX = 0;
-	float m_lastY = 0;
+	//Camera m_camera;
+	//bool m_firstMouse = true;
+	//float m_lastX = 0;
+	//float m_lastY = 0;
 
 	float m_cacheDelta = 0;
 
@@ -55,8 +55,8 @@ public:
 		m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
-		m_camera.Init(window);
-		m_camera.m_transform.SetPosition(Vector3(0, 0, -10));
+		//m_camera.Init(window);
+		//m_camera.m_transform.SetPosition(Vector3(0, 0, -10));
 	}
 
 	virtual void render(double currentTime)
@@ -69,8 +69,10 @@ public:
 
 
 
-	void RenderUpdate(float delta)
+	virtual void RenderUpdate(float delta)
 	{
+		application::RenderUpdate(delta);
+
 		// Simply clear the window with red
 		static const GLfloat white[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 		static const GLfloat ones[] = { 1.0f };
@@ -148,7 +150,7 @@ public:
 		glDrawElements(GL_TRIANGLES, m_sphereDrawVertexCount, GL_UNSIGNED_SHORT, 0);
 		//glDrawArrays(m_vertex_array_object, )
 
-		m_camera.Update(delta);
+		//m_camera.Update(delta);
 
 		m_cacheDelta = delta;
 	}
@@ -158,37 +160,23 @@ public:
 // 
 // 	}
 
-	virtual void onMouseMove(int xpos, int ypos)
-	{
-// 		if (m_firstMouse)
-// 		{
-// 			m_lastX = xpos;
-// 			m_lastY = ypos;
-// 			m_firstMouse = false;
-// 		}
-// 
-// 		float xoffset = xpos - m_lastX;
-// 		float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
-// 
-// 		m_lastX = xpos;
-// 		m_lastY = ypos;
-// 
-// 		m_camera.ProcessMouseMovement(xoffset, yoffset, m_cacheDelta);
-		m_camera.onMouseMove(xpos, ypos);
- 	}
+// 	virtual void onMouseMove(int xpos, int ypos)
+// 	{
+// 		m_camera.onMouseMove(xpos, ypos);
+//  	}
 
-	virtual void onMouseButton(int button, int action)
-	{
-		GUtil::Log("onMouseButton " + std::to_string(button) + " action " + std::to_string(action));
-		if (button == GLFW_MOUSE_BUTTON_1 && action == 1)
-		{
-			m_camera.OnMouseDown();
-		}
-		else if (button == GLFW_MOUSE_BUTTON_1 && action == 0)
-		{
-			m_camera.OnMouseUp();
-		}
-	}
+// 	virtual void onMouseButton(int button, int action)
+// 	{
+// 		GUtil::Log("onMouseButton " + std::to_string(button) + " action " + std::to_string(action));
+// 		if (button == GLFW_MOUSE_BUTTON_1 && action == 1)
+// 		{
+// 			m_camera.OnMouseDown();
+// 		}
+// 		else if (button == GLFW_MOUSE_BUTTON_1 && action == 0)
+// 		{
+// 			m_camera.OnMouseUp();
+// 		}
+// 	}
 
 	virtual void shutdown()
 	{

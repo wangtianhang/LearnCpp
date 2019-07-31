@@ -186,11 +186,11 @@
     <ClInclude Include="src\Graphic\ObjFileHelper.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphic\MeshData.h">
-      <Filter>源文件\src\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="src\GL\RenderObject.h">
       <Filter>源文件\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphic\MeshFliter.h">
+      <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

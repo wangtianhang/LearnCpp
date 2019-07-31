@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl3w.h"
-#include "../Graphic/MeshData.h"
+#include "../Graphic/MeshFliter.h"
 
 struct RenderObject
 {
@@ -9,7 +9,7 @@ public:
 	//bool m_isIndex = true;
 	//GLuint m_vao = 0;
 	//int m_vertexCount = 0; // indexÊýÁ¿
-	MeshData m_meshData;
+	MeshFliter m_meshData;
 	
 	bool m_isOpaque = true;
 	GLenum m_blendFactor1 = GL_SRC_ALPHA;
@@ -98,5 +98,10 @@ public:
 		{
 			glDrawArrays(GL_TRIANGLES, 0, m_meshData.drawVerticesCount);
 		}
+	}
+
+	void UnInit()
+	{
+		m_meshData.UnInit();
 	}
 };

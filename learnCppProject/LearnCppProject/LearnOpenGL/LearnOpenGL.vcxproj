@@ -189,7 +189,7 @@
     <ClInclude Include="src\GL\GLUtil.h" />
     <ClInclude Include="src\GL\RenderObject.h" />
     <ClInclude Include="src\Graphic\Color.h" />
-    <ClInclude Include="src\Graphic\MeshData.h" />
+    <ClInclude Include="src\Graphic\MeshFliter.h" />
     <ClInclude Include="src\Graphic\ObjFileHelper.h" />
     <ClInclude Include="src\Graphic\PNGHelper.h" />
     <ClInclude Include="src\GUtil\GUtil.h" />

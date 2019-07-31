@@ -64,9 +64,9 @@ void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertice
 	
 }
 
-MeshData ObjFileHelper::loadObjAsVAO(const char* filename)
+MeshFliter ObjFileHelper::loadObjAsVAO(const char* filename)
 {
-	MeshData ret;
+	MeshFliter ret;
 	ret.m_frontFace = GL_CCW;
 
 	std::vector<Vector3> vertices;

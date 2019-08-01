@@ -12,13 +12,15 @@
 #include "../Camera.h"
 #include "../PNGHelper.h"
 
-// direction light demo
-class Demo17 : public application
+// hard shadow demo
+class Demo18 : public application
 {
 public:
 	// Our rendering function
 
 	double m_accTime = 0;
+
+	MeshRenderObject * m_sphere = NULL;
 
 	virtual void startup()
 	{
@@ -58,6 +60,8 @@ public:
 			obj->m_transform.SetLocalScale(Vector3::one() * 1);
 			obj->m_transform.SetPosition(Vector3(0, 0.5, 0));
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
+
+			m_sphere = obj;
 		}
 
 		{
@@ -80,6 +84,25 @@ public:
 		m_camera.m_transform.SetEulerAngles(Vector3(20, 0, 0));
 	}
 
+	static float Modulo(float a, int b)
+	{
+		return a - ((int)a / b) * b;
+	}
+
+	static Vector3 PingPong(Vector3 a, Vector3 b, float t)
+	{
+		float modt = Modulo(t, 2);
+		//t = t % 2;
+		if (modt < 1)
+		{
+			return Vector3::Lerp(a, b, modt);
+		}
+		else
+		{
+			return Vector3::Lerp(b, a, modt - 1);
+		}
+	}
+
 	virtual void render(double currentTime)
 	{
 		float delta = currentTime - m_accTime;
@@ -90,6 +113,8 @@ public:
 
 	virtual void RenderUpdate(float delta)
 	{
+		Vector3 newPos = PingPong(Vector3(0, 0.5, 0), Vector3(0, 1.5, 0), m_accTime);
+		m_sphere->m_transform.SetPosition(newPos);
 		// 进入渲染流程时 应该已经全部移动完毕 相机应该在稳定后计算位置
 		application::RenderCamera(delta);
 

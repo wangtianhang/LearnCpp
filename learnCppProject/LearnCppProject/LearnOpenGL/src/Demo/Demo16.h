@@ -66,11 +66,11 @@ public:
 			int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
 			glUniform1i(location2, unit);
 
-			MeshRenderObject obj;
-			obj.m_meshData = meshFilter;
-			obj.m_material = mat;
-			obj.m_transform.SetLocalScale(Vector3::one() * 1);
-			obj.m_transform.SetPosition(Vector3(0, 0.5, 0));
+			MeshRenderObject * obj = new MeshRenderObject();
+			obj->m_meshData = meshFilter;
+			obj->m_material = mat;
+			obj->m_transform.SetLocalScale(Vector3::one() * 1);
+			obj->m_transform.SetPosition(Vector3(0, 0.5, 0));
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 		}
 
@@ -82,11 +82,11 @@ public:
 			Material mat;
 			mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo12Vertex.txt", "./Assets/shader/Demo12Pixel.txt");
 
-			MeshRenderObject obj;
-			obj.m_meshData = meshFilter;
-			obj.m_material = mat;
-			obj.m_transform.SetLocalScale(Vector3(5, 1, 5));
-			obj.m_transform.SetPosition(Vector3(0, -0.5, 0));
+			MeshRenderObject * obj = new MeshRenderObject();
+			obj->m_meshData = meshFilter;
+			obj->m_material = mat;
+			obj->m_transform.SetLocalScale(Vector3(5, 1, 5));
+			obj->m_transform.SetPosition(Vector3(0, -0.5, 0));
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 		}
 

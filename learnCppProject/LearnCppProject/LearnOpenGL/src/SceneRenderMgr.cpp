@@ -12,7 +12,7 @@ void SceneRenderMgr::Update(float delta)
 
 	for (int i = 0; i < m_renderGoVec.size(); ++i)
 	{
-		MeshRenderObject iter = m_renderGoVec[i];
+		MeshRenderObject iter = *m_renderGoVec[i];
 
 		Matrix4x4 view = application::app->m_camera.GetViewMatrix();
 		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;

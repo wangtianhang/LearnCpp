@@ -13,7 +13,7 @@ in VS_OUT
 
 // Material properties
 uniform vec3 diffuse_albedo = vec3(1, 1, 1);
-uniform vec3 specular_albedo = vec3(0.7);
+uniform vec3 specular_albedo = vec3(1);
 uniform float specular_power = 30.0;
 
 void main(void)

@@ -7,7 +7,7 @@
 class SceneRenderMgr
 {
 public:
-	std::vector<MeshRenderObject> m_renderGoVec;
+	std::vector<MeshRenderObject *> m_renderGoVec;
 
 	void Update(float delta);
 };

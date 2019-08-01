@@ -45,39 +45,50 @@ public:
 		//m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		//m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
-		MeshFliter meshFilter = GLHelper::CreateSphereMesh();
+		{
+			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
 
-		Material mat;
-		mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo13Vertex.txt", "./Assets/shader/Demo14Pixel.txt");
-		GLuint albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
-		GLuint normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
+			Material mat;
+			mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo13Vertex.txt", "./Assets/shader/Demo14Pixel.txt");
+			GLuint albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
+			GLuint normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
-		glUseProgram(mat.m_renderProgram);
-		GLuint unit = 0;
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, albedo);
-		int location = glGetUniformLocation(mat.m_renderProgram, "tex_color");
-		glUniform1i(location, unit);
+			glUseProgram(mat.m_renderProgram);
+			GLuint unit = 0;
+			glActiveTexture(GL_TEXTURE0 + unit);
+			glBindTexture(GL_TEXTURE_2D, albedo);
+			int location = glGetUniformLocation(mat.m_renderProgram, "tex_color");
+			glUniform1i(location, unit);
 
-		unit = 1;
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(GL_TEXTURE_2D, normal);
-		int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
-		glUniform1i(location2, unit);
+			unit = 1;
+			glActiveTexture(GL_TEXTURE0 + unit);
+			glBindTexture(GL_TEXTURE_2D, normal);
+			int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
+			glUniform1i(location2, unit);
 
-		MeshRenderObject obj;
-		obj.m_meshData = meshFilter;
-		obj.m_material = mat;
-		obj.m_transform.SetLocalScale(Vector3::one() * 5);
-		obj.m_transform.SetPosition(Vector3(-5, 0, 0));
-		m_sceneRenderMgr.m_renderGoVec.push_back(obj);
+			MeshRenderObject obj;
+			obj.m_meshData = meshFilter;
+			obj.m_material = mat;
+			obj.m_transform.SetLocalScale(Vector3::one() * 5);
+			obj.m_transform.SetPosition(Vector3(-5, 0, 0));
+			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
+		}
 
-		MeshRenderObject obj2;
-		obj2.m_meshData = meshFilter;
-		obj2.m_material = mat;
-		obj2.m_transform.SetLocalScale(Vector3::one() * 5);
-		obj2.m_transform.SetPosition(Vector3(5, 0, 0));
-		m_sceneRenderMgr.m_renderGoVec.push_back(obj2);
+		{
+			MeshFliter meshFilter = GLHelper::CreateCubeMesh();
+
+			//std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
+			//std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
+			Material mat;
+			mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo12Vertex.txt", "./Assets/shader/Demo12Pixel.txt");
+
+			MeshRenderObject obj;
+			obj.m_meshData = meshFilter;
+			obj.m_material = mat;
+			obj.m_transform.SetLocalScale(Vector3::one() * 5);
+			obj.m_transform.SetPosition(Vector3(5, 0, 0));
+			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
+		}
 	}
 
 	virtual void render(double currentTime)

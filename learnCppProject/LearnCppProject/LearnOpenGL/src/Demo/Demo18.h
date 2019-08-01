@@ -22,10 +22,19 @@ public:
 
 	MeshRenderObject * m_sphere = NULL;
 
+	GLuint m_depth_fbo;
+
 	virtual void startup()
 	{
 		application::startup();
 
+		InitScene();
+
+		InitDepthFBO();
+	}
+
+	void InitScene()
+	{
 		GLuint renderProgram = GLHelper::CreateShader("./Assets/shader/Demo17Vertex.txt", "./Assets/shader/Demo17Pixel.txt");
 		Vector3 lightEuler = Vector3(50, -30, 0);
 		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
@@ -38,21 +47,6 @@ public:
 
 			Material mat;
 			mat.m_renderProgram = renderProgram;
-			//GLuint albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
-			//GLuint normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
-
-// 			glUseProgram(mat.m_renderProgram);
-// 			GLuint unit = 0;
-// 			glActiveTexture(GL_TEXTURE0 + unit);
-// 			glBindTexture(GL_TEXTURE_2D, albedo);
-// 			int location = glGetUniformLocation(mat.m_renderProgram, "tex_color");
-// 			glUniform1i(location, unit);
-// 
-// 			unit = 1;
-// 			glActiveTexture(GL_TEXTURE0 + unit);
-// 			glBindTexture(GL_TEXTURE_2D, normal);
-// 			int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
-// 			glUniform1i(location2, unit);
 
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
@@ -67,8 +61,6 @@ public:
 		{
 			MeshFliter meshFilter = GLHelper::CreateCubeMesh();
 
-			//std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
-			//std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
 			Material mat;
 			mat.m_renderProgram = renderProgram;
 
@@ -82,6 +74,12 @@ public:
 
 		m_camera.m_transform.SetPosition(Vector3(0, 2, -5));
 		m_camera.m_transform.SetEulerAngles(Vector3(20, 0, 0));
+	}
+
+	void InitDepthFBO() 
+	{
+		//glGenFramebuffers(1, &m_depth_fbo);
+		//glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
 	}
 
 	static float Modulo(float a, int b)
@@ -115,6 +113,7 @@ public:
 	{
 		Vector3 newPos = PingPong(Vector3(0, 0.5, 0), Vector3(0, 1.5, 0), m_accTime);
 		m_sphere->m_transform.SetPosition(newPos);
+
 		// 进入渲染流程时 应该已经全部移动完毕 相机应该在稳定后计算位置
 		application::RenderCamera(delta);
 
@@ -125,8 +124,6 @@ public:
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
 		application::RenderScene(delta);
-
-
 	}
 
 

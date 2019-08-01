@@ -24,7 +24,7 @@ out VS_OUT
 } vs_out;
 
 // Position of light
-uniform vec3 light_pos = vec3(-20.0, 20.0, 20.0);
+uniform vec3 light_dir = vec3(0.0, 0.0, 0.0);
 
 void main(void)
 {
@@ -35,7 +35,7 @@ void main(void)
     vs_out.N = mat3(mv_matrix) * normal;
 
     // Calculate light vector
-    vs_out.L = light_pos - P.xyz;
+    vs_out.L = mat3(view_matrix) * (-light_dir);
 
     // Calculate view vector
     vs_out.V = -P.xyz;

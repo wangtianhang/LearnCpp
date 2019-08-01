@@ -44,6 +44,12 @@ public:
 		//m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
 		GLuint renderProgram = GLHelper::CreateShader("./Assets/shader/Demo17Vertex.txt", "./Assets/shader/Demo17Pixel.txt");
+		Vector3 lightEuler = Vector3(50, -30, 0);
+		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
+		lightDir.Normalize();
+		glUseProgram(renderProgram);
+		glUniform3f(glGetUniformLocation(renderProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
+
 		{
 			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
 

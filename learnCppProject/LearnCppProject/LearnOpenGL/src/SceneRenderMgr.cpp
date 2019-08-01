@@ -30,6 +30,11 @@ void SceneRenderMgr::Update(float delta)
 		mv.GetMatrixArray(mvMatrixArray);
 		glUniformMatrix4fv(mvLocation, 1, true, mvMatrixArray);
 
+		GLuint viewLocation = glGetUniformLocation(iter.m_material.GetRenderProgram(), "view_matrix");
+		float viewMatrixArray[16];
+		view.GetMatrixArray(viewMatrixArray);
+		glUniformMatrix4fv(viewLocation, 1, true, viewMatrixArray);
+
 
 		GLuint projLocation = glGetUniformLocation(iter.m_material.GetRenderProgram(), "proj_matrix");
 		float projMatrixArray[16];

@@ -69,8 +69,8 @@ public:
 			MeshRenderObject obj;
 			obj.m_meshData = meshFilter;
 			obj.m_material = mat;
-			obj.m_transform.SetLocalScale(Vector3::one() * 5);
-			obj.m_transform.SetPosition(Vector3(-5, 0, 0));
+			obj.m_transform.SetLocalScale(Vector3::one() * 1);
+			obj.m_transform.SetPosition(Vector3(0, 0.5, 0));
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 		}
 
@@ -85,10 +85,13 @@ public:
 			MeshRenderObject obj;
 			obj.m_meshData = meshFilter;
 			obj.m_material = mat;
-			obj.m_transform.SetLocalScale(Vector3::one() * 5);
-			obj.m_transform.SetPosition(Vector3(5, 0, 0));
+			obj.m_transform.SetLocalScale(Vector3(5, 1, 5));
+			obj.m_transform.SetPosition(Vector3(0, -0.5, 0));
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 		}
+
+		m_camera.m_transform.SetPosition(Vector3(0, 2, -5));
+		m_camera.m_transform.SetEulerAngles(Vector3(20, 0, 0));
 	}
 
 	virtual void render(double currentTime)

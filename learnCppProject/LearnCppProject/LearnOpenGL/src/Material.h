@@ -24,6 +24,18 @@ struct Material
 	//bool m_isShared = false;
 	//int m_ShareCount = 1;
 
+	GLuint GetRenderProgram()
+	{
+		if (m_useOutProgram)
+		{
+			return m_outProgram;
+		}
+		else
+		{
+			return m_renderProgram;
+		}
+	}
+
 	void UnInit()
 	{
 // 		if (m_isShared)

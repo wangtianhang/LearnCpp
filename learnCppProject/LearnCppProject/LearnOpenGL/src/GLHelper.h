@@ -392,6 +392,17 @@ struct GLHelper
 		return mesh;
 	}
 
+	static MeshFliter CreateSphereMesh()
+	{
+		MeshFliter mesh;
+		mesh.m_vao = m_sphere_Vao;
+		mesh.m_isIndex = true;
+		mesh.drawVerticesCount = m_sphereDrawVertexCount;
+		mesh.m_frontFace = GL_CCW;
+
+		return mesh;
+	}
+
 	static GLuint CreateShader(std::string vertexPath, std::string pixelPath)
 	{
 		GLuint rendering_program = 0;

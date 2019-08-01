@@ -269,5 +269,8 @@
     <ClCompile Include="src\MeshFliter.cpp">
       <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneRenderMgr.cpp">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

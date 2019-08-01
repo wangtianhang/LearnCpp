@@ -235,6 +235,7 @@
     <ClCompile Include="src\sb7\sb7object.cpp" />
     <ClCompile Include="src\sb7\sb7shader.cpp" />
     <ClCompile Include="src\sb7\sb7textoverlay.cpp" />
+    <ClCompile Include="src\SceneRenderMgr.cpp" />
     <ClCompile Include="src\ShaderHelper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

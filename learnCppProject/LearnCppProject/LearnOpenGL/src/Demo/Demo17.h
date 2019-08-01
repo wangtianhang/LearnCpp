@@ -43,26 +43,27 @@ public:
 		//m_albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
 		//m_normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
+		GLuint renderProgram = GLHelper::CreateShader("./Assets/shader/Demo17Vertex.txt", "./Assets/shader/Demo17Pixel.txt");
 		{
 			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
 
 			Material mat;
-			mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo13Vertex.txt", "./Assets/shader/Demo14Pixel.txt");
-			GLuint albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
-			GLuint normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
+			mat.m_renderProgram = renderProgram;
+			//GLuint albedo = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Dif_Spec.png");
+			//GLuint normal = PNGHelper::LoadPngAsGLTexture("./Assets/texture/Rock_Ground_01_Nor.png");
 
-			glUseProgram(mat.m_renderProgram);
-			GLuint unit = 0;
-			glActiveTexture(GL_TEXTURE0 + unit);
-			glBindTexture(GL_TEXTURE_2D, albedo);
-			int location = glGetUniformLocation(mat.m_renderProgram, "tex_color");
-			glUniform1i(location, unit);
-
-			unit = 1;
-			glActiveTexture(GL_TEXTURE0 + unit);
-			glBindTexture(GL_TEXTURE_2D, normal);
-			int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
-			glUniform1i(location2, unit);
+// 			glUseProgram(mat.m_renderProgram);
+// 			GLuint unit = 0;
+// 			glActiveTexture(GL_TEXTURE0 + unit);
+// 			glBindTexture(GL_TEXTURE_2D, albedo);
+// 			int location = glGetUniformLocation(mat.m_renderProgram, "tex_color");
+// 			glUniform1i(location, unit);
+// 
+// 			unit = 1;
+// 			glActiveTexture(GL_TEXTURE0 + unit);
+// 			glBindTexture(GL_TEXTURE_2D, normal);
+// 			int location2 = glGetUniformLocation(mat.m_renderProgram, "tex_normal");
+// 			glUniform1i(location2, unit);
 
 			MeshRenderObject obj;
 			obj.m_meshData = meshFilter;
@@ -78,7 +79,7 @@ public:
 			//std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
 			//std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
 			Material mat;
-			mat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo12Vertex.txt", "./Assets/shader/Demo12Pixel.txt");
+			mat.m_renderProgram = renderProgram;
 
 			MeshRenderObject obj;
 			obj.m_meshData = meshFilter;

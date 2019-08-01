@@ -385,7 +385,7 @@ struct GLHelper
 		mesh.m_vao = m_cubeVao;
 		mesh.m_isIndex = true;
 		mesh.drawVerticesCount = 36;
-		mesh.m_frontFace = GL_CCW;
+		mesh.m_frontFace = GL_CW;
 
 		//mesh.m_isShared = true;
 
@@ -398,7 +398,7 @@ struct GLHelper
 		mesh.m_vao = m_sphere_Vao;
 		mesh.m_isIndex = true;
 		mesh.drawVerticesCount = m_sphereDrawVertexCount;
-		mesh.m_frontFace = GL_CCW;
+		mesh.m_frontFace = GL_CW;
 
 		return mesh;
 	}

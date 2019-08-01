@@ -69,7 +69,15 @@ public:
 		obj.m_meshData = meshFilter;
 		obj.m_material = mat;
 		obj.m_transform.SetLocalScale(Vector3::one() * 5);
+		obj.m_transform.SetPosition(Vector3(-5, 0, 0));
 		m_sceneRenderMgr.m_renderGoVec.push_back(obj);
+
+		MeshRenderObject obj2;
+		obj2.m_meshData = meshFilter;
+		obj2.m_material = mat;
+		obj2.m_transform.SetLocalScale(Vector3::one() * 5);
+		obj2.m_transform.SetPosition(Vector3(5, 0, 0));
+		m_sceneRenderMgr.m_renderGoVec.push_back(obj2);
 	}
 
 	virtual void render(double currentTime)

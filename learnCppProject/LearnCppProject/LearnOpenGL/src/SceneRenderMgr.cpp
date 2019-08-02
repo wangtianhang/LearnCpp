@@ -24,6 +24,10 @@ void SceneRenderMgr::Update(float delta)
 		Matrix4x4 mv = view * iter.m_transform.GetLocalToWorldMatrix();
 		glUseProgram(iter.m_material.GetRenderProgram());
 
+		GLuint modelToWorldLocation = glGetUniformLocation(iter.m_material.GetRenderProgram(), "modelToWorldMatrix");
+		float modelToWorldMatrixArray[16];
+		iter.m_transform.GetLocalToWorldMatrix().GetMatrixArray(modelToWorldMatrixArray);
+		glUniformMatrix4fv(modelToWorldLocation, 1, true, modelToWorldMatrixArray);
 
 		GLuint mvLocation = glGetUniformLocation(iter.m_material.GetRenderProgram(), "mv_matrix");
 		float mvMatrixArray[16];

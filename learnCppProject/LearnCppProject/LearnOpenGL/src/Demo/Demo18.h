@@ -31,6 +31,10 @@ public:
 
 	GLuint m_drawDepthProgram;
 
+	GLuint m_renderProgram;
+
+	Matrix4x4 m_worldToLightViewAndProjectMatrix;
+
 	virtual void startup()
 	{
 		application::startup();
@@ -44,18 +48,18 @@ public:
 	{
 		m_drawDepthProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo18Pixel-drawDepth.txt");
 
-		GLuint renderProgram = GLHelper::CreateShader("./Assets/shader/Demo17Vertex.txt", "./Assets/shader/Demo17Pixel.txt");
+		m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-withShadow.txt", "./Assets/shader/Demo18Pixel-withShadow.txt");
 		Vector3 lightEuler = Vector3(50, -30, 0);
 		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
 		lightDir.Normalize();
-		glUseProgram(renderProgram);
-		glUniform3f(glGetUniformLocation(renderProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
+		glUseProgram(m_renderProgram);
+		glUniform3f(glGetUniformLocation(m_renderProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
 
 		{
 			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
 
 			Material mat;
-			mat.m_renderProgram = renderProgram;
+			mat.m_renderProgram = m_renderProgram;
 
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
@@ -71,7 +75,7 @@ public:
 			MeshFliter meshFilter = GLHelper::CreateCubeMesh();
 
 			Material mat;
-			mat.m_renderProgram = renderProgram;
+			mat.m_renderProgram = m_renderProgram;
 
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
@@ -95,8 +99,9 @@ public:
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_tex, 0);
 
@@ -129,21 +134,24 @@ public:
 		Matrix4x4 lightCameraLocalToWorld = Matrix4x4::TRS(lightCameraPos, Quaternion::Euler(lightCameraEuler), Vector3::one());
 		Matrix4x4 view = GLHelper::worldToCameraMatrix(lightCameraLocalToWorld);
 
+		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
+		float size = 5;
+		Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
 
+		m_worldToLightViewAndProjectMatrix = orthoProject * view;
 
 		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
 		{
 			MeshRenderObject * iter = application::app->m_sceneRenderMgr.m_renderGoVec[i];
 
 			//Matrix4x4 view = application::app->m_camera.GetViewMatrix();
-			float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
+			
 			//float fov = 60;
 			//float nearPlane = 0.3;
 			//float farPlane = 10;
 			//Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
 
-			float size = 5;
-			Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
+
 			Matrix4x4 mvp = orthoProject * view * iter->m_transform.GetLocalToWorldMatrix();
 			//Matrix4x4 mv = view * iter->m_transform.GetLocalToWorldMatrix();
 			//glUseProgram(iter->m_material.GetRenderProgram());
@@ -217,7 +225,7 @@ public:
 
 
 		// 进入渲染流程时 应该已经全部移动完毕 相机应该在稳定后计算位置
-		//application::RenderCamera(delta);
+		application::RenderCamera(delta);
 
 		// Simply clear the window with red
 		static const GLfloat white[] = { 0.f, 0.f, 0.f, 1.0f };
@@ -225,9 +233,22 @@ public:
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
-		//application::RenderScene(delta);
 
-		GLHelper::DrawFullTexture(m_depth_debug_tex);
+		glUseProgram(m_renderProgram);
+		GLuint unit = 0;
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_depth_tex);
+		int location = glGetUniformLocation(m_renderProgram, "shadow_tex");
+		glUniform1i(location, unit);
+
+		GLuint worldToLightViewAndProjectLocation = glGetUniformLocation(m_renderProgram, "worldToLightViewAndProject_matrix");
+		float worldToLightViewAndProjectArray[16];
+		m_worldToLightViewAndProjectMatrix.GetMatrixArray(worldToLightViewAndProjectArray);
+		glUniformMatrix4fv(worldToLightViewAndProjectLocation, 1, true, worldToLightViewAndProjectArray);
+
+		application::RenderScene(delta);
+
+		//GLHelper::DrawFullTexture(m_depth_debug_tex);
 	}
 
 

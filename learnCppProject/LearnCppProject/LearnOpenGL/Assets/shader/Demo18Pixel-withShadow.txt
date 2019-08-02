@@ -6,6 +6,7 @@ layout (location = 0) out vec4 color;
 // Input from vertex shader
 in VS_OUT
 {
+	vec4 shadow_coord;
     vec3 N;
     vec3 L;
     vec3 V;
@@ -15,6 +16,8 @@ in VS_OUT
 uniform vec3 diffuse_albedo = vec3(1, 1, 1);
 uniform vec3 specular_albedo = vec3(1);
 uniform float specular_power = 30.0;
+
+uniform sampler2DShadow shadow_tex;
 
 void main(void)
 {
@@ -30,5 +33,14 @@ void main(void)
     vec3 specular = pow(nh, specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
-    color = vec4(diffuse + specular, 1.0);
+    //color = textureProj(shadow_tex, fs_in.shadow_coord) * vec4(diffuse + specular, 1.0);
+	//color = vec4(textureProj(shadow_tex, fs_in.shadow_coord));
+	if(textureProj(shadow_tex, fs_in.shadow_coord) > 0)
+	{
+		color = vec4(1, 0, 0, 1);
+	}
+	else
+	{
+		color = vec4(0, 1, 0, 1);
+	}
 }

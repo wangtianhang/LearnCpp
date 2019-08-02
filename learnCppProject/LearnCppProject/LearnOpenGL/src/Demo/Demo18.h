@@ -100,8 +100,8 @@ public:
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_tex, 0);
 
@@ -139,6 +139,14 @@ public:
 		Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
 
 		m_worldToLightViewAndProjectMatrix = orthoProject * view;
+
+		glDepthMask(true);
+		glEnable(GL_CULL_FACE);
+		// unityÄÚ²¿Ë³Ê±Õë
+		glFrontFace(GL_CW);
+		glCullFace(GL_BACK);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 
 		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
 		{
@@ -186,6 +194,8 @@ public:
 
 		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		
 	}
 
 	static float Modulo(float a, int b)
@@ -248,6 +258,7 @@ public:
 
 		application::RenderScene(delta);
 
+		//GLHelper::DrawFullTexture(m_depth_debug_tex);
 		//GLHelper::DrawFullTexture(m_depth_debug_tex);
 	}
 

@@ -14,6 +14,8 @@ void SceneRenderMgr::Update(float delta)
 	{
 		MeshRenderObject iter = *m_renderGoVec[i];
 
+		
+
 		Matrix4x4 view = application::app->m_camera.GetViewMatrix();
 		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
 		float fov = 60;
@@ -23,6 +25,8 @@ void SceneRenderMgr::Update(float delta)
 		Matrix4x4 mvp = project * view * iter.m_transform.GetLocalToWorldMatrix();
 		Matrix4x4 mv = view * iter.m_transform.GetLocalToWorldMatrix();
 		glUseProgram(iter.m_material.GetRenderProgram());
+
+		Vector3 test = (project * view).MultiplyPoint(Vector3::zero());
 
 		GLuint modelToWorldLocation = glGetUniformLocation(iter.m_material.GetRenderProgram(), "modelToWorldMatrix");
 		float modelToWorldMatrixArray[16];

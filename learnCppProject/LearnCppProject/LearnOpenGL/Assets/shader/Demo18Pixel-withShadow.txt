@@ -49,7 +49,8 @@ void main(void)
     vec3 specular = pow(nh, specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
-    color = ShadowCalculation(fs_in.shadow_coord) * vec4(diffuse + specular, 1.0);
+	float shadow = ShadowCalculation(fs_in.shadow_coord);
+    color = (1- shadow) * vec4(diffuse + specular, 1.0);
 	//color = vec4(textureProj(shadow_tex, fs_in.shadow_coord));
 	//if(ShadowCalculation(fs_in.shadow_coord) > 0.8)
 	//{

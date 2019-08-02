@@ -138,12 +138,12 @@ public:
 			//Matrix4x4 view = application::app->m_camera.GetViewMatrix();
 			float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
 			//float fov = 60;
-			float nearPlane = 0.3;
-			float farPlane = 1000;
+			//float nearPlane = 0.3;
+			//float farPlane = 10;
 			//Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
 
 			float size = 5;
-			Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 100);
+			Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
 			Matrix4x4 mvp = orthoProject * view * iter->m_transform.GetLocalToWorldMatrix();
 			//Matrix4x4 mv = view * iter->m_transform.GetLocalToWorldMatrix();
 			//glUseProgram(iter->m_material.GetRenderProgram());

@@ -69,14 +69,14 @@ public:
 		}
 
 		
-		if (m_material.m_useOutProgram)
-		{
-			glUseProgram(m_material.m_outProgram);
-		}
-		else
-		{
+// 		if (m_material.m_useOutProgram)
+// 		{
+// 			glUseProgram(m_material.m_outProgram);
+// 		}
+// 		else
+// 		{
 			glUseProgram(m_material.m_renderProgram);
-		}
+/*		}*/
 		
 		glFrontFace(m_meshData.m_frontFace);
 		glBindVertexArray(m_meshData.m_vao);

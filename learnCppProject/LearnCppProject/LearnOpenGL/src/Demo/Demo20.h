@@ -29,7 +29,8 @@ public:
 	GLuint m_depth_tex;
 	GLuint m_depth_debug_tex;
 
-	GLuint m_drawDepthProgram;
+	//GLuint m_drawDepthProgram;
+	Material m_drawDepthMat;
 
 	GLuint m_renderProgram;
 
@@ -47,7 +48,7 @@ public:
 
 	void InitScene()
 	{
-		m_drawDepthProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo20Pixel-drawDepth.txt");
+		m_drawDepthMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo20Pixel-drawDepth.txt");
 
 		m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo19Vertex-withShadow.txt", "./Assets/shader/Demo20Pixel-withShadow.txt");
 		Vector3 lightEuler = Vector3(50, -30, 0);
@@ -122,7 +123,7 @@ public:
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
 		glViewport(0, 0, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
-		glUseProgram(m_drawDepthProgram);
+		glUseProgram(m_drawDepthMat.m_renderProgram);
 		static const GLenum buffs[] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, buffs);
 		static const GLfloat zero[] = { 1.0f, 1, 1, 1 };
@@ -148,7 +149,7 @@ public:
 
 			Matrix4x4 mvp = orthoProject * view * iter->m_transform.GetLocalToWorldMatrix();
 
-			GLuint mvpLocation = glGetUniformLocation(m_drawDepthProgram, "mvp");
+			GLuint mvpLocation = glGetUniformLocation(m_drawDepthMat.m_renderProgram, "mvp");
 			float mvpMatrixArray[16];
 			mvp.GetMatrixArray(mvpMatrixArray);
 			glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
@@ -156,10 +157,11 @@ public:
 
 			Vector3 test = mvp.MultiplyPoint(Vector3::zero());
 
-			iter->m_material.m_useOutProgram = true;
-			iter->m_material.m_outProgram = m_drawDepthProgram;
+			Material cacheMat = iter->m_material;
+			iter->m_material = m_drawDepthMat;
 			iter->RenderObj();
-			iter->m_material.m_useOutProgram = false;
+			//iter->m_material.m_useOutProgram = false;
+			iter->m_material = cacheMat;
 		}
 
 		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);

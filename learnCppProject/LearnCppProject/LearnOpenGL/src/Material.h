@@ -18,23 +18,23 @@ struct Material
 
 	GLuint m_renderProgram = 0;
 
-	bool m_useOutProgram = false;
-	GLuint m_outProgram = 0;
+	//bool m_useOutProgram = false;
+	//GLuint m_outProgram = 0;
 
 	//bool m_isShared = false;
 	//int m_ShareCount = 1;
 
-	GLuint GetRenderProgram()
-	{
-		if (m_useOutProgram)
-		{
-			return m_outProgram;
-		}
-		else
-		{
-			return m_renderProgram;
-		}
-	}
+// 	GLuint GetRenderProgram()
+// 	{
+// 		if (m_useOutProgram)
+// 		{
+// 			return m_outProgram;
+// 		}
+// 		else
+// 		{
+// 			return m_renderProgram;
+// 		}
+// 	}
 
 	void UnInit()
 	{

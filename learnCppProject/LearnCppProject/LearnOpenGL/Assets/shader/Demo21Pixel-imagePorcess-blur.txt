@@ -1,0 +1,19 @@
+#version 450 core
+// Declare VS_OUT as an input interface block
+in VS_OUT
+{
+vec4 color; // Send color to the next stage
+vec2 uv;
+} fs_in;
+uniform sampler2D texture1;
+// Output to the framebuffer
+out vec4 color;
+void main(void)
+{
+// Simply assign the color we were given by the vertex shader to our output
+//color = fs_in.color;
+//vec2 tmpuv = vec2(0.5, 0.5);
+color = texture(texture1,fs_in.uv);
+//color = vec4(fs_in.uv, 0, 1);
+//color = texelFetch(texture1, ivec2(gl_FragCoord.xy), 0);
+}

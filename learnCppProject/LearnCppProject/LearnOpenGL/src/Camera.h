@@ -181,4 +181,19 @@ public:
 		}
 
 	}
+
+	void onMouseWheel(int pos)
+	{
+		//GUtil::Log("onMouseWheel " + std::to_string(pos));
+		if (pos == 1) 
+		{
+			// 向前滚 拉远
+			ProcessKeyboard(BACKWARD, 0.1f);
+		}
+		else if (pos == -1)
+		{
+			// 向后滚 拉近
+			ProcessKeyboard(FORWARD, 0.1f);
+		}
+	}
 };

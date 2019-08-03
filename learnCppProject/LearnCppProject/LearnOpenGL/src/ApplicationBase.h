@@ -228,7 +228,7 @@ public:
 
 	virtual void onMouseWheel(int pos)
 	{
-
+		m_camera.onMouseWheel(pos);
 	}
 
 	virtual void onDebugMessage(GLenum source,

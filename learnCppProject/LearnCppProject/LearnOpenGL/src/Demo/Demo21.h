@@ -11,6 +11,7 @@
 #include "../GLHelper.h"
 #include "../Camera.h"
 #include "../PNGHelper.h"
+#include "../RenderTexture.h"
 
 // blur vsm demo
 class Demo21 : public application
@@ -22,12 +23,13 @@ public:
 
 	MeshRenderObject * m_sphere = NULL;
 
-	GLuint m_depth_fbo;
+	//GLuint m_depth_fbo;
 
 	int m_DEPTH_TEXTURE_SIZE = 128;
 
-	GLuint m_depth_tex;
-	GLuint m_depth_vsm_tex;
+	//GLuint m_depth_tex;
+	//GLuint m_depth_vsm_tex;
+	RenderTexture m_depthRenderTexture;
 
 	//GLuint m_drawDepthProgram;
 	Material m_drawDepthMat;
@@ -36,8 +38,9 @@ public:
 
 	Matrix4x4 m_worldToLightViewAndProjectMatrix;
 
-	GLuint m_blurDepthFbo;
-	GLuint m_blurDepthTex;
+	//GLuint m_blurDepthFbo;
+	//GLuint m_blurDepthTex;
+	RenderTexture m_blurDepthRenderTexture;
 	Material m_blurMat;
 
 	virtual void startup()
@@ -101,11 +104,11 @@ public:
 
 	void InitDepthFBO()
 	{
-		glGenFramebuffers(1, &m_depth_fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
+		glGenFramebuffers(1, &m_depthRenderTexture.m_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_depthRenderTexture.m_fbo);
 
-		glGenTextures(1, &m_depth_tex);
-		glBindTexture(GL_TEXTURE_2D, m_depth_tex);
+		glGenTextures(1, &m_depthRenderTexture.m_depthTex);
+		glBindTexture(GL_TEXTURE_2D, m_depthRenderTexture.m_depthTex);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -113,15 +116,15 @@ public:
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
 
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_tex, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depthRenderTexture.m_depthTex, 0);
 
-		glGenTextures(1, &m_depth_vsm_tex);
-		glBindTexture(GL_TEXTURE_2D, m_depth_vsm_tex);
+		glGenTextures(1, &m_depthRenderTexture.m_colorTex);
+		glBindTexture(GL_TEXTURE_2D, m_depthRenderTexture.m_colorTex);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_depth_vsm_tex, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_depthRenderTexture.m_colorTex, 0);
 
 		static const GLenum buffs[] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, buffs);
@@ -132,27 +135,30 @@ public:
 
 	void InitBlurDepth()
 	{
-		glGenFramebuffers(1, &m_blurDepthFbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_blurDepthFbo);
+		glGenFramebuffers(1, &m_blurDepthRenderTexture.m_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_blurDepthRenderTexture.m_fbo);
 
-		glGenTextures(1, &m_blurDepthTex);
-		glBindTexture(GL_TEXTURE_2D, m_blurDepthTex);
+		glGenTextures(1, &m_blurDepthRenderTexture.m_colorTex);
+		glBindTexture(GL_TEXTURE_2D, m_blurDepthRenderTexture.m_colorTex);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_blurDepthTex, 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_blurDepthRenderTexture.m_colorTex, 0);
 
 		static const GLenum buffs[] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, buffs);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		m_blurDepthRenderTexture.m_width = m_DEPTH_TEXTURE_SIZE;
+		m_blurDepthRenderTexture.m_height = m_DEPTH_TEXTURE_SIZE;
 	}
 
 	void DrawDepth()
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_depthRenderTexture.m_fbo);
 		glViewport(0, 0, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 		glUseProgram(m_drawDepthMat.m_renderProgram);
 
@@ -228,7 +234,7 @@ public:
 
 	void BlurDepth()
 	{
-		GLHelper::Blit(m_depth_vsm_tex, m_blurDepthFbo, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE, m_blurMat);
+		GLHelper::Blit(m_depthRenderTexture, m_blurDepthRenderTexture, m_blurMat);
 	}
 
 	virtual void RenderUpdate(float delta)
@@ -254,7 +260,7 @@ public:
 		glUseProgram(m_renderProgram);
 		GLuint unit = 0;
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_blurDepthTex);
+		glBindTexture(GL_TEXTURE_2D, m_blurDepthRenderTexture.m_colorTex);
 		int location = glGetUniformLocation(m_renderProgram, "shadowMap");
 		glUniform1i(location, unit);
 

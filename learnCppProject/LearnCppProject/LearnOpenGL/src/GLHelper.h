@@ -8,6 +8,7 @@
 #include "./FileIO.h"
 #include "./MeshFliter.h"
 #include "./Material.h"
+#include "./RenderTexture.h"
 
 struct GLHelper 
 {
@@ -360,7 +361,7 @@ struct GLHelper
 		}
 	}
 
-	static void Blit(GLuint srcTex, GLuint desFbo, int width, int height, Material mat);
+	static void Blit(RenderTexture srcRenderTexture, RenderTexture desRenderTexture, Material mat);
 
 	static void SaveScreen(std::string fileName);
 

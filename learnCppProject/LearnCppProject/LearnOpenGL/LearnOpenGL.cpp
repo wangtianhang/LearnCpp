@@ -43,13 +43,19 @@
 #include "./src/Demo/Demo21.h"
 #include "./src/Demo/Demo22.h"
 
+#include <assimp/Importer.hpp>
+#include "../../include/assimp/scene.h"
+#include "../../include/assimp/postprocess.h"
+
 // Derive my_application from sb7::application
 
 // Our one and only instance of DECLARE_MAIN
 //DECLARE_MAIN(my_application);
 
+#pragma comment(lib,"glfw3.lib")
 #pragma comment(lib,"libpng16d.lib")
 #pragma comment(lib,"zlibd.lib")
+#pragma comment(lib,"assimp-vc140-mt.lib")
 
 //my_application *app = 0;
 int CALLBACK WinMain(HINSTANCE hInstance, 

@@ -12,8 +12,8 @@
 #include "../Camera.h"
 #include "../PNGHelper.h"
 
-// hard shadow demo
-class Demo18 : public application
+// pcf demo
+class Demo19 : public application
 {
 public:
 	// Our rendering function
@@ -35,7 +35,6 @@ public:
 
 	Matrix4x4 m_worldToLightViewAndProjectMatrix;
 
-	//float m_bias = 0.005f;
 
 	virtual void startup()
 	{
@@ -50,7 +49,7 @@ public:
 	{
 		m_drawDepthProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo18Pixel-drawDepth.txt");
 
-		m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-withShadow.txt", "./Assets/shader/Demo18Pixel-withShadow.txt");
+		m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo19Vertex-withShadow.txt", "./Assets/shader/Demo19Pixel-withShadow.txt");
 		Vector3 lightEuler = Vector3(50, -30, 0);
 		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
 		lightDir.Normalize();
@@ -91,7 +90,7 @@ public:
 		m_camera.m_transform.SetEulerAngles(Vector3(20, 0, 0));
 	}
 
-	void InitDepthFBO() 
+	void InitDepthFBO()
 	{
 		glGenFramebuffers(1, &m_depth_fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_depth_fbo);
@@ -142,49 +141,18 @@ public:
 
 		m_worldToLightViewAndProjectMatrix = orthoProject * view;
 
-		//glDepthMask(true);
-		//glEnable(GL_CULL_FACE);
-		// unityÄÚ²¿Ë³Ê±Õë
-		//glFrontFace(GL_CW);
-		//glCullFace(GL_BACK);
-		//glEnable(GL_DEPTH_TEST);
-		//glDepthFunc(GL_LEQUAL);
-
 		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
 		{
 			MeshRenderObject * iter = application::app->m_sceneRenderMgr.m_renderGoVec[i];
 
-			//Matrix4x4 view = application::app->m_camera.GetViewMatrix();
-			
-			//float fov = 60;
-			//float nearPlane = 0.3;
-			//float farPlane = 10;
-			//Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
-
 
 			Matrix4x4 mvp = orthoProject * view * iter->m_transform.GetLocalToWorldMatrix();
-			//Matrix4x4 mv = view * iter->m_transform.GetLocalToWorldMatrix();
-			//glUseProgram(iter->m_material.GetRenderProgram());
 
 			GLuint mvpLocation = glGetUniformLocation(m_drawDepthProgram, "mvp");
 			float mvpMatrixArray[16];
 			mvp.GetMatrixArray(mvpMatrixArray);
 			glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
-// 			GLuint mvLocation = glGetUniformLocation(iter->m_material.GetRenderProgram(), "mv_matrix");
-// 			float mvMatrixArray[16];
-// 			mv.GetMatrixArray(mvMatrixArray);
-// 			glUniformMatrix4fv(mvLocation, 1, true, mvMatrixArray);
-// 
-// 			GLuint viewLocation = glGetUniformLocation(iter->m_material.GetRenderProgram(), "view_matrix");
-// 			float viewMatrixArray[16];
-// 			view.GetMatrixArray(viewMatrixArray);
-// 			glUniformMatrix4fv(viewLocation, 1, true, viewMatrixArray);
-// 
-// 
-// 			GLuint projLocation = glGetUniformLocation(iter->m_material.GetRenderProgram(), "proj_matrix");
-// 			float projMatrixArray[16];
-// 			project.GetMatrixArray(projMatrixArray);
-// 			glUniformMatrix4fv(projLocation, 1, true, projMatrixArray);
+
 
 			Vector3 test = mvp.MultiplyPoint(Vector3::zero());
 
@@ -197,7 +165,7 @@ public:
 		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-		
+
 	}
 
 	static float Modulo(float a, int b)
@@ -208,7 +176,6 @@ public:
 	static Vector3 PingPong(Vector3 a, Vector3 b, float t)
 	{
 		float modt = Modulo(t, 2);
-		//t = t % 2;
 		if (modt < 1)
 		{
 			return Vector3::Lerp(a, b, modt);
@@ -253,22 +220,20 @@ public:
 		int location = glGetUniformLocation(m_renderProgram, "shadowMap");
 		glUniform1i(location, unit);
 
+		int depthSizeLocation = glGetUniformLocation(m_renderProgram, "depthSize");
+		glUniform2i(depthSizeLocation, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
+
 		GLuint worldToLightViewAndProjectLocation = glGetUniformLocation(m_renderProgram, "worldToLightViewAndProject_matrix");
 		float worldToLightViewAndProjectArray[16];
 		m_worldToLightViewAndProjectMatrix.GetMatrixArray(worldToLightViewAndProjectArray);
 		glUniformMatrix4fv(worldToLightViewAndProjectLocation, 1, true, worldToLightViewAndProjectArray);
 
 		application::RenderScene(delta);
-
-		//GLHelper::DrawFullTexture(m_depth_debug_tex);
-		//GLHelper::DrawFullTexture(m_depth_debug_tex);
 	}
 
 
 	virtual void shutdown()
 	{
 		application::shutdown();
-
-		//glDeleteProgram(m_rendering_program);
 	}
 };

@@ -80,6 +80,7 @@ public:
 			obj->m_material = mat;
 			obj->m_transform.SetLocalScale(Vector3::one() * 1);
 			obj->m_transform.SetPosition(Vector3(0, 0.5, 0));
+			
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 
 			m_sphere = obj;

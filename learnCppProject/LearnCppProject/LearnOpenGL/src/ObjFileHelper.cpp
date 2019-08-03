@@ -6,7 +6,7 @@
 #include<sstream>
 
 #include "./ObjFileHelper.h"
-
+/*
 void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertices, std::vector<Vector3> &normals, std::vector<GLushort> &elements)
 {
 	using namespace std;
@@ -42,13 +42,21 @@ void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertice
 		}
 		else if (line[0] == '#')
 		{
-			/* ignoring this line */
+			// ignoring this line
 		}
 		else
 		{
-			/* ignoring this line */
+			// ignoring this line
 		}
 	}
+
+	// 3dmax 为右手坐标系 需要转换下坐标
+// 	for (int i = 0; i < vertices.size(); ++i)
+// 	{
+// 		Vector3 iter = vertices[i];
+// 		iter.x = -iter.x;
+// 		vertices[i] = iter;
+// 	}
 
 	normals.resize(vertices.size(), Vector3(0.0, 0.0, 0.0));
 	for (int i = 0; i < elements.size(); i += 3)
@@ -132,3 +140,4 @@ MeshFliter ObjFileHelper::loadObjAsVAO(const char* filename)
 
 	return ret;
 }
+*/

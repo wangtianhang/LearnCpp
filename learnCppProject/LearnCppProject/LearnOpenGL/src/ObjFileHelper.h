@@ -9,6 +9,7 @@
 
 //using namespace std;
 
+/*
 struct ObjFileHelper
 {
 	
@@ -17,3 +18,4 @@ public:
 
 	static MeshFliter loadObjAsVAO(const char* filename);
 };
+*/

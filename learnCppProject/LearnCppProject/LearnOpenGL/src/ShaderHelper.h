@@ -12,6 +12,6 @@ GLuint CreateShaderFromFile(const char * filename,
 
 GLuint CreateShaderFromString(const char * source,
 	GLenum shader_type,
-	bool check_errors);
+	bool check_errors, std::string shaderPath = "");
 
 GLuint CreateShaderProgram(GLuint vertex, GLuint pixel, bool delete_shader, bool check_errors);

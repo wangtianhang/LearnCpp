@@ -98,7 +98,7 @@ void GLHelper::Blit(RenderTexture srcRenderTexture, RenderTexture desRenderTextu
 
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, srcRenderTexture.m_colorTex);
-	int location = glGetUniformLocation(m_drawTexture_program, "texture1");
+	int location = glGetUniformLocation(mat.m_renderProgram, "texture1");
 	glUniform1i(location, unit);
 
 	glBindVertexArray(m_drawTexVao);

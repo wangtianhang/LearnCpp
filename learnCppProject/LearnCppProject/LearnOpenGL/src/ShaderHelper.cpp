@@ -69,7 +69,8 @@ fail_data_alloc:
 
 GLuint CreateShaderFromString(const char * source,
 	GLenum shader_type,
-	bool check_errors)
+	bool check_errors,
+	std::string shaderPath)
 {
 	GLuint sh;
 
@@ -92,11 +93,11 @@ GLuint CreateShaderFromString(const char * source,
 #ifdef _WIN32
 			if(shader_type == GL_VERTEX_SHADER)
 			{
-				OutputDebugStringA("vertex shader error\n");
+				OutputDebugStringA((shaderPath + " vertex shader error\n").c_str());
 			}
 			else if (shader_type == GL_FRAGMENT_SHADER)
 			{
-				OutputDebugStringA("pixel shader error\n");
+				OutputDebugStringA((shaderPath + " pixel shader error\n").c_str());
 			}
 			OutputDebugStringA(buffer);
 			OutputDebugStringA("\n");

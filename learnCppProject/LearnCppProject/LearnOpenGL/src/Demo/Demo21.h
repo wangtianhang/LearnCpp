@@ -34,7 +34,7 @@ public:
 	//GLuint m_drawDepthProgram;
 	Material m_drawDepthMat;
 
-	GLuint m_renderProgram;
+	GLuint m_phongWithShadowProgram;
 
 	Matrix4x4 m_worldToLightViewAndProjectMatrix;
 
@@ -58,21 +58,22 @@ public:
 	{
 		m_drawDepthMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo20Pixel-drawDepth.txt");
 
-		m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo19Vertex-withShadow.txt", "./Assets/shader/Demo20Pixel-withShadow.txt");
+		m_phongWithShadowProgram = GLHelper::CreateShader("./Assets/shader/Demo19Vertex-withShadow.txt", "./Assets/shader/Demo20Pixel-withShadow.txt");
 
-		m_blurMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo7Vertex.txt", "./Assets/shader/Demo7Pixel.txt");
+		m_blurMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo21Vertex-imagePorcess.txt", "./Assets/shader/Demo21Pixel-imagePorcess-blur.txt");
+		//m_blurMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo7Vertex.txt", "./Assets/shader/Demo7Pixel.txt");
 
 		Vector3 lightEuler = Vector3(50, -30, 0);
 		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
 		lightDir.Normalize();
-		glUseProgram(m_renderProgram);
-		glUniform3f(glGetUniformLocation(m_renderProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
+		glUseProgram(m_phongWithShadowProgram);
+		glUniform3f(glGetUniformLocation(m_phongWithShadowProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
 
 		{
 			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
 
 			Material mat;
-			mat.m_renderProgram = m_renderProgram;
+			mat.m_renderProgram = m_phongWithShadowProgram;
 
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
@@ -88,7 +89,7 @@ public:
 			MeshFliter meshFilter = GLHelper::CreateCubeMesh();
 
 			Material mat;
-			mat.m_renderProgram = m_renderProgram;
+			mat.m_renderProgram = m_phongWithShadowProgram;
 
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
@@ -234,6 +235,10 @@ public:
 
 	void BlurDepth()
 	{
+		glUseProgram(m_blurMat.m_renderProgram);
+		int texSizeLocation = glGetUniformLocation(m_blurMat.m_renderProgram, "texSize2");
+		glUniform2i(texSizeLocation, m_blurDepthRenderTexture.m_width, m_blurDepthRenderTexture.m_height);
+
 		GLHelper::Blit(m_depthRenderTexture, m_blurDepthRenderTexture, m_blurMat);
 	}
 
@@ -257,24 +262,23 @@ public:
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
 
-		glUseProgram(m_renderProgram);
+		glUseProgram(m_phongWithShadowProgram);
 		GLuint unit = 0;
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_blurDepthRenderTexture.m_colorTex);
-		int location = glGetUniformLocation(m_renderProgram, "shadowMap");
+		int location = glGetUniformLocation(m_phongWithShadowProgram, "shadowMap");
 		glUniform1i(location, unit);
 
-		//int depthSizeLocation = glGetUniformLocation(m_renderProgram, "depthSize");
-		//glUniform2i(depthSizeLocation, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
 
-		GLuint worldToLightViewAndProjectLocation = glGetUniformLocation(m_renderProgram, "worldToLightViewAndProject_matrix");
+
+		GLuint worldToLightViewAndProjectLocation = glGetUniformLocation(m_phongWithShadowProgram, "worldToLightViewAndProject_matrix");
 		float worldToLightViewAndProjectArray[16];
 		m_worldToLightViewAndProjectMatrix.GetMatrixArray(worldToLightViewAndProjectArray);
 		glUniformMatrix4fv(worldToLightViewAndProjectLocation, 1, true, worldToLightViewAndProjectArray);
 
 		application::RenderScene(delta);
 
-		//GLHelper::DrawFullTexture(m_blurDepthTex);
+		//GLHelper::DrawFullTexture(m_blurDepthRenderTexture.m_colorTex);
 	}
 
 

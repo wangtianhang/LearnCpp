@@ -413,8 +413,8 @@ struct GLHelper
 		std::string vertex_shader_source = LoadTextFile(vertexPath);
 		std::string fragment_shader_source = LoadTextFile(pixelPath);
 
-		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
-		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
+		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true, vertexPath);
+		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true, pixelPath);
 		rendering_program = CreateShaderProgram(vertex, pixel, true, true);
 		return rendering_program;
 	}

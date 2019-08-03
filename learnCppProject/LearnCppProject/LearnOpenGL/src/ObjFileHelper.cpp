@@ -67,7 +67,7 @@ void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertice
 MeshFliter ObjFileHelper::loadObjAsVAO(const char* filename)
 {
 	MeshFliter ret;
-	ret.m_frontFace = GL_CCW;
+	ret.m_frontFace = GL_CW;
 
 	std::vector<Vector3> vertices;
 	std::vector<Vector3> normals;
@@ -76,6 +76,25 @@ MeshFliter ObjFileHelper::loadObjAsVAO(const char* filename)
 	GLfloat * vertex_positions = new GLfloat[vertices.size() * 3];
 	GLushort * vertex_indices = new GLushort[indexs.size()];
 	GLfloat * vertex_normals = new GLfloat[normals.size() * 3];
+
+	for (int i = 0; i < vertices.size(); ++i)
+	{
+		vertex_positions[i * 3] = vertices[i].x;
+		vertex_positions[i * 3 + 1] = vertices[i].y;
+		vertex_positions[i * 3 + 2] = vertices[i].z;
+	}
+
+	for (int i = 0; i < indexs.size(); ++i)
+	{
+		vertex_indices[i] = indexs[i];
+	}
+
+	for (int i = 0; i < normals.size(); ++i)
+	{
+		vertex_normals[i * 3] = normals[i].x;
+		vertex_normals[i * 3 + 1] = normals[i].y;
+		vertex_normals[i * 3 + 2] = normals[i].z;
+	}
 
 	int size_vertex_positions = vertices.size() * 3 * 4;
 	int size_vertex_indices = indexs.size() * 2;

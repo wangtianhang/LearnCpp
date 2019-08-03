@@ -187,13 +187,13 @@ public:
 		//GUtil::Log("onMouseWheel " + std::to_string(pos));
 		if (pos == 1) 
 		{
-			// 向前滚 拉远
-			ProcessKeyboard(BACKWARD, 0.1f);
+			// 向前滚 拉jin
+			ProcessKeyboard(FORWARD, 0.1f);
 		}
 		else if (pos == -1)
 		{
-			// 向后滚 拉近
-			ProcessKeyboard(FORWARD, 0.1f);
+			// 向后滚 拉yuan
+			ProcessKeyboard(BACKWARD, 0.1f);
 		}
 	}
 };

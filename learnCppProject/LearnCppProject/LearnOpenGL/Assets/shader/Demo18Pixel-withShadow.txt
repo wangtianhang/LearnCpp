@@ -19,7 +19,7 @@ uniform float specular_power = 30.0;
 
 uniform sampler2D  shadowMap;
 
-float ShadowCalculation(vec4 fragPosLightSpace)
+float ShadowCalculation(vec4 fragPosLightSpace, float bias)
 {
     // 执行透视除法
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
@@ -30,7 +30,10 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     // 取得当前片元在光源视角下的深度
     float currentDepth = projCoords.z;
     // 检查当前片元是否在阴影中
-    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+	
+	
+	
+    float shadow = currentDepth - bias> closestDepth  ? 1.0 : 0.0;
 
     return shadow;
 }
@@ -49,7 +52,8 @@ void main(void)
     vec3 specular = pow(nh, specular_power) * specular_albedo;
 
     // Write final color to the framebuffer
-	float shadow = ShadowCalculation(fs_in.shadow_coord);
+	float bias = max(0.05 * (1.0 - dot(N, L)), 0.005);
+	float shadow = ShadowCalculation(fs_in.shadow_coord, bias);
     color = (1- shadow) * vec4(diffuse + specular, 1.0);
 	//color = vec4(textureProj(shadow_tex, fs_in.shadow_coord));
 	//if(ShadowCalculation(fs_in.shadow_coord) > 0.8)

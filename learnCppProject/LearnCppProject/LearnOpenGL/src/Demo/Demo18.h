@@ -24,7 +24,7 @@ public:
 
 	GLuint m_depth_fbo;
 
-	int m_DEPTH_TEXTURE_SIZE = 1024;
+	int m_DEPTH_TEXTURE_SIZE = 128;
 
 	GLuint m_depth_tex;
 	GLuint m_depth_debug_tex;
@@ -34,6 +34,8 @@ public:
 	GLuint m_renderProgram;
 
 	Matrix4x4 m_worldToLightViewAndProjectMatrix;
+
+	//float m_bias = 0.005f;
 
 	virtual void startup()
 	{
@@ -140,13 +142,13 @@ public:
 
 		m_worldToLightViewAndProjectMatrix = orthoProject * view;
 
-		glDepthMask(true);
-		glEnable(GL_CULL_FACE);
+		//glDepthMask(true);
+		//glEnable(GL_CULL_FACE);
 		// unityÄÚ²¿Ë³Ê±Õë
-		glFrontFace(GL_CW);
-		glCullFace(GL_BACK);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
+		//glFrontFace(GL_CW);
+		//glCullFace(GL_BACK);
+		//glEnable(GL_DEPTH_TEST);
+		//glDepthFunc(GL_LEQUAL);
 
 		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
 		{

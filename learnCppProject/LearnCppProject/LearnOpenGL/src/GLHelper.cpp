@@ -80,6 +80,39 @@ void GLHelper::SetMVP(int shaderProgramId, int mvpLocation, Matrix4x4 mvp)
 	glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
 }
 
+void GLHelper::Blit(GLuint srcTex, GLuint desFbo, int width, int height, Material mat)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, desFbo);
+	glViewport(0, 0, width, height);
+	static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glClearBufferfv(GL_COLOR, 0, black);
+
+	GLboolean isBlendEnable = false;
+	glGetBooleanv(GL_BLEND, &isBlendEnable);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GLuint unit = 0;
+	glUseProgram(mat.m_renderProgram);
+
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, srcTex);
+	int location = glGetUniformLocation(m_drawTexture_program, "texture1");
+	glUniform1i(location, unit);
+
+	glBindVertexArray(m_drawTexVao);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+	if (!isBlendEnable)
+	{
+		glDisable(GL_BLEND);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+}
+
 void GLHelper::SaveScreen(std::string fileName)
 {
 	

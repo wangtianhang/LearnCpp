@@ -7,6 +7,7 @@
 #include "./ShaderHelper.h"
 #include "./FileIO.h"
 #include "./MeshFliter.h"
+#include "./Material.h"
 
 struct GLHelper 
 {
@@ -358,6 +359,8 @@ struct GLHelper
 			glDisable(GL_BLEND);
 		}
 	}
+
+	static void Blit(GLuint srcTex, GLuint desFbo, int width, int height, Material mat);
 
 	static void SaveScreen(std::string fileName);
 

@@ -14,6 +14,8 @@
 #include "../RenderTexture.h"
 #include "../ObjFileHelper.h"
 
+
+
 // load model demo
 class Demo22 : public application
 {
@@ -71,8 +73,12 @@ public:
 		glUniform3f(glGetUniformLocation(m_phongWithShadowProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
 
 		{
-			MeshFliter meshFilter = GLHelper::CreateSphereMesh();
-			//MeshFliter meshFilter = ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj");
+
+
+			//MeshFliter meshFilter = GLHelper::CreateSphereMesh();
+			std::vector<MeshFliter> ret;
+			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", ret);
+			MeshFliter meshFilter = ret[0];
 
 			Material mat;
 			mat.m_renderProgram = m_phongWithShadowProgram;
@@ -80,8 +86,8 @@ public:
 			MeshRenderObject * obj = new MeshRenderObject();
 			obj->m_meshData = meshFilter;
 			obj->m_material = mat;
-			obj->m_transform.SetLocalScale(Vector3::one() * 1);
-			obj->m_transform.SetPosition(Vector3(0, 0.5, 0));
+			obj->m_transform.SetLocalScale(Vector3::one() * 0.1);
+			obj->m_transform.SetPosition(Vector3(0, 0, 0));
 			Vector3 euler = obj->m_transform.GetEulerAngles();
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 

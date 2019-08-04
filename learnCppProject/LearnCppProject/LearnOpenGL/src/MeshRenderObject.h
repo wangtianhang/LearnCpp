@@ -82,7 +82,15 @@ public:
 		glBindVertexArray(m_meshData.m_vao);
 		if (m_meshData.m_isIndex)
 		{
-			glDrawElements(GL_TRIANGLES, m_meshData.drawVerticesCount, GL_UNSIGNED_SHORT, 0);
+			if (m_meshData.m_bigIndex)
+			{
+				glDrawElements(GL_TRIANGLES, m_meshData.drawVerticesCount, GL_UNSIGNED_INT, 0);
+			}
+			else
+			{
+				glDrawElements(GL_TRIANGLES, m_meshData.drawVerticesCount, GL_UNSIGNED_SHORT, 0);
+			}
+			
 		}
 		else
 		{

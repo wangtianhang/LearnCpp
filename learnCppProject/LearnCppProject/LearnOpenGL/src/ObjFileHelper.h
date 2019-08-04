@@ -19,3 +19,9 @@ public:
 	static MeshFliter loadObjAsVAO(const char* filename);
 };
 */
+
+struct ObjFileHelper
+{
+public:
+	static bool loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret);
+};

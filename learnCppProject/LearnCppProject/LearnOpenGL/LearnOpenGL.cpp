@@ -44,8 +44,8 @@
 #include "./src/Demo/Demo22.h"
 
 #include <assimp/Importer.hpp>
-#include "../../include/assimp/scene.h"
-#include "../../include/assimp/postprocess.h"
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 // Derive my_application from sb7::application
 

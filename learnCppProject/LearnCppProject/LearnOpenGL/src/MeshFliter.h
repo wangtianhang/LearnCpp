@@ -17,6 +17,7 @@ public:
 	int drawVerticesCount = 0;
 	bool m_isIndex = true;
 	GLenum m_frontFace = GL_CCW;
+	bool m_bigIndex = false;
 
 	//bool m_isShared = false;
 	//int m_ShareCount = 1; // 非共享的情况下 不用了要delete vao和vbo

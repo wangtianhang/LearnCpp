@@ -35,8 +35,8 @@ public:
 	{
 		application::startup();
 
-		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
-		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo22Vertex.txt");
+		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo22Pixel.txt");
 
 		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
 		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
@@ -153,7 +153,7 @@ public:
 		view.m00 = -1;
 
 
-		vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(0, 0, -10), vmath::vec3(0, 0, 0), vmath::vec3(0.0f, 1.0f, 0.0f));
+		vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(0, 0, -10), vmath::vec3(0, 0, -9), vmath::vec3(0.0f, 1.0f, 0.0f));
 
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;

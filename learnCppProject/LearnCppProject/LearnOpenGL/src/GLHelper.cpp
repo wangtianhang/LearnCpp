@@ -2,6 +2,7 @@
 
 #include "./GLHelper.h"
 #include "./ApplicationBase.h"
+#include "./vmath.h"
 
 bool GLHelper::m_hasInit = false;
 GLuint GLHelper::m_drawTexture_program = 0;
@@ -43,6 +44,28 @@ Matrix4x4 GLHelper::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
 	worldToLocal.m22 *= -1;
 	worldToLocal.m23 *= -1;
 	return worldToLocal;
+}
+
+// Matrix4x4 GLHelper::worldToCameraMatrix(Matrix4x4 cameraLocalToWorld)
+// {
+// 
+// }
+
+Matrix4x4 GLHelper::OpenglWorldToCameraMatrix(Vector3 pos, Vector3 forward, Vector3 up)
+{
+// 	Matrix4x4 worldToLocal = cameraLocalToWorld.inverse();
+// 	//worldToLocal.m00 = -worldToLocal.m00;
+// 	worldToLocal.m20 *= -1;
+// 	worldToLocal.m21 *= -1;
+// 	worldToLocal.m22 *= -1;
+// 	worldToLocal.m23 *= -1;
+// 	return worldToLocal;
+	Vector3 center = pos + forward * 1;
+	vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(pos.x, pos.y, pos.z), vmath::vec3(center.x, center.y, center.z), vmath::vec3(up.x, up.y, up.z));
+	Matrix4x4 ret;
+	ret.m00 = view_matrix[0][0];
+
+	return ret;
 }
 
 Matrix4x4 GLHelper::GenViewMatrix(Vector3 cameraPos, Vector3 cameraEuler)

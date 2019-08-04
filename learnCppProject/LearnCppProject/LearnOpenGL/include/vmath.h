@@ -1,4 +1,4 @@
-/*
+
 #ifndef __VMATH_H__
 #define __VMATH_H__
 
@@ -1247,4 +1247,4 @@ static inline T mix(const T& A, const T& B, const T& t)
 };
 
 #endif 
-*/
+

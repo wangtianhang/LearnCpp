@@ -23,216 +23,107 @@ public:
 	// Our rendering function
 
 	double m_accTime = 0;
+	GLuint m_rendering_program = 0;
+	//GLuint m_vertex_array_object = 0;
 
-	MeshRenderObject * m_model = NULL;
-
-	//GLuint m_depth_fbo;
-
-	int m_DEPTH_TEXTURE_SIZE = 128;
-
-	//GLuint m_depth_tex;
-	//GLuint m_depth_vsm_tex;
-	RenderTexture m_depthRenderTexture;
-
-	//GLuint m_drawDepthProgram;
-	Material m_drawDepthMat;
-
-	GLuint m_phongWithShadowProgram;
-
-	Matrix4x4 m_worldToLightViewAndProjectMatrix;
-
-	//GLuint m_blurDepthFbo;
-	//GLuint m_blurDepthTex;
-	RenderTexture m_blurDepthRenderTexture;
-	Material m_blurMat;
+	//GLuint m_buffer;
+	//GLuint m_vao;
+	//int m_sphereDrawVertexCount = 0;
+	MeshFliter m_meshFilter;
 
 	virtual void startup()
 	{
 		application::startup();
 
-		InitScene();
+		std::string vertex_shader_source = LoadTextFile("./Assets/shader/Demo12Vertex.txt");
+		std::string fragment_shader_source = LoadTextFile("./Assets/shader/Demo12Pixel.txt");
 
-		InitDepthFBO();
+		GLuint vertex = CreateShaderFromString(vertex_shader_source.c_str(), GL_VERTEX_SHADER, true);
+		GLuint pixel = CreateShaderFromString(fragment_shader_source.c_str(), GL_FRAGMENT_SHADER, true);
+		m_rendering_program = CreateShaderProgram(vertex, pixel, true, true);
+		//glCreateVertexArrays(1, &m_vertex_array_object);
+		//glBindVertexArray(m_vertex_array_object);
 
-		InitBlurDepth();
+		//TestBufferWithVAO();
+
+		//m_vao = GLHelper::CreateSphereVAO(m_sphereDrawVertexCount);
+		std::vector<MeshFliter> retVec;
+		ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
+		m_meshFilter = retVec[0];
 	}
 
-	void InitScene()
-	{
-		m_drawDepthMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo18Vertex-drawDepth.txt", "./Assets/shader/Demo20Pixel-drawDepth.txt");
-
-		m_phongWithShadowProgram = GLHelper::CreateShader("./Assets/shader/Demo19Vertex-withShadow.txt", "./Assets/shader/Demo20Pixel-withShadow.txt");
-
-		m_blurMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo21Vertex-imagePorcess.txt", "./Assets/shader/Demo21Pixel-imagePorcess-blur.txt");
-		//m_blurMat.m_renderProgram = GLHelper::CreateShader("./Assets/shader/Demo7Vertex.txt", "./Assets/shader/Demo7Pixel.txt");
-
-		Vector3 lightEuler = Vector3(50, -30, 0);
-		Vector3 lightDir = Quaternion::Euler(lightEuler) * Vector3::forward();
-		lightDir.Normalize();
-		glUseProgram(m_phongWithShadowProgram);
-		glUniform3f(glGetUniformLocation(m_phongWithShadowProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
-
-		{
-
-
-			//MeshFliter meshFilter = GLHelper::CreateSphereMesh();
-			std::vector<MeshFliter> ret;
-			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", ret);
-			MeshFliter meshFilter = ret[0];
-
-			Material mat;
-			mat.m_renderProgram = m_phongWithShadowProgram;
-
-			MeshRenderObject * obj = new MeshRenderObject();
-			obj->m_meshData = meshFilter;
-			obj->m_material = mat;
-			obj->m_transform.SetLocalScale(Vector3::one() * 0.1);
-			obj->m_transform.SetPosition(Vector3(0, 0, 0));
-			Vector3 euler = obj->m_transform.GetEulerAngles();
-			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
-
-			m_model = obj;
-		}
-
-		{
-			MeshFliter meshFilter = GLHelper::CreateCubeMesh();
-
-			Material mat;
-			mat.m_renderProgram = m_phongWithShadowProgram;
-
-			MeshRenderObject * obj = new MeshRenderObject();
-			obj->m_meshData = meshFilter;
-			obj->m_material = mat;
-			obj->m_transform.SetLocalScale(Vector3(5, 1, 5));
-			obj->m_transform.SetPosition(Vector3(0, -0.5, 0));
-			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
-		}
-
-		m_camera.m_transform.SetPosition(Vector3(0, 2, -5));
-		m_camera.m_transform.SetEulerAngles(Vector3(20, 0, 0));
-	}
-
-	void InitDepthFBO()
-	{
-		glGenFramebuffers(1, &m_depthRenderTexture.m_fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_depthRenderTexture.m_fbo);
-
-		glGenTextures(1, &m_depthRenderTexture.m_depthTex);
-		glBindTexture(GL_TEXTURE_2D, m_depthRenderTexture.m_depthTex);
-		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT32F, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depthRenderTexture.m_depthTex, 0);
-
-		glGenTextures(1, &m_depthRenderTexture.m_colorTex);
-		glBindTexture(GL_TEXTURE_2D, m_depthRenderTexture.m_colorTex);
-		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_depthRenderTexture.m_colorTex, 0);
-
-		static const GLenum buffs[] = { GL_COLOR_ATTACHMENT0 };
-		glDrawBuffers(1, buffs);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
-
-	void InitBlurDepth()
-	{
-		glGenFramebuffers(1, &m_blurDepthRenderTexture.m_fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_blurDepthRenderTexture.m_fbo);
-
-		glGenTextures(1, &m_blurDepthRenderTexture.m_colorTex);
-		glBindTexture(GL_TEXTURE_2D, m_blurDepthRenderTexture.m_colorTex);
-		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA16, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_blurDepthRenderTexture.m_colorTex, 0);
-
-		static const GLenum buffs[] = { GL_COLOR_ATTACHMENT0 };
-		glDrawBuffers(1, buffs);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		m_blurDepthRenderTexture.m_width = m_DEPTH_TEXTURE_SIZE;
-		m_blurDepthRenderTexture.m_height = m_DEPTH_TEXTURE_SIZE;
-	}
-
-	void DrawDepth()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_depthRenderTexture.m_fbo);
-		glViewport(0, 0, m_DEPTH_TEXTURE_SIZE, m_DEPTH_TEXTURE_SIZE);
-		glUseProgram(m_drawDepthMat.m_renderProgram);
-
-		static const GLfloat zero[] = { 1.0f, 1, 1, 1 };
-		glClearBufferfv(GL_COLOR, 0, zero);
-		static const GLfloat ones[] = { 1.0f };
-		glClearBufferfv(GL_DEPTH, 0, ones);
-
-		Vector3 lightCameraPos = Vector3(3.9, 7.4, -6.1);
-		Vector3 lightCameraEuler = Vector3(50, -30, 0);
-		Matrix4x4 lightCameraLocalToWorld = Matrix4x4::TRS(lightCameraPos, Quaternion::Euler(lightCameraEuler), Vector3::one());
-		Matrix4x4 view = GLHelper::worldToCameraMatrix(lightCameraLocalToWorld);
-
-		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
-		float size = 5;
-		Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
-
-		m_worldToLightViewAndProjectMatrix = orthoProject * view;
-
-		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
-		{
-			MeshRenderObject * iter = application::app->m_sceneRenderMgr.m_renderGoVec[i];
-
-
-			Matrix4x4 mvp = orthoProject * view * iter->m_transform.GetLocalToWorldMatrix();
-
-			GLuint mvpLocation = glGetUniformLocation(m_drawDepthMat.m_renderProgram, "mvp");
-			float mvpMatrixArray[16];
-			mvp.GetMatrixArray(mvpMatrixArray);
-			glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
-
-
-			Vector3 test = mvp.MultiplyPoint(Vector3::zero());
-
-			Material cacheMat = iter->m_material;
-			iter->m_material = m_drawDepthMat;
-			iter->RenderObj();
-			//iter->m_material.m_useOutProgram = false;
-			iter->m_material = cacheMat;
-		}
-
-		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-
-	}
-
-// 	static float Modulo(float a, int b)
-// 	{
-// 		return a - ((int)a / b) * b;
-// 	}
-// 
-// 	static Vector3 PingPong(Vector3 a, Vector3 b, float t)
-// 	{
-// 		float modt = Modulo(t, 2);
-// 		if (modt < 1)
-// 		{
-// 			return Vector3::Lerp(a, b, modt);
-// 		}
-// 		else
-// 		{
-// 			return Vector3::Lerp(b, a, modt - 1);
-// 		}
-// 	}
+	// 	void TestBufferWithVAO()
+	// 	{
+	// 		static const GLfloat vertex_positions[] =
+	// 		{
+	// 			-0.25f,  0.25f, -0.25f,
+	// 			-0.25f, -0.25f, -0.25f,
+	// 			 0.25f, -0.25f, -0.25f,
+	// 
+	// 			 0.25f, -0.25f, -0.25f,
+	// 			 0.25f,  0.25f, -0.25f,
+	// 			-0.25f,  0.25f, -0.25f,
+	// 
+	// 			 0.25f, -0.25f, -0.25f,
+	// 			 0.25f, -0.25f,  0.25f,
+	// 			 0.25f,  0.25f, -0.25f,
+	// 
+	// 			 0.25f, -0.25f,  0.25f,
+	// 			 0.25f,  0.25f,  0.25f,
+	// 			 0.25f,  0.25f, -0.25f,
+	// 
+	// 			 0.25f, -0.25f,  0.25f,
+	// 			-0.25f, -0.25f,  0.25f,
+	// 			 0.25f,  0.25f,  0.25f,
+	// 
+	// 			-0.25f, -0.25f,  0.25f,
+	// 			-0.25f,  0.25f,  0.25f,
+	// 			 0.25f,  0.25f,  0.25f,
+	// 
+	// 			-0.25f, -0.25f,  0.25f,
+	// 			-0.25f, -0.25f, -0.25f,
+	// 			-0.25f,  0.25f,  0.25f,
+	// 
+	// 			-0.25f, -0.25f, -0.25f,
+	// 			-0.25f,  0.25f, -0.25f,
+	// 			-0.25f,  0.25f,  0.25f,
+	// 
+	// 			-0.25f, -0.25f,  0.25f,
+	// 			 0.25f, -0.25f,  0.25f,
+	// 			 0.25f, -0.25f, -0.25f,
+	// 
+	// 			 0.25f, -0.25f, -0.25f,
+	// 			-0.25f, -0.25f, -0.25f,
+	// 			-0.25f, -0.25f,  0.25f,
+	// 
+	// 			-0.25f,  0.25f, -0.25f,
+	// 			 0.25f,  0.25f, -0.25f,
+	// 			 0.25f,  0.25f,  0.25f,
+	// 
+	// 			 0.25f,  0.25f,  0.25f,
+	// 			-0.25f,  0.25f,  0.25f,
+	// 			-0.25f,  0.25f, -0.25f
+	// 		};
+	// 
+	// 		// Create the vertex array object
+	// 		glCreateVertexArrays(1, &m_vao);
+	// 		// Get create two buffers
+	// 		glCreateBuffers(1, &m_buffer);
+	// 		// Initialize the first buffer
+	// 		glNamedBufferStorage(m_buffer, sizeof(vertex_positions), vertex_positions, 0);
+	// 		// Bind it to the vertex array - offset zero, stride = sizeof(vec3)
+	// 		int tmp = sizeof(Vector3);
+	// 		// tmp == 12 ....
+	// 		glVertexArrayVertexBuffer(m_vao, 0, m_buffer, 0, sizeof(Vector3));
+	// 		// Tell OpenGL what the format of the attribute is
+	// 		glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, 0);
+	// 		// Tell OpenGL which vertex buffer binding to use for this attribute
+	// 		glVertexArrayAttribBinding(m_vao, 0, 0);
+	// 		// Enable the attribute
+	// 		glEnableVertexArrayAttrib(m_vao, 0);
+	// 
+	// 
+	// 	}
 
 	virtual void render(double currentTime)
 	{
@@ -242,57 +133,81 @@ public:
 		RenderUpdate(delta);
 	}
 
-	void BlurDepth()
+
+
+	void RenderUpdate(float delta)
 	{
-		glUseProgram(m_blurMat.m_renderProgram);
-		int texSizeLocation = glGetUniformLocation(m_blurMat.m_renderProgram, "texSize2");
-		glUniform2i(texSizeLocation, m_blurDepthRenderTexture.m_width, m_blurDepthRenderTexture.m_height);
-
-		GLHelper::Blit(m_depthRenderTexture, m_blurDepthRenderTexture, m_blurMat);
-	}
-
-	virtual void RenderUpdate(float delta)
-	{
-		//Vector3 newPos = PingPong(Vector3(0, 0.5, 0), Vector3(0, 1.5, 0), m_accTime);
-		//m_sphere->m_transform.SetPosition(newPos);
-
-
-		DrawDepth();
-
-		BlurDepth();
-
-		// 进入渲染流程时 应该已经全部移动完毕 相机应该在稳定后计算位置
-		application::RenderCamera(delta);
-
 		// Simply clear the window with red
-		static const GLfloat white[] = { 0.f, 0.f, 0.f, 1.0f };
+		static const GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		static const GLfloat ones[] = { 1.0f };
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
+		Vector3 euler = Vector3(0, 0, 0);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 1);
+		Vector3 cameraPos = Vector3(0, 0, -10);
+		Vector3 cameraEuler = Vector3::zero();
+		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
+		// camera worldToLocal
+		Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
+		view.m00 = -1;
 
-		glUseProgram(m_phongWithShadowProgram);
-		GLuint unit = 0;
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_blurDepthRenderTexture.m_colorTex);
-		int location = glGetUniformLocation(m_phongWithShadowProgram, "shadowMap");
-		glUniform1i(location, unit);
+
+		vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(0, 0, -10), vmath::vec3(0, 0, 0), vmath::vec3(0.0f, 1.0f, 0.0f));
+
+		float aspect = (float)info.windowWidth / info.windowHeight;
+		float fov = 60;
+		float nearPlane = 0.3;
+		float farPlane = 1000;
+		Matrix4x4 project = Matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
+		Matrix4x4 mvp = project * view * model_localToWorld;
+		Matrix4x4 mv = view * model_localToWorld;
+		//Matrix4x4 mvp = model_localToWorld * view * project;
+		glUseProgram(m_rendering_program);
 
 
+		GLuint mvLocation = glGetUniformLocation(m_rendering_program, "mv_matrix");
+		float mvMatrixArray[16];
+		mv.GetMatrixArray(mvMatrixArray);
+		glUniformMatrix4fv(mvLocation, 1, true, mvMatrixArray);
 
-		GLuint worldToLightViewAndProjectLocation = glGetUniformLocation(m_phongWithShadowProgram, "worldToLightViewAndProject_matrix");
-		float worldToLightViewAndProjectArray[16];
-		m_worldToLightViewAndProjectMatrix.GetMatrixArray(worldToLightViewAndProjectArray);
-		glUniformMatrix4fv(worldToLightViewAndProjectLocation, 1, true, worldToLightViewAndProjectArray);
+		GLuint viewLocation = glGetUniformLocation(m_rendering_program, "view_matrix");
+		float viewMatrixArray[16];
+		view.GetMatrixArray(viewMatrixArray);
+		glUniformMatrix4fv(viewLocation, 1, true, viewMatrixArray);
 
-		application::RenderScene(delta);
+		GLuint projLocation = glGetUniformLocation(m_rendering_program, "proj_matrix");
+		float projMatrixArray[16];
+		project.GetMatrixArray(projMatrixArray);
+		glUniformMatrix4fv(projLocation, 1, true, projMatrixArray);
 
-		//GLHelper::DrawFullTexture(m_blurDepthRenderTexture.m_colorTex);
+		//GLuint lightPosLocation = glGetUniformLocation(m_rendering_program, "light_pos");
+		//Vector3 mvLightPos = view.MultiplyPoint(Vector3(-20, 20, -20));
+		//glUniform3f(lightPosLocation, mvLightPos.x, mvLightPos.y, mvLightPos.z);
+		Vector3 test = mv.MultiplyPoint(Vector3(0, 0, 0));
+
+
+		glEnable(GL_CULL_FACE);
+		// unity内部顺时针
+		glFrontFace(GL_CW);
+		glCullFace(GL_BACK);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+
+		// 这种先bind再draw很蛋疼。。
+		glBindVertexArray(m_meshFilter.m_vao);
+		glDrawElements(GL_TRIANGLES, m_meshFilter.drawVerticesCount, GL_UNSIGNED_INT, 0);
+		//glDrawArrays(m_vertex_array_object, )
+
+
 	}
-
 
 	virtual void shutdown()
 	{
 		application::shutdown();
+
+		//glDeleteProgram(m_rendering_program);
+		//glDeleteVertexArrays(1, &m_vao);
+		//glDeleteBuffers(1, &m_buffer);
 	}
 };

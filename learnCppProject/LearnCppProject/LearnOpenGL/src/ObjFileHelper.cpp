@@ -266,7 +266,7 @@ void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& me
 bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret)
 {
 	Assimp::Importer import;
-	const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GenNormals);
+	const aiScene *scene = import.ReadFile(path, aiProcess_GenNormals);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{

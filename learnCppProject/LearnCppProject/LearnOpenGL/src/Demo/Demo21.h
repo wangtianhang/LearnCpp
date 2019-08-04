@@ -12,6 +12,7 @@
 #include "../Camera.h"
 #include "../PNGHelper.h"
 #include "../RenderTexture.h"
+#include "./vmath.h"
 
 // blur vsm demo
 class Demo21 : public application
@@ -171,6 +172,7 @@ public:
 
 		Vector3 lightCameraPos = Vector3(3.9, 7.4, -6.1);
 		Vector3 lightCameraEuler = Vector3(50, -30, 0);
+		Vector3 forward = lightCameraPos + Quaternion::Euler(lightCameraEuler) * Vector3::forward() * 1;
 		Matrix4x4 lightCameraLocalToWorld = Matrix4x4::TRS(lightCameraPos, Quaternion::Euler(lightCameraEuler), Vector3::one());
 		Matrix4x4 view = GLHelper::worldToCameraMatrix(lightCameraLocalToWorld);
 
@@ -193,7 +195,7 @@ public:
 			glUniformMatrix4fv(mvpLocation, 1, true, mvpMatrixArray);
 
 
-			Vector3 test = mvp.MultiplyPoint(Vector3::zero());
+			Vector3 test = mvp.MultiplyPoint(Vector3(1, 0, 0));
 
 			Material cacheMat = iter->m_material;
 			iter->m_material = m_drawDepthMat;

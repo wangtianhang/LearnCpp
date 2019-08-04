@@ -9,6 +9,7 @@
 #include "../Learn3D/Vector3.h"
 #include "../Learn3D/Matrix4x4.h"
 #include "../GLHelper.h"
+#include "./vmath.h"
 
 // blinnphong demo
 class Demo12 : public application
@@ -140,6 +141,11 @@ public:
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
 		Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
+		//view.m00 = -1;
+
+
+		vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(0, 0, -10), vmath::vec3(0, 0, 0), vmath::vec3(0.0f, 1.0f, 0.0f));
+
 		float aspect = (float)info.windowWidth / info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;

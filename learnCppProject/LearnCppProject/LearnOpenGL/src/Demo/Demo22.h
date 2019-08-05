@@ -150,7 +150,7 @@ public:
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());
 		// camera worldToLocal
 		Matrix4x4 view = GLHelper::worldToCameraMatrix(cameraLocalToWorld);
-		view.m00 = -1;
+		//view.m00 = -1;
 
 
 		vmath::mat4 view_matrix = vmath::lookat(vmath::vec3(0, 0, -10), vmath::vec3(0, 0, -9), vmath::vec3(0.0f, 1.0f, 0.0f));

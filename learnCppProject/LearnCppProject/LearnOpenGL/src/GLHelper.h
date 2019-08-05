@@ -308,7 +308,7 @@ struct GLHelper
 
 	static Matrix4x4 worldToCameraMatrix(Matrix4x4 cameraLocalToWorld);
 
-	static Matrix4x4 OpenglWorldToCameraMatrix(Vector3 pos, Vector3 forward, Vector3 up);
+	//static Matrix4x4 OpenglWorldToCameraMatrix(Vector3 pos, Vector3 forward, Vector3 up);
 
 	static Matrix4x4 GenViewMatrix(Vector3 cameraPos, Vector3 cameraEuler);
 

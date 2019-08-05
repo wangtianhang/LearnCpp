@@ -31,6 +31,9 @@ public:
 	//int m_sphereDrawVertexCount = 0;
 	MeshFliter m_meshFilter;
 
+	Vector3 m_scale = Vector3::one();
+	Vector3 m_euler = Vector3::zero();
+
 	virtual void startup()
 	{
 		application::startup();
@@ -50,7 +53,20 @@ public:
 		//std::vector<MeshFliter> retVec;
 		//ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
 		//m_meshFilter = retVec[0];
-		m_meshFilter = ObjFileHelper::loadObjAsVAO2("./Assets/model/dragon.obj");
+		
+		int id = 2;
+		if (id == 1)
+		{
+			m_meshFilter = ObjFileHelper::loadObjAsVAO2("./Assets/model/dragon.obj");
+			m_scale = Vector3::one() * 0.2f;
+		}
+		else if (id == 2)
+		{
+			std::vector<MeshFliter> retVec;
+			ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
+			m_meshFilter = retVec[0];
+			m_euler = Vector3(0, 180, 0);
+		}
 	}
 
 	// 	void TestBufferWithVAO()
@@ -144,8 +160,8 @@ public:
 		glClearBufferfv(GL_COLOR, 0, white);
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
-		Vector3 euler = Vector3(0, 0, 0);
-		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 0.2);
+		//Vector3 euler = Vector3(0, 0, 0);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(m_euler), m_scale);
 		Vector3 cameraPos = Vector3(0, 0, -10);
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());

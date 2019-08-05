@@ -47,9 +47,10 @@ public:
 		//TestBufferWithVAO();
 
 		//m_vao = GLHelper::CreateSphereVAO(m_sphereDrawVertexCount);
-		std::vector<MeshFliter> retVec;
-		ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
-		m_meshFilter = retVec[0];
+		//std::vector<MeshFliter> retVec;
+		//ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
+		//m_meshFilter = retVec[0];
+		m_meshFilter = ObjFileHelper::loadObjAsVAO2("./Assets/model/dragon.obj");
 	}
 
 	// 	void TestBufferWithVAO()
@@ -144,7 +145,7 @@ public:
 		glClearBufferfv(GL_DEPTH, 0, ones);
 
 		Vector3 euler = Vector3(0, 0, 0);
-		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 1);
+		Matrix4x4 model_localToWorld = Matrix4x4::TRS(Vector3(-0, 0, 0), Quaternion::Euler(euler), Vector3::one() * 0.2);
 		Vector3 cameraPos = Vector3(0, 0, -10);
 		Vector3 cameraEuler = Vector3::zero();
 		Matrix4x4 cameraLocalToWorld = Matrix4x4::TRS(cameraPos, Quaternion::Euler(cameraEuler), Vector3::one());

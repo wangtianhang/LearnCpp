@@ -42,6 +42,7 @@
 #include "./src/Demo/Demo20.h"
 #include "./src/Demo/Demo21.h"
 #include "./src/Demo/Demo22.h"
+#include "./src/Demo/Demo23.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -72,7 +73,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo22 *app = new Demo22;
+		Demo23 *app = new Demo23;
 		//Demo7 *app = new Demo7;
 		app->run(app);
 		delete app;

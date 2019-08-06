@@ -73,7 +73,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo23 *app = new Demo23;
+		Demo22 *app = new Demo22;
 		//Demo7 *app = new Demo7;
 		app->run(app);
 		delete app;

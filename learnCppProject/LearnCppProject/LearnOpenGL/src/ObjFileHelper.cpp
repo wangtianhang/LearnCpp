@@ -205,9 +205,12 @@ void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertice
 		GLuint ia = elements[i];
 		GLuint ib = elements[i + 1];
 		GLuint ic = elements[i + 2];
+		Vector3 v1 = vertices[ia];
+		Vector3 v2 = vertices[ib];
+		Vector3 v3 = vertices[ic];
 		Vector3 normal = Vector3::Normalize(Vector3::Cross(
-			Vector3(vertices[ib]) - Vector3(vertices[ia]),
-			Vector3(vertices[ic]) - Vector3(vertices[ia])));
+			v2 - v1,
+			v3 - v1));
 		normals[ia] = normals[ib] = normals[ic] = normal;
 	}
 
@@ -216,7 +219,7 @@ void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertice
 MeshFliter ObjFileHelper::loadObjAsVAO2(const char* filename)
 {
 	MeshFliter ret;
-	ret.m_frontFace = GL_CCW;
+	ret.m_frontFace = GL_CW;
 
 	std::vector<Vector3> vertices;
 	std::vector<Vector3> normals;

@@ -54,7 +54,7 @@ public:
 		//ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
 		//m_meshFilter = retVec[0];
 		
-		int id = 2;
+		int id = 1;
 		if (id == 1)
 		{
 			m_meshFilter = ObjFileHelper::loadObjAsVAO2("./Assets/model/dragon.obj");
@@ -66,6 +66,14 @@ public:
 			ObjFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
 			m_meshFilter = retVec[0];
 			m_euler = Vector3(0, 180, 0);
+		}
+		else if (id == 3)
+		{
+			std::vector<MeshFliter> retVec;
+			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", retVec);
+			m_meshFilter = retVec[0];
+			m_euler = Vector3(0, 180, 0);
+			m_scale = Vector3::one() * 0.2f;
 		}
 	}
 

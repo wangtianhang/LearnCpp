@@ -14,6 +14,7 @@
 #include "../RenderTexture.h"
 #include "./vmath.h"
 
+// ≤‚ ‘animaton demo
 class Demo23 : public application
 {
 public:
@@ -71,6 +72,7 @@ public:
 
 		{
 			std::vector<MeshFliter> retVec;
+			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
 			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", retVec);
 			MeshFliter meshFilter = retVec[0];
 			//m_euler = Vector3(0, 180, 0);

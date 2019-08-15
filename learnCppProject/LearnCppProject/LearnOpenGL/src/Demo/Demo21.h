@@ -22,7 +22,7 @@ public:
 
 	double m_accTime = 0;
 
-	MeshRenderObject * m_sphere = NULL;
+	MeshRenderObject * m_meshRenderObj = NULL;
 
 	//GLuint m_depth_fbo;
 
@@ -84,7 +84,7 @@ public:
 			
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 
-			m_sphere = obj;
+			m_meshRenderObj = obj;
 		}
 
 		{
@@ -248,7 +248,7 @@ public:
 	virtual void RenderUpdate(float delta)
 	{
 		Vector3 newPos = PingPong(Vector3(0, 0.5, 0), Vector3(0, 1.5, 0), m_accTime);
-		m_sphere->m_transform.SetPosition(newPos);
+		m_meshRenderObj->m_transform.SetPosition(newPos);
 
 
 		DrawDepth();

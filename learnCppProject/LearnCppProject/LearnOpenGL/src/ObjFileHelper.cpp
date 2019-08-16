@@ -15,7 +15,7 @@
 
 */
 
-MeshFliter GetMeshFilter(std::vector<Vector3> vertices,
+extern MeshFliter GetMeshFilter(std::vector<Vector3> vertices,
 std::vector<Vector3> normals,
 std::vector<GLuint> indexs)
 {
@@ -148,73 +148,73 @@ bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret
 	return true;
 }
 
-void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertices, std::vector<Vector3> &normals, std::vector<GLuint> &elements)
-{
-	using namespace std;
-	ifstream in(filename, ios::in);
-	if (!in)
-	{
-		cerr << "Cannot open " << filename << endl; exit(1);
-	}
-
-	string line;
-	while (getline(in, line))
-	{
-		if (line.substr(0, 2) == "v ")
-		{
-			istringstream s(line.substr(2));
-			Vector3 v;
-			s >> v.x;
-			s >> v.y;
-			s >> v.z;
-			vertices.push_back(v);
-		}
-		else if (line.substr(0, 2) == "f ")
-		{
-			istringstream s(line.substr(2));
-			GLushort a, b, c;
-			s >> a;
-			s >> b;
-			s >> c;
-			a--;
-			b--;
-			c--;
-			elements.push_back(a); elements.push_back(b); elements.push_back(c);
-		}
-		else if (line[0] == '#')
-		{
-			// ignoring this line
-		}
-		else
-		{
-			// ignoring this line
-		}
-	}
-
-	// 3dmax 为右手坐标系 需要转换下坐标
-//  	for (int i = 0; i < vertices.size(); ++i)
-//  	{
-//  		Vector3 iter = vertices[i];
-//  		iter.x = -iter.x;
-//  		vertices[i] = iter;
-//  	}
-
-	normals.resize(vertices.size(), Vector3(0.0, 0.0, 0.0));
-	for (int i = 0; i < elements.size(); i += 3)
-	{
-		GLuint ia = elements[i];
-		GLuint ib = elements[i + 1];
-		GLuint ic = elements[i + 2];
-		Vector3 v1 = vertices[ia];
-		Vector3 v2 = vertices[ib];
-		Vector3 v3 = vertices[ic];
-		Vector3 normal = Vector3::Normalize(Vector3::Cross(
-			v2 - v1,
-			v3 - v1));
-		normals[ia] = normals[ib] = normals[ic] = normal;
-	}
-
-}
+// void ObjFileHelper::load_obj(const char* filename, std::vector<Vector3> &vertices, std::vector<Vector3> &normals, std::vector<GLuint> &elements)
+// {
+// 	using namespace std;
+// 	ifstream in(filename, ios::in);
+// 	if (!in)
+// 	{
+// 		cerr << "Cannot open " << filename << endl; exit(1);
+// 	}
+// 
+// 	string line;
+// 	while (getline(in, line))
+// 	{
+// 		if (line.substr(0, 2) == "v ")
+// 		{
+// 			istringstream s(line.substr(2));
+// 			Vector3 v;
+// 			s >> v.x;
+// 			s >> v.y;
+// 			s >> v.z;
+// 			vertices.push_back(v);
+// 		}
+// 		else if (line.substr(0, 2) == "f ")
+// 		{
+// 			istringstream s(line.substr(2));
+// 			GLushort a, b, c;
+// 			s >> a;
+// 			s >> b;
+// 			s >> c;
+// 			a--;
+// 			b--;
+// 			c--;
+// 			elements.push_back(a); elements.push_back(b); elements.push_back(c);
+// 		}
+// 		else if (line[0] == '#')
+// 		{
+// 			// ignoring this line
+// 		}
+// 		else
+// 		{
+// 			// ignoring this line
+// 		}
+// 	}
+// 
+// 	// 3dmax 为右手坐标系 需要转换下坐标
+// //  	for (int i = 0; i < vertices.size(); ++i)
+// //  	{
+// //  		Vector3 iter = vertices[i];
+// //  		iter.x = -iter.x;
+// //  		vertices[i] = iter;
+// //  	}
+// 
+// 	normals.resize(vertices.size(), Vector3(0.0, 0.0, 0.0));
+// 	for (int i = 0; i < elements.size(); i += 3)
+// 	{
+// 		GLuint ia = elements[i];
+// 		GLuint ib = elements[i + 1];
+// 		GLuint ic = elements[i + 2];
+// 		Vector3 v1 = vertices[ia];
+// 		Vector3 v2 = vertices[ib];
+// 		Vector3 v3 = vertices[ic];
+// 		Vector3 normal = Vector3::Normalize(Vector3::Cross(
+// 			v2 - v1,
+// 			v3 - v1));
+// 		normals[ia] = normals[ib] = normals[ic] = normal;
+// 	}
+// 
+// }
 
 // MeshFliter ObjFileHelper::loadObjAsVAO2(const char* filename)
 // {

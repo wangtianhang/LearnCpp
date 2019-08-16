@@ -9,5 +9,7 @@
 struct FBXFileHelper
 {
 public:
-	static bool loadObjAsVAO(std::string path, MeshFliter & ret, BoneAnimation & bones);
+	static bool loadFBXAsModel(std::string path, MeshFliter & ret, BoneAnimation & bones);
+
+	static bool logFbx(std::string path);
 };

@@ -13,6 +13,7 @@
 #include "../PNGHelper.h"
 #include "../RenderTexture.h"
 #include "./vmath.h"
+#include "../FBXFileHelper.h"
 
 // ≤‚ ‘fbx demo
 class Demo23 : public application
@@ -73,6 +74,7 @@ public:
 		{
 			std::vector<MeshFliter> retVec;
 			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
+			FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
 			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", retVec);
 			MeshFliter meshFilter = retVec[0];
 			//m_euler = Vector3(0, 180, 0);

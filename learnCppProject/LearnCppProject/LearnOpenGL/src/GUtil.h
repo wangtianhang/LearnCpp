@@ -15,4 +15,9 @@ public:
 		log += "\n";
 		OutputDebugStringA(log.c_str());
 	}
+
+	static void Print(std::string log)
+	{
+		OutputDebugStringA(log.c_str());
+	}
 };

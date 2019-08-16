@@ -129,7 +129,7 @@ bool FBXFileHelper::logFbx(std::string path)
 
 	// The file is imported; so get rid of the importer.
 	lImporter->Destroy();
-	//FbxAxisSystem::DirectX.ConvertScene(lScene);
+	FbxAxisSystem::DirectX.ConvertScene(lScene);
 
 	// Print the nodes of the scene and their attributes recursively.
 	// Note that we are not printing the root node because it should

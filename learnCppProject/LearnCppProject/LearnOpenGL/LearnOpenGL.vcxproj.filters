@@ -228,6 +228,15 @@
     <ClInclude Include="src\Demo\Demo23.h">
       <Filter>源文件\src\Demo</Filter>
     </ClInclude>
+    <ClInclude Include="src\FBXFileHelper.h">
+      <Filter>源文件\src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoneAnimation.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoneWeight.h">
+      <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -295,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="src\SceneRenderMgr.cpp">
       <Filter>源文件\src\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FBXFileHelper.cpp">
+      <Filter>源文件\src\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

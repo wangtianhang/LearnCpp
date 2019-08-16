@@ -57,6 +57,7 @@
 #pragma comment(lib,"libpng16d.lib")
 #pragma comment(lib,"zlibd.lib")
 #pragma comment(lib,"assimp-vc140-mt.lib")
+#pragma comment(lib,"libfbxsdk.lib")
 
 //my_application *app = 0;
 int CALLBACK WinMain(HINSTANCE hInstance, 
@@ -73,7 +74,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	int demoId = 1;
 	if (demoId == 1)
 	{
-		Demo22 *app = new Demo22;
+		Demo23 *app = new Demo23;
 		//Demo7 *app = new Demo7;
 		app->run(app);
 		delete app;

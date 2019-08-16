@@ -14,7 +14,7 @@
 #include "../RenderTexture.h"
 #include "./vmath.h"
 
-// ≤‚ ‘animaton demo
+// ≤‚ ‘fbx demo
 class Demo23 : public application
 {
 public:

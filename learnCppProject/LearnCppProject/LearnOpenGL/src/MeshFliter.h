@@ -11,6 +11,8 @@
 struct MeshFliter
 {
 public:
+	//Matrix4x4 m_localToWorld;
+
 	GLuint m_vao = 0;
 	
 	GLuint m_positionVBO = 0;

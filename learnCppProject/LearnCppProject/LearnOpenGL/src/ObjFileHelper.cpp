@@ -83,12 +83,14 @@ std::vector<GLuint> indexs)
 	return ret;
 }
 
-MeshFliter processMesh(aiMesh *mesh, const aiScene *scene)
+MeshFliter processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
 	//std::vector<Texture> textures;
 	std::vector<Vector3> normals;
+
+	Matrix4x4 inverseMat = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(Vector3(0, 180, 0)), Vector3::one());
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -97,12 +99,20 @@ MeshFliter processMesh(aiMesh *mesh, const aiScene *scene)
 		vertex.x = mesh->mVertices[i].x;
 		vertex.y = mesh->mVertices[i].y;
 		vertex.z = mesh->mVertices[i].z;
+		if (inverseZ)
+		{
+			vertex = inverseMat.MultiplyPoint(vertex);
+		}
 		vertices.push_back(vertex);
 
 		Vector3 normal;
 		normal.x = mesh->mNormals[i].x;
 		normal.y = mesh->mNormals[i].y;
 		normal.z = mesh->mNormals[i].z;
+		if (inverseZ)
+		{
+			normal = inverseMat.MultiplyVector(normal);
+		}
 		normals.push_back(normal);
 	}
 
@@ -116,22 +126,22 @@ MeshFliter processMesh(aiMesh *mesh, const aiScene *scene)
 	return GetMeshFilter(vertices, normals, indices);
 }
 
-void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec)
+void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, bool inverseZ)
 {
 	// 处理节点所有的网格（如果有的话）
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		meshFilterVec.push_back(processMesh(mesh, scene));
+		meshFilterVec.push_back(processMesh(mesh, scene, inverseZ));
 	}
 	// 接下来对它的子节点重复这一过程
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene, meshFilterVec);
+		processNode(node->mChildren[i], scene, meshFilterVec, inverseZ);
 	}
 }
 
-bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret)
+bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
@@ -144,7 +154,7 @@ bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret
 	std::string directory = path.substr(0, path.find_last_of('/'));
 
 	//std::vector<MeshFliter> meshFilterVec;
-	processNode(scene->mRootNode, scene, ret);
+	processNode(scene->mRootNode, scene, ret, inverseZ);
 	return true;
 }
 

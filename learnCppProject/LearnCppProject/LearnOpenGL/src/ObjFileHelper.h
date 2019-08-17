@@ -23,7 +23,7 @@ public:
 struct ObjFileHelper
 {
 public:
-	static bool loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret);
+	static bool loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ = true);
 
 	//static void load_obj(const char* filename, std::vector<Vector3> &vertices, std::vector<Vector3> &normals, std::vector<GLuint> &elements);
 

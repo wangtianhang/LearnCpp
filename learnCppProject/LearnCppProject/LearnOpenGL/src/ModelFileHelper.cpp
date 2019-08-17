@@ -177,9 +177,12 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	{
 		aiAnimation * animation = scene->mAnimations[0];
 		boneAnimation.m_framePerSecond = animation->mTicksPerSecond;
-		if (animation->mNumChannels > 0)
+		for (int i = 0; i < animation->mNumChannels; ++i)
 		{
-			aiNodeAnim * anim = animation->mChannels[0];
+			//aiNodeAnim * anim = animation->mChannels[0];
+			//int test = 0;
+			aiNodeAnim * anim = animation->mChannels[i];
+
 		}
 	}
 	//=========================================

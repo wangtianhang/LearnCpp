@@ -213,7 +213,7 @@
     <ClInclude Include="src\Learn3D\Vector4.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\MeshFliter.h" />
-    <ClInclude Include="src\ObjFileHelper.h" />
+    <ClInclude Include="src\ModelFileHelper.h" />
     <ClInclude Include="src\PNGHelper.h" />
     <ClInclude Include="src\MeshRenderObject.h" />
     <ClInclude Include="src\RenderTexture.h" />
@@ -241,7 +241,7 @@
     <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\Learn3D\Vector4.cpp" />
     <ClCompile Include="src\MeshFliter.cpp" />
-    <ClCompile Include="src\ObjFileHelper.cpp" />
+    <ClCompile Include="src\ModelFileHelper.cpp" />
     <ClCompile Include="src\sb7\sb7.cpp" />
     <ClCompile Include="src\sb7\sb7color.cpp" />
     <ClCompile Include="src\sb7\sb7ktx.cpp" />

@@ -5,7 +5,7 @@
 #include <fstream>
 #include<sstream>
 
-#include "./ObjFileHelper.h"
+#include "./ModelFileHelper.h"
 #include "./GUtil.h"
 
 #include <assimp/Importer.hpp>
@@ -141,7 +141,7 @@ void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& me
 	}
 }
 
-bool ObjFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
+bool ModelFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);

@@ -180,9 +180,6 @@
     <ClInclude Include="src\MeshFliter.h">
       <Filter>源文件\src\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjFileHelper.h">
-      <Filter>源文件\src\IO</Filter>
-    </ClInclude>
     <ClInclude Include="src\PNGHelper.h">
       <Filter>源文件\src\IO</Filter>
     </ClInclude>
@@ -236,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="src\BoneWeight.h">
       <Filter>源文件\src\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ModelFileHelper.h">
+      <Filter>源文件\src\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +293,6 @@
     <ClCompile Include="src\GLHelper.cpp">
       <Filter>源文件\src\GUtil</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjFileHelper.cpp">
-      <Filter>源文件\src\IO</Filter>
-    </ClCompile>
     <ClCompile Include="src\ShaderHelper.cpp">
       <Filter>源文件\src\GL</Filter>
     </ClCompile>
@@ -306,6 +303,9 @@
       <Filter>源文件\src\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="src\FBXFileHelper.cpp">
+      <Filter>源文件\src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelFileHelper.cpp">
       <Filter>源文件\src\IO</Filter>
     </ClCompile>
   </ItemGroup>

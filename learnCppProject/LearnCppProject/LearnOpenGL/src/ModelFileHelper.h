@@ -20,7 +20,7 @@ public:
 };
 */
 
-struct ObjFileHelper
+struct ModelFileHelper
 {
 public:
 	static bool loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ = true);

@@ -14,6 +14,11 @@
 struct BoneAnimation
 {
 public:
-	int m_framePerSecond = 30;
+	double m_framePerSecond = 30;
 	std::vector<std::vector<Transform>> m_frameVec;
+
+	void Update(float delta)
+	{
+
+	}
 };

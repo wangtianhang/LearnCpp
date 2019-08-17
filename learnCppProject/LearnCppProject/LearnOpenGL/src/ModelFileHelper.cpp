@@ -83,7 +83,34 @@ std::vector<GLuint> indexs)
 	return ret;
 }
 
-void processMesh(aiMesh *mesh, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
+Matrix4x4 Convert(aiMatrix4x4 offset)
+{
+	Matrix4x4 ret;
+
+	ret.m00 = offset.a1;
+	ret.m01 = offset.a2;
+	ret.m02 = offset.a3;
+	ret.m03 = offset.a4;
+
+	ret.m10 = offset.b1;
+	ret.m11 = offset.b2;
+	ret.m12 = offset.b3;
+	ret.m13 = offset.b4;
+
+	ret.m20 = offset.c1;
+	ret.m21 = offset.c2;
+	ret.m22 = offset.c3;
+	ret.m23 = offset.c4;
+
+	ret.m30 = offset.d1;
+	ret.m31 = offset.d2;
+	ret.m32 = offset.d3;
+	ret.m33 = offset.d4;
+
+	return ret;
+}
+
+void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
@@ -126,14 +153,36 @@ void processMesh(aiMesh *mesh, bool inverseZ, MeshFliter & meshFilter, BoneAnima
 
 	meshFilter = GetMeshFilter(vertices, normals, indices);
 
+	//===================½âÎö¹Ç÷ÀºÍ¹Ç÷À¶¯»­=======================
 	meshFilter.m_vertices = vertices;
+	for (int i = 0; i < vertices.size(); ++i)
+	{
+		boneWeights.push_back(BoneWeight());
+	}
+
 	int numBones = mesh->mNumBones;
 	for (int i = 0; i < numBones; ++i)
 	{
 		aiBone * bone = mesh->mBones[i];
+		Matrix4x4 bindPose = Convert(bone->mOffsetMatrix);
+		meshFilter.m_bindPoses.push_back(bindPose);
+		for (int j = 0; j < bone->mNumWeights; ++j)
+		{
+			aiVertexWeight weight = bone->mWeights[j];
+			boneWeights[weight.mVertexId].AddWeight(j, weight.mWeight);
+		}
 	}
 
-	int test = 0;
+	if (scene->mNumAnimations > 0)
+	{
+		aiAnimation * animation = scene->mAnimations[0];
+		boneAnimation.m_framePerSecond = animation->mTicksPerSecond;
+		if (animation->mNumChannels > 0)
+		{
+			aiNodeAnim * anim = animation->mChannels[0];
+		}
+	}
+	//=========================================
 }
 
 void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
@@ -144,7 +193,7 @@ void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& me
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshFliter meshFilter;
 		BoneAnimation boneAnimation;
-		processMesh(mesh, inverseZ, meshFilter, boneAnimation);
+		processMesh(mesh, scene, inverseZ, meshFilter, boneAnimation);
 		meshFilterVec.push_back(meshFilter);
 		boneAnimationVec.push_back(boneAnimation);
 	}

@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include <vector>
 
 #include "./MeshFliter.h"
@@ -15,3 +15,4 @@ public:
 
 	//static bool loadFbxMeshes(std::string path, std::vector<MeshFliter> & ret);
 };
+*/

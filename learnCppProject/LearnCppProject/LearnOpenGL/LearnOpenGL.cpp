@@ -57,7 +57,7 @@
 #pragma comment(lib,"libpng16d.lib")
 //#pragma comment(lib,"zlibd.lib")
 #pragma comment(lib,"assimp-vc140-mt.lib")
-#pragma comment(lib,"libfbxsdk.lib")
+//#pragma comment(lib,"libfbxsdk.lib")
 
 //my_application *app = 0;
 int CALLBACK WinMain(HINSTANCE hInstance, 

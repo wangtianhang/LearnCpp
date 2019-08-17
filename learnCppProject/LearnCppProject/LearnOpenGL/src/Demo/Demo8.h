@@ -11,7 +11,7 @@
 #include "../GLHelper.h"
 #include "../PNGHelper.h"
 #include "../GUtil.h"
-#include "../../include/sb7ktx.h"
+#include "sb7ktx.h"
 
 // drawindex demo
 class Demo8 : public application

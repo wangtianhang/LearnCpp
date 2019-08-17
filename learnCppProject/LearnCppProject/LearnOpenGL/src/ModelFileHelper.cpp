@@ -83,7 +83,7 @@ std::vector<GLuint> indexs)
 	return ret;
 }
 
-MeshFliter processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ)
+void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
@@ -123,25 +123,35 @@ MeshFliter processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ)
 			indices.push_back(face.mIndices[j]);
 	}
 
-	return GetMeshFilter(vertices, normals, indices);
+	meshFilter = GetMeshFilter(vertices, normals, indices);
 }
 
-void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, bool inverseZ)
+void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
 {
 	// 处理节点所有的网格（如果有的话）
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		meshFilterVec.push_back(processMesh(mesh, scene, inverseZ));
+		MeshFliter meshFilter;
+		BoneAnimation boneAnimation;
+		processMesh(mesh, scene, inverseZ, meshFilter, boneAnimation);
+		meshFilterVec.push_back(meshFilter);
+		boneAnimationVec.push_back(boneAnimation);
 	}
 	// 接下来对它的子节点重复这一过程
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene, meshFilterVec, inverseZ);
+		processNode(node->mChildren[i], scene, meshFilterVec, boneAnimationVec, inverseZ);
 	}
 }
 
-bool ModelFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
+bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
+{
+	std::vector<BoneAnimation> boneAnimation;
+	return loadBoneAnimation(path, ret, boneAnimation, inverseZ);
+}
+
+bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
@@ -154,7 +164,7 @@ bool ModelFileHelper::loadObjAsVAO(std::string path, std::vector<MeshFliter> & r
 	std::string directory = path.substr(0, path.find_last_of('/'));
 
 	//std::vector<MeshFliter> meshFilterVec;
-	processNode(scene->mRootNode, scene, ret, inverseZ);
+	processNode(scene->mRootNode, scene, ret, boneAnimation, inverseZ);
 	return true;
 }
 

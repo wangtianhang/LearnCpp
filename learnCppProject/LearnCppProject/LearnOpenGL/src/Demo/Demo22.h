@@ -63,14 +63,14 @@ public:
 		if (id == 2)
 		{
 			std::vector<MeshFliter> retVec;
-			ModelFileHelper::loadObjAsVAO("./Assets/model/bunny.obj", retVec);
+			ModelFileHelper::loadMeshAsVAO("./Assets/model/bunny.obj", retVec);
 			m_meshFilter = retVec[0];
 			m_euler = Vector3(0, 180, 0);
 		}
 		else if (id == 3)
 		{
 			std::vector<MeshFliter> retVec;
-			ModelFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", retVec);
+			ModelFileHelper::loadMeshAsVAO("./Assets/model/dragon.obj", retVec);
 			m_meshFilter = retVec[0];
 			m_euler = Vector3(0, 180, 0);
 			m_scale = Vector3::one() * 0.2f;

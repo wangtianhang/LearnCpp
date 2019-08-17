@@ -78,7 +78,7 @@ public:
 			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
 			//FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
 			
-			ModelFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
+			ModelFileHelper::loadMeshAsVAO("./Assets/model/faluli.FBX", retVec);
 			MeshFliter meshFilter = retVec[0];
 			//m_euler = Vector3(0, 180, 0);
 			//m_scale = Vector3::one() * 0.2f;

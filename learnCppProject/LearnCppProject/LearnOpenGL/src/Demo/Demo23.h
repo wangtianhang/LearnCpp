@@ -72,9 +72,12 @@ public:
 		glUniform3f(glGetUniformLocation(m_phongWithShadowProgram, "light_dir"), lightDir.x, lightDir.y, lightDir.z);
 
 		{
+			//std::vector<MeshFliter> retVec2;
+			//FBXFileHelper::loadFbxMeshes("./Assets/model/faluli.FBX", retVec2);
 			std::vector<MeshFliter> retVec;
 			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
-			FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
+			//FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
+			
 			ObjFileHelper::loadObjAsVAO("./Assets/model/dragon.obj", retVec);
 			MeshFliter meshFilter = retVec[0];
 			//m_euler = Vector3(0, 180, 0);

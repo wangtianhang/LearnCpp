@@ -10,7 +10,7 @@
 class Transform
 {
 public:
-
+	std::string m_name;
 	bool m_needParentUpdate = true;
 
 	Vector3 m_localPostion;

@@ -83,12 +83,13 @@ std::vector<GLuint> indexs)
 	return ret;
 }
 
-void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
+void processMesh(aiMesh *mesh, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
 	//std::vector<Texture> textures;
 	std::vector<Vector3> normals;
+	std::vector<BoneWeight> boneWeights;
 
 	Matrix4x4 inverseMat = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(Vector3(0, 180, 0)), Vector3::one());
 
@@ -124,6 +125,15 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	}
 
 	meshFilter = GetMeshFilter(vertices, normals, indices);
+
+	meshFilter.m_vertices = vertices;
+	int numBones = mesh->mNumBones;
+	for (int i = 0; i < numBones; ++i)
+	{
+		aiBone * bone = mesh->mBones[i];
+	}
+
+	int test = 0;
 }
 
 void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
@@ -134,7 +144,7 @@ void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& me
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshFliter meshFilter;
 		BoneAnimation boneAnimation;
-		processMesh(mesh, scene, inverseZ, meshFilter, boneAnimation);
+		processMesh(mesh, inverseZ, meshFilter, boneAnimation);
 		meshFilterVec.push_back(meshFilter);
 		boneAnimationVec.push_back(boneAnimation);
 	}

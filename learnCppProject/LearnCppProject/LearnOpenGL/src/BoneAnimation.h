@@ -4,6 +4,13 @@
 
 #include "./Learn3D/Transform.h"
 
+// struct OneBone
+// {
+// public:
+// 	std::string m_boneName;
+// 	Transform m_bone;
+// };
+
 struct BoneAnimation
 {
 public:

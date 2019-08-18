@@ -240,6 +240,9 @@
     <ClInclude Include="src\Learn3D\MathHelper.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\Learn3D\Matrix3x3.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

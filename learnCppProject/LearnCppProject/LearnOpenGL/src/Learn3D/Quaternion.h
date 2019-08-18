@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./Vector3.h"
+#include "./Matrix3x3.h"
 
 struct Quaternion
 {
@@ -219,50 +220,159 @@ public:
 // 		v.z = Mathf::Atan2(2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.y * q.y + q.z * q.z));      // Roll
 // 		return NormalizeAngles(v * Mathf::Rad2Deg) * Mathf::Deg2Rad;
 
-		float sqw = q.w * q.w;
-		float sqx = q.x * q.x;
-		float sqy = q.y * q.y;
-		float sqz = q.z * q.z;
+// 		float sqw = q.w * q.w;
+// 		float sqx = q.x * q.x;
+// 		float sqy = q.y * q.y;
+// 		float sqz = q.z * q.z;
+// 
+// 		float unit = sqx + sqy + sqz + sqw;
+// 		float test = q.x * q.y + q.z * q.w;
+// 
+// 		float yaw = 0.0f;
+// 		float pitch = 0.0f;
+// 		float roll = 0.0f;
+// 
+// 		// North pole singularity
+// 		if (test > 0.499f * unit)
+// 		{
+// 			yaw = 2.0f * Mathf::Atan2(q.x, q.w);
+// 			pitch = Mathf::PI * 0.5f;
+// 			roll = 0.0f;
+// 		}
+// 
+// 		// South pole singularity
+// 		else if (test < -0.499f * unit)
+// 		{
+// 			yaw = -2.0f * Mathf::Atan2(q.x, q.w);
+// 			pitch = -Mathf::PI * 0.5f;
+// 			roll = 0.0f;
+// 		}
+// 
+// 		else
+// 		{
+// 			yaw = Mathf::Atan2(2.0f * q.y * q.w - 2.0f * q.x * q.z, sqx - sqy - sqz + sqw);
+// 			pitch = Mathf::Asin(2.0f * test / unit);
+// 			roll = Mathf::Atan2(2.0f * q.x * q.w - 2.0f * q.y * q.z, -sqx + sqy - sqz + sqw);
+// 		}
+// 
+// 		// Keep angles [0..360].
+// 		if (Mathf::Sign(yaw) < 0)
+// 			yaw = Mathf::Deg2Rad * (360) + yaw;
+// 		if (Mathf::Sign(pitch) < 0)
+// 			pitch = Mathf::Deg2Rad * (360) + pitch;
+// 		if (Mathf::Sign(roll) < 0)
+// 			roll = Mathf::Deg2Rad * (360) + roll;
+// 
+// 		return Vector3(roll, yaw, pitch);
 
-		float unit = sqx + sqy + sqz + sqw;
-		float test = q.x * q.y + q.z * q.w;
+		Matrix3x3 m = Matrix3x3();
+		Vector3 rot = Vector3();
+		QuaternionToMatrix(q, m);
+		MatrixToEuler(m, rot);
+		return rot;
+	}
 
-		float yaw = 0.0f;
-		float pitch = 0.0f;
-		float roll = 0.0f;
+	static void QuaternionToMatrix(Quaternion q, Matrix3x3 & m)
+	{
+		// Precalculate coordinate products
+		float x = q.x * 2.0F;
+		float y = q.y * 2.0F;
+		float z = q.z * 2.0F;
+		float xx = q.x * x;
+		float yy = q.y * y;
+		float zz = q.z * z;
+		float xy = q.x * y;
+		float xz = q.x * z;
+		float yz = q.y * z;
+		float wx = q.w * x;
+		float wy = q.w * y;
+		float wz = q.w * z;
 
-		// North pole singularity
-		if (test > 0.499f * unit)
+		// Calculate 3x3 matrix from orthonormal basis
+		m[0] = 1.0f - (yy + zz);
+		m[1] = xy + wz;
+		m[2] = xz - wy;
+
+		m[3] = xy - wz;
+		m[4] = 1.0f - (xx + zz);
+		m[5] = yz + wx;
+
+		m[6] = xz + wy;
+		m[7] = yz - wx;
+		m[8] = 1.0f - (xx + yy);
+	}
+
+	static void MakePositive(Vector3 & euler)
+	{
+		const float negativeFlip = -0.0001F;
+		const float positiveFlip = (Mathf::PI * 2.0F) - 0.0001F;
+
+		if (euler.x < negativeFlip)
+			euler.x += 2.0f * Mathf::PI;
+		else if (euler.x > positiveFlip)
+			euler.x -= 2.0f * Mathf::PI;
+
+		if (euler.y < negativeFlip)
+			euler.y += 2.0f * Mathf::PI;
+		else if (euler.y > positiveFlip)
+			euler.y -= 2.0f * Mathf::PI;
+
+		if (euler.z < negativeFlip)
+			euler.z += 2.0f * Mathf::PI;
+		else if (euler.z > positiveFlip)
+			euler.z -= 2.0f * Mathf::PI;
+	}
+
+	static void SanitizeEuler(Vector3 & euler)
+	{
+		MakePositive(euler);
+		/*
+		 Vector3f option0 = euler;
+		 option0.x = kPI - option0.x;
+		 option0.y = kPI - option0.y;
+		 option0.z = kPI - option0.z;
+
+		 MakePositive (euler);
+		 MakePositive (option0);
+		 if (option0.x+option0.y+option0.z < euler.x+euler.y+euler.z)
+		 euler = option0;
+		 */
+	}
+
+	static bool MatrixToEuler(Matrix3x3 matrix, Vector3 & v)
+	{
+		// from http://www.geometrictools.com/Documentation/EulerAngles.pdf
+		// YXZ order
+		if (matrix.Get(1, 2) < 0.999F) // some fudge for imprecision
 		{
-			yaw = 2.0f * Mathf::Atan2(q.x, q.w);
-			pitch = Mathf::PI * 0.5f;
-			roll = 0.0f;
-		}
+			if (matrix.Get(1, 2) > -0.999F) // some fudge for imprecision
+			{
+				v.x = Mathf::Asin(-matrix.Get(1, 2));
+				v.y = Mathf::Atan2(matrix.Get(0, 2), matrix.Get(2, 2));
+				v.z = Mathf::Atan2(matrix.Get(1, 0), matrix.Get(1, 1));
+				SanitizeEuler(v);
+				return true;
+			}
+			else
+			{
+				// WARNING.  Not unique.  YA - ZA = atan2(r01,r00)
+				v.x = Mathf::PI * 0.5F;
+				v.y = Mathf::Atan2(matrix.Get(0, 1), matrix.Get(0, 0));
+				v.z = 0.0F;
+				SanitizeEuler(v);
 
-		// South pole singularity
-		else if (test < -0.499f * unit)
-		{
-			yaw = -2.0f * Mathf::Atan2(q.x, q.w);
-			pitch = -Mathf::PI * 0.5f;
-			roll = 0.0f;
+				return false;
+			}
 		}
-
 		else
 		{
-			yaw = Mathf::Atan2(2.0f * q.y * q.w - 2.0f * q.x * q.z, sqx - sqy - sqz + sqw);
-			pitch = Mathf::Asin(2.0f * test / unit);
-			roll = Mathf::Atan2(2.0f * q.x * q.w - 2.0f * q.y * q.z, -sqx + sqy - sqz + sqw);
+			// WARNING.  Not unique.  YA + ZA = atan2(-r01,r00)
+			v.x = -Mathf::PI * 0.5F;
+			v.y = Mathf::Atan2(-matrix.Get(0, 1), matrix.Get(0, 0));
+			v.z = 0.0F;
+			SanitizeEuler(v);
+			return false;
 		}
-
-		// Keep angles [0..360].
-		if (Mathf::Sign(yaw) < 0)
-			yaw = Mathf::Deg2Rad * (360) + yaw;
-		if (Mathf::Sign(pitch) < 0)
-			pitch = Mathf::Deg2Rad * (360) + pitch;
-		if (Mathf::Sign(roll) < 0)
-			roll = Mathf::Deg2Rad * (360) + roll;
-
-		return Vector3(roll, yaw, pitch);
 	}
 
 	static Vector3 NormalizeAngles(Vector3 angles)

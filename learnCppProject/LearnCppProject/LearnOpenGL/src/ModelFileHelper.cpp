@@ -121,10 +121,16 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 		int test = 0;
 		GUtil::Log("Bip001 Spine origin matrix " + localToWorldMatrix.ToString());
 	}
-	transform->m_localPostion = MathHelper::GetPosition(localToWorldMatrix);
-	transform->m_localRotation = MathHelper::GetRotation(localToWorldMatrix);
-	Vector3 localEuler = transform->GetLocalEulerAngles();
-	transform->m_localScale = MathHelper::GetScale(localToWorldMatrix);
+	//Vector3 openglLocalPosition = MathHelper::GetPosition(localToWorldMatrix);
+	//Vector3 dxLocalPosition = Vector3(openglLocalPosition.x, openglLocalPosition.y, -openglLocalPosition.z);
+	transform->SetLocalPosition(MathHelper::GetPosition(localToWorldMatrix));
+	//Vector3 openglLocalEuler = MathHelper::GetRotation(localToWorldMatrix).eulerAngles();
+	//Vector3 dxLocalEuler = Vector3(-openglLocalEuler.x, -openglLocalEuler.y, openglLocalEuler.z);
+	//Quaternion openglQua = MathHelper::GetRotation(localToWorldMatrix);
+	//Quaternion dxQua = Quaternion(-openglQua.x, -openglQua.y, openglQua.z, openglQua.w);
+	transform->SetLocalRotation(MathHelper::GetRotation(localToWorldMatrix));
+	//Vector3 localEuler = transform->GetLocalEulerAngles();
+	transform->SetLocalEulerAngles(MathHelper::GetScale(localToWorldMatrix));
 	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
 	{
 		Transform * childTrans = processHierarchyTransform(aiNolde->mChildren[i], boneTransformVec);
@@ -184,7 +190,7 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 	for (int i = 0; i < boneTransformVec.size(); ++i)
 	{
 		GUtil::Log(boneTransformVec[i]->m_name + " localpos " + boneTransformVec[i]->GetLocalPosition().toString() + 
-			" localeuler " + boneTransformVec[i]->GetLocalEulerAngles().toString());
+			" localeuler " + boneTransformVec[i]->GetLocalEulerAngles().toString() + " worldPos " + boneTransformVec[i]->GetPosition().toString());
 	}
 }
 
@@ -229,7 +235,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 			indices.push_back(face.mIndices[j]);
 	}
 
-	meshFilter = GetMeshFilter(vertices, normals, indices);
+	
 
 	//===================½âÎö¹Ç÷ÀºÍ¹Ç÷À¶¯»­=======================
 	if (mesh->mNumBones == 0)
@@ -253,7 +259,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 		for (int j = 0; j < bone->mNumWeights; ++j)
 		{
 			aiVertexWeight weight = bone->mWeights[j];
-			boneWeights[weight.mVertexId].AddWeight(j, weight.mWeight);
+			boneWeights[weight.mVertexId].AddWeight(i, weight.mWeight);
 		}
 	}
 
@@ -272,6 +278,29 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 		processBoneAnimation(boneNameVec, scene, animation, boneAnimation.m_boneTransformVec, boneAnimation.m_aiNodeAnimVec);
 	}
 	//=========================================
+	std::vector<Matrix4x4> vertexToModel;
+	for (int i = 0; i < boneNameVec.size(); ++i)
+	{
+		Matrix4x4 mat = boneAnimation.m_boneTransformVec[i]->GetLocalToWorldMatrix() * meshFilter.m_bindPoses[i];
+		vertexToModel.push_back(mat);
+	}
+	
+	std::vector<Vector3> posVertices;
+	for (int i = 0; i < vertices.size(); ++i)
+	{
+		Vector3 iter = vertices[i];
+		BoneWeight weight = boneWeights[i];
+		Matrix4x4 mat0 = vertexToModel[weight.m_index0];
+		Matrix4x4 mat1 = vertexToModel[weight.m_index1];
+		Matrix4x4 mat2 = vertexToModel[weight.m_index2];
+		Matrix4x4 mat3 = vertexToModel[weight.m_index3];
+		Vector3 newPos = mat0.MultiplyPoint(iter) * weight.m_weight0 + 
+			mat1.MultiplyPoint(iter) * weight.m_weight1 + 
+			mat2.MultiplyPoint(iter) * weight.m_weight2 + 
+			mat3.MultiplyPoint(iter) * weight.m_weight3;
+		posVertices.push_back(newPos);
+	}
+	meshFilter = GetMeshFilter(vertices, normals, indices);
 }
 
 void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)

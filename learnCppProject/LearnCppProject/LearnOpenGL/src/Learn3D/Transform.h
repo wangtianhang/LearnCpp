@@ -81,7 +81,7 @@ public:
 		return m_localPostion;
 	}
 
-	Vector3 SetLocalPosition(Vector3 value)
+	void SetLocalPosition(Vector3 value)
 	{
 		m_isWorldPositionNeedUpdate = true;
 		m_localPostion = value;

@@ -110,6 +110,67 @@ Matrix4x4 Convert(aiMatrix4x4 offset)
 	return ret;
 }
 
+Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transform *> & boneTransformVec)
+{
+	Transform * transform = new Transform();
+	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
+	{
+		Transform * childTrans = processHierarchyTransform(aiNolde->mChildren[i], boneTransformVec);
+		transform->m_childList.push_back(childTrans);
+	}
+	boneTransformVec.push_back(transform);
+	return transform;
+}
+
+const aiNode * FindNode(const aiNode * node, aiString nodeName)
+{
+	if (node->mName == nodeName)
+	{
+		return node;
+	}
+	else
+	{
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			const aiNode * childNode = FindNode(node->mChildren[i], nodeName);
+			if (childNode != nullptr)
+			{
+				return childNode;
+			}
+		}
+		return nullptr;
+	}
+}
+
+void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, std::vector<aiNodeAnim *> & animVec)
+{
+	const aiNode * rootNode = FindNode(scene->mRootNode, aiString(boneNameVec[0].c_str()));
+	std::vector<Transform *> tmpBoneTransformVec;
+	processHierarchyTransform(rootNode, tmpBoneTransformVec);
+	for (int i = 0; i < boneNameVec.size(); ++i)
+	{
+		for (int j = 0; j < tmpBoneTransformVec.size(); ++j)
+		{
+			if (tmpBoneTransformVec[j]->m_name == boneNameVec[i])
+			{
+				boneTransformVec.push_back(tmpBoneTransformVec[j]);
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < boneNameVec.size(); ++i)
+	{
+		for (int j = 0; j < animation->mNumChannels; ++j)
+		{
+			if (animation->mChannels[j]->mNodeName == aiString(boneNameVec[i].c_str()))
+			{
+				animVec.push_back(animation->mChannels[j]);
+				break;
+			}
+		}
+	}
+}
+
 void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
 {
 	std::vector<Vector3> vertices;
@@ -154,18 +215,24 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	meshFilter = GetMeshFilter(vertices, normals, indices);
 
 	//===================½âÎö¹Ç÷ÀºÍ¹Ç÷À¶¯»­=======================
+	if (mesh->mNumBones == 0)
+	{
+		return;
+	}
 	meshFilter.m_vertices = vertices;
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		boneWeights.push_back(BoneWeight());
 	}
 
+	std::vector<std::string> boneNameVec;
 	int numBones = mesh->mNumBones;
 	for (int i = 0; i < numBones; ++i)
 	{
 		aiBone * bone = mesh->mBones[i];
 		Matrix4x4 bindPose = Convert(bone->mOffsetMatrix);
 		meshFilter.m_bindPoses.push_back(bindPose);
+		boneNameVec.push_back(bone->mName.C_Str());
 		for (int j = 0; j < bone->mNumWeights; ++j)
 		{
 			aiVertexWeight weight = bone->mWeights[j];
@@ -177,13 +244,15 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	{
 		aiAnimation * animation = scene->mAnimations[0];
 		boneAnimation.m_framePerSecond = animation->mTicksPerSecond;
-		for (int i = 0; i < animation->mNumChannels; ++i)
-		{
-			//aiNodeAnim * anim = animation->mChannels[0];
-			//int test = 0;
-			aiNodeAnim * anim = animation->mChannels[i];
-
-		}
+		boneAnimation.m_totalFrame = animation->mDuration;
+// 		for (int i = 0; i < animation->mNumChannels; ++i)
+// 		{
+// 			//aiNodeAnim * anim = animation->mChannels[0];
+// 			//int test = 0;
+// 			aiNodeAnim * anim = animation->mChannels[i];
+// 		}
+		
+		processBoneAnimation(boneNameVec, scene, animation, boneAnimation.m_boneTransformVec, boneAnimation.m_aiNodeAnimVec);
 	}
 	//=========================================
 }

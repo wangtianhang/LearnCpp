@@ -10,7 +10,8 @@ struct MathHelper
 public:
 	static Vector3 GetPosition(Matrix4x4 m)
 	{
-		return Vector3(m[0, 3], m[1, 3], m[2, 3]);
+		//return Vector3(m[0, 3], m[1, 3], m[2, 3]);
+		return Vector3(m.m03, m.m13, m.m23);
 	}
 
 	static Vector3 GetScale(Matrix4x4 m)
@@ -23,15 +24,15 @@ public:
 		Vector3 s = GetScale(m);
 
 		// Normalize Scale from Matrix4x4
-		float m00 = m[0, 0] / s.x;
-		float m01 = m[0, 1] / s.y;
-		float m02 = m[0, 2] / s.z;
-		float m10 = m[1, 0] / s.x;
-		float m11 = m[1, 1] / s.y;
-		float m12 = m[1, 2] / s.z;
-		float m20 = m[2, 0] / s.x;
-		float m21 = m[2, 1] / s.y;
-		float m22 = m[2, 2] / s.z;
+		float m00 = m.m00 / s.x;
+		float m01 = m.m01 / s.y;
+		float m02 = m.m02 / s.z;
+		float m10 = m.m10 / s.x;
+		float m11 = m.m11 / s.y;
+		float m12 = m.m12 / s.z;
+		float m20 = m.m20 / s.x;
+		float m21 = m.m21 / s.y;
+		float m22 = m.m22 / s.z;
 
 		Quaternion q = Quaternion();
 		q.w = Mathf::Sqrt(Mathf::Max((float)0, 1 + m00 + m11 + m22)) / 2;

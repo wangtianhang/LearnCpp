@@ -368,7 +368,7 @@ bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & 
 bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/)
 {
 	Assimp::Importer import;
-	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality /*| aiProcess_ConvertToLeftHanded*/);
+	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{

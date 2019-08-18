@@ -116,19 +116,40 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 	Transform * transform = new Transform();
 	transform->m_name = std::string(aiNolde->mName.C_Str());
 	Matrix4x4 localToWorldMatrix = Convert(aiNolde->mTransformation);
-	if (transform->m_name == "Bip001 Spine")
+	if (transform->m_name == "Bip001")
 	{
 		int test = 0;
-		GUtil::Log("Bip001 Spine origin matrix " + localToWorldMatrix.ToString());
+		GUtil::Log(transform->m_name + " origin matrix \n" + localToWorldMatrix.ToString());
+		Quaternion openglQua = MathHelper::GetRotation(localToWorldMatrix);
+		Quaternion dxQua = Quaternion(-openglQua.x, -openglQua.y, openglQua.z, openglQua.w);
+		GUtil::Log("euler1 " + openglQua.eulerAngles().toString());
+		GUtil::Log("euler2 " + dxQua.eulerAngles().toString());
+	
+		Matrix4x4 src = localToWorldMatrix;
+		Matrix4x4 des = src;
+		des.m01 = -src.m01;
+		des.m02 = -src.m02;
+		des.m02 = -src.m03;
+
+		des.m10 = -src.m10;
+
+		des.m20 = -src.m20;
+		des.m23 = -src.m23;
+
+		Matrix4x4 x = des * src.inverse();
+		GUtil::Log(transform->m_name + " x matrix \n" + x.ToString());
+		GUtil::Log(MathHelper::GetPosition(x).toString());
+		GUtil::Log(MathHelper::GetRotation(x).eulerAngles().toString());
+		GUtil::Log(MathHelper::GetScale(x).toString());
 	}
 	//Vector3 openglLocalPosition = MathHelper::GetPosition(localToWorldMatrix);
 	//Vector3 dxLocalPosition = Vector3(openglLocalPosition.x, openglLocalPosition.y, -openglLocalPosition.z);
 	transform->SetLocalPosition(MathHelper::GetPosition(localToWorldMatrix));
 	//Vector3 openglLocalEuler = MathHelper::GetRotation(localToWorldMatrix).eulerAngles();
 	//Vector3 dxLocalEuler = Vector3(-openglLocalEuler.x, -openglLocalEuler.y, openglLocalEuler.z);
-	//Quaternion openglQua = MathHelper::GetRotation(localToWorldMatrix);
-	//Quaternion dxQua = Quaternion(-openglQua.x, -openglQua.y, openglQua.z, openglQua.w);
-	transform->SetLocalRotation(MathHelper::GetRotation(localToWorldMatrix));
+	Quaternion openglQua = MathHelper::GetRotation(localToWorldMatrix);
+	Quaternion dxQua = Quaternion(-openglQua.x, -openglQua.y, openglQua.z, openglQua.w);
+	transform->SetLocalRotation(dxQua);
 	//Vector3 localEuler = transform->GetLocalEulerAngles();
 	transform->SetLocalEulerAngles(MathHelper::GetScale(localToWorldMatrix));
 	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
@@ -162,6 +183,13 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 
 void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, std::vector<aiNodeAnim *> & animVec)
 {
+	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
+	Matrix4x4 localToWorldMatrix = Convert(bone001->mTransformation);
+	GUtil::Log("Bone001 origin matrix " + localToWorldMatrix.ToString());
+	GUtil::Log(MathHelper::GetPosition(localToWorldMatrix).toString());
+	GUtil::Log(MathHelper::GetRotation(localToWorldMatrix).eulerAngles().toString());
+	GUtil::Log(MathHelper::GetScale(localToWorldMatrix).toString());
+
 	const aiNode * rootNode = FindNode(scene->mRootNode, aiString(animation->mChannels[0]->mNodeName));
 	std::vector<Transform *> tmpBoneTransformVec;
 	processHierarchyTransform(rootNode, tmpBoneTransformVec);
@@ -187,11 +215,20 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 			}
 		}
 	}
-	for (int i = 0; i < boneTransformVec.size(); ++i)
+	for (int i = 0; i < tmpBoneTransformVec.size(); ++i)
 	{
-		GUtil::Log(boneTransformVec[i]->m_name + " localpos " + boneTransformVec[i]->GetLocalPosition().toString() + 
-			" localeuler " + boneTransformVec[i]->GetLocalEulerAngles().toString() + " worldPos " + boneTransformVec[i]->GetPosition().toString());
+		Transform * iter = tmpBoneTransformVec[i];
+		if (iter->m_name == "Bip001")
+		{
+			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
+				" localeuler " + iter->GetLocalEulerAngles().toString() + " worldPos " + iter->GetPosition().toString());
+		}
 	}
+	aiQuaternion key = animVec[0]->mRotationKeys[0].mValue;
+	Quaternion bip001Qua = Quaternion(key.x, key.y, key.z, key.w);
+	GUtil::Log("bip001 euler " + bip001Qua.eulerAngles().toString());
+	
+	
 }
 
 void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
@@ -331,7 +368,7 @@ bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & 
 bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/)
 {
 	Assimp::Importer import;
-	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
+	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality /*| aiProcess_ConvertToLeftHanded*/);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{

@@ -189,35 +189,80 @@ public:
 
 
 	// 四元数转欧拉角
-	static Vector3 ToEulerRad(Quaternion rotation)
+	static Vector3 ToEulerRad(Quaternion q)
 	{
-		float sqw = rotation.w * rotation.w;
-		float sqx = rotation.x * rotation.x;
-		float sqy = rotation.y * rotation.y;
-		float sqz = rotation.z * rotation.z;
-		float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
-		float test = rotation.x * rotation.w - rotation.y * rotation.z;
-		Vector3 v;
+// 		float sqw = rotation.w * rotation.w;
+// 		float sqx = rotation.x * rotation.x;
+// 		float sqy = rotation.y * rotation.y;
+// 		float sqz = rotation.z * rotation.z;
+// 		float unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+// 		float test = rotation.x * rotation.w - rotation.y * rotation.z;
+// 		Vector3 v;
+// 
+// 		if (test > 0.4995f * unit)
+// 		{ // singularity at north pole
+// 			v.y = 2 * Mathf::Atan2(rotation.y, rotation.x);
+// 			v.x = Mathf::PI / 2;
+// 			v.z = 0;
+// 			return NormalizeAngles(v * Mathf::Rad2Deg);
+// 		}
+// 		if (test < -0.4995f * unit)
+// 		{ // singularity at south pole
+// 			v.y = -2 * Mathf::Atan2(rotation.y, rotation.x);
+// 			v.x = -Mathf::PI / 2;
+// 			v.z = 0;
+// 			return NormalizeAngles(v * Mathf::Rad2Deg);
+// 		}
+// 		Quaternion q = Quaternion(rotation.w, rotation.z, rotation.x, rotation.y);
+// 		v.y = Mathf::Atan2(2 * q.x * q.w + 2 * q.y * q.z, 1 - 2 * (q.z * q.z + q.w * q.w));     // Yaw
+// 		v.x = Mathf::Asin(2 * (q.x * q.z - q.w * q.y));                             // Pitch
+// 		v.z = Mathf::Atan2(2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.y * q.y + q.z * q.z));      // Roll
+// 		return NormalizeAngles(v * Mathf::Rad2Deg) * Mathf::Deg2Rad;
 
-		if (test > 0.4995f * unit)
-		{ // singularity at north pole
-			v.y = 2 * Mathf::Atan2(rotation.y, rotation.x);
-			v.x = Mathf::PI / 2;
-			v.z = 0;
-			return NormalizeAngles(v * Mathf::Rad2Deg);
+		float sqw = q.w * q.w;
+		float sqx = q.x * q.x;
+		float sqy = q.y * q.y;
+		float sqz = q.z * q.z;
+
+		float unit = sqx + sqy + sqz + sqw;
+		float test = q.x * q.y + q.z * q.w;
+
+		float yaw = 0.0f;
+		float pitch = 0.0f;
+		float roll = 0.0f;
+
+		// North pole singularity
+		if (test > 0.499f * unit)
+		{
+			yaw = 2.0f * Mathf::Atan2(q.x, q.w);
+			pitch = Mathf::PI * 0.5f;
+			roll = 0.0f;
 		}
-		if (test < -0.4995f * unit)
-		{ // singularity at south pole
-			v.y = -2 * Mathf::Atan2(rotation.y, rotation.x);
-			v.x = -Mathf::PI / 2;
-			v.z = 0;
-			return NormalizeAngles(v * Mathf::Rad2Deg);
+
+		// South pole singularity
+		else if (test < -0.499f * unit)
+		{
+			yaw = -2.0f * Mathf::Atan2(q.x, q.w);
+			pitch = -Mathf::PI * 0.5f;
+			roll = 0.0f;
 		}
-		Quaternion q = Quaternion(rotation.w, rotation.z, rotation.x, rotation.y);
-		v.y = Mathf::Atan2(2 * q.x * q.w + 2 * q.y * q.z, 1 - 2 * (q.z * q.z + q.w * q.w));     // Yaw
-		v.x = Mathf::Asin(2 * (q.x * q.z - q.w * q.y));                             // Pitch
-		v.z = Mathf::Atan2(2 * q.x * q.y + 2 * q.z * q.w, 1 - 2 * (q.y * q.y + q.z * q.z));      // Roll
-		return NormalizeAngles(v * Mathf::Rad2Deg) * Mathf::Deg2Rad;
+
+		else
+		{
+			yaw = Mathf::Atan2(2.0f * q.y * q.w - 2.0f * q.x * q.z, sqx - sqy - sqz + sqw);
+			pitch = Mathf::Asin(2.0f * test / unit);
+			roll = Mathf::Atan2(2.0f * q.x * q.w - 2.0f * q.y * q.z, -sqx + sqy - sqz + sqw);
+		}
+
+		// Keep angles [0..360].
+		if (Mathf::Sign(yaw) < 0)
+			yaw = Mathf::Deg2Rad * (360) + yaw;
+		if (Mathf::Sign(pitch) < 0)
+			pitch = Mathf::Deg2Rad * (360) + pitch;
+		if (Mathf::Sign(roll) < 0)
+			roll = Mathf::Deg2Rad * (360) + roll;
+
+		return Vector3(roll, yaw, pitch);
 	}
 
 	static Vector3 NormalizeAngles(Vector3 angles)

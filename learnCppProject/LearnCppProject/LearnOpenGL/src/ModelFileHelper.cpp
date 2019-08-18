@@ -203,7 +203,7 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 
 void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, std::vector<aiNodeAnim *> & animVec)
 {
-// 	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
+	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
 // 	Matrix4x4 localToWorldMatrix = Convert(bone001->mTransformation);
 // 	GUtil::Log("Bone001 origin matrix " + localToWorldMatrix.ToString());
 // 	GUtil::Log(MathHelper::GetPosition(localToWorldMatrix).toString());
@@ -217,6 +217,7 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 	bool debug = true;
 	if (debug)
 	{
+		// todo Bone001 的parent还有好几层。。从父节点感觉可以读取出旋转和缩放数据
 		Transform * bone001 = new Transform;
 		bone001->m_name = "Bone001";
 		bone001->SetLocalEulerAngles(Vector3(0, 270, 180));

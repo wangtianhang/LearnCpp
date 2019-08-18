@@ -9,8 +9,7 @@
 
 class Transform
 {
-public:
-	std::string m_name;
+private:
 	bool m_needParentUpdate = true;
 
 	Vector3 m_localPostion;
@@ -19,13 +18,17 @@ public:
 
 	Quaternion m_DerivedOrientation = Quaternion::identity(); // 包含自身和上级
 	Vector3 m_DerivedScale = Vector3::one(); // 包含自身和上级
-	Vector3 m_DerivedPosition; // 包含自身和上级
+	Vector3 m_DerivedPosition; // 只含上级
 
 	Transform * m_parent = NULL;
 	std::vector<Transform *> m_childList;
 
 	Vector3 m_worldPosition;
 	bool m_isWorldPositionNeedUpdate = true;
+
+public:
+	std::string m_name;
+
 
 	static void Test()
 	{
@@ -73,6 +76,10 @@ public:
 	{
 		m_isWorldPositionNeedUpdate = true;
 		m_localPostion = convertWorldToLocalPosition(value);
+		if (m_name == "Bip001 Pelvis")
+		{
+			int test = 0;
+		}
 		SetChildNeedUpdate();
 	}
 
@@ -84,6 +91,10 @@ public:
 	void SetLocalPosition(Vector3 value)
 	{
 		m_isWorldPositionNeedUpdate = true;
+		if (m_name == "Bip001 Pelvis")
+		{
+			int test = 0;
+		}
 		m_localPostion = value;
 		SetChildNeedUpdate();
 	}
@@ -145,10 +156,10 @@ public:
 		{
 			Quaternion parentOrientation = m_parent->_getDerivedOrientation();
 			m_DerivedOrientation = parentOrientation * m_localRotation;
-			Vector3 parentScale = m_parent->_getDerivedScale();
-			m_DerivedScale = Vector3::Scale(parentScale, m_localScale);
+			//Vector3 parentScale = m_parent->GetLossyScale();
+			m_DerivedScale = m_parent->GetLossyScale();
 			// Change position vector based on parent's orientation & scale
-			m_DerivedPosition = parentOrientation * Vector3::Scale(parentScale, m_localPostion);
+			m_DerivedPosition = parentOrientation * Vector3::Scale(m_DerivedScale, m_localPostion);
 			// Add altered position vector to parents
 			m_DerivedPosition = m_DerivedPosition + m_parent->_getDerivedPosition();
 		}
@@ -156,7 +167,7 @@ public:
 		{
 			m_DerivedOrientation = m_localRotation;
 			m_DerivedPosition = m_localPostion;
-			m_DerivedScale = m_localScale;
+			m_DerivedScale = Vector3::one();
 		}
 
 		m_needParentUpdate = false;
@@ -355,6 +366,10 @@ public:
 	void SetLocalScale(Vector3 value)
 	{
 		m_localScale = value;
+		if (m_localScale.x > 360 && m_localScale.x < 362)
+		{
+			int test = 0;
+		}
 		SetChildNeedUpdate();
 	}
 
@@ -365,13 +380,17 @@ public:
 
 	void SetLossyScale(Vector3 value)
 	{
-		m_localScale = Divide(GetLossyScale(), m_DerivedScale);
+		m_localScale = Divide(value, m_DerivedScale);
+		if (m_localScale.x > 360 && m_localScale.x < 362)
+		{
+			int test = 0;
+		}
 		SetChildNeedUpdate();
 	}
 
 	Matrix4x4 GetSelfTransform()
 	{
-		Matrix4x4 matrix = Matrix4x4::TRS(_getDerivedPosition(), _getDerivedOrientation(), _getDerivedScale());
+		Matrix4x4 matrix = Matrix4x4::TRS(_getDerivedPosition(), _getDerivedOrientation(), GetLossyScale());
 		return matrix;
 	}
 
@@ -414,4 +433,5 @@ public:
 	{
 		SetRotation(Quaternion::FromToRotation(Vector3::up(), value));
 	}
+
 };

@@ -121,7 +121,7 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 	Transform * transform = new Transform();
 	transform->m_name = std::string(aiNolde->mName.C_Str());
 	Matrix4x4 localToWorldMatrix = Convert(aiNolde->mTransformation);
-	if (transform->m_name == "Bip001")
+	if (transform->m_name == "Bip001 Pelvis")
 	{
 // 		int test = 0;
 // 		GUtil::Log(transform->m_name + " origin matrix \n" + localToWorldMatrix.ToString());
@@ -161,10 +161,21 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 	transform->SetLocalEulerAngles(euler);
 	//Vector3 localEuler = transform->GetLocalEulerAngles();
 	transform->SetLocalScale(MathHelper::GetScale(localToWorldMatrix));
+	if (transform->m_name == "Bip001 Pelvis")
+	{
+		int test = 0;
+	}
+	
 	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
 	{
 		Transform * childTrans = processHierarchyTransform(aiNolde->mChildren[i], boneTransformVec);
-		transform->m_childList.push_back(childTrans);
+		Vector3 cacheLocalPos = childTrans->GetLocalPosition();
+		Vector3 cacheLocalEuler = childTrans->GetLocalEulerAngles();
+		Vector3 cacheLocalScale = childTrans->GetLocalScale();
+		childTrans->SetParent(transform);
+		childTrans->SetLocalPosition(cacheLocalPos);
+		childTrans->SetLocalEulerAngles(cacheLocalEuler);
+		childTrans->SetLocalScale(cacheLocalScale);
 	}
 	boneTransformVec.push_back(transform);
 	return transform;
@@ -199,16 +210,34 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 // 	GUtil::Log(MathHelper::GetRotation(localToWorldMatrix).eulerAngles().toString());
 // 	GUtil::Log(MathHelper::GetScale(localToWorldMatrix).toString());
 
-	const aiNode * rootNode = FindNode(scene->mRootNode, aiString(animation->mChannels[0]->mNodeName));
-	std::vector<Transform *> tmpBoneTransformVec;
-	processHierarchyTransform(rootNode, tmpBoneTransformVec);
+	const aiNode * bip001Node = FindNode(scene->mRootNode, aiString(animation->mChannels[0]->mNodeName));
+	std::vector<Transform *> fullBoneTransformVec;
+	Transform * bip001Transform = processHierarchyTransform(bip001Node, fullBoneTransformVec);
+
+	bool debug = true;
+	if (debug)
+	{
+		Transform * bone001 = new Transform;
+		bone001->m_name = "Bone001";
+		bone001->SetLocalEulerAngles(Vector3(0, 270, 180));
+		bone001->SetLocalScale(Vector3(0.05256505f, 0.05256505f, 0.05256505f));
+		Vector3 cacheLocalPos = bip001Transform->GetLocalPosition();
+		Vector3 cacheLocalEuler = bip001Transform->GetLocalEulerAngles();
+		Vector3 cacheLocalScale = bip001Transform->GetLocalScale();
+		bip001Transform->SetParent(bone001);
+		bip001Transform->SetLocalPosition(cacheLocalPos);
+		bip001Transform->SetLocalEulerAngles(cacheLocalEuler);
+		bip001Transform->SetLocalScale(cacheLocalScale);
+		fullBoneTransformVec.push_back(bone001);
+	}
+
 	for (int i = 0; i < boneNameVec.size(); ++i)
 	{
-		for (int j = 0; j < tmpBoneTransformVec.size(); ++j)
+		for (int j = 0; j < fullBoneTransformVec.size(); ++j)
 		{
-			if (tmpBoneTransformVec[j]->m_name == boneNameVec[i])
+			if (fullBoneTransformVec[j]->m_name == boneNameVec[i])
 			{
-				boneTransformVec.push_back(tmpBoneTransformVec[j]);
+				boneTransformVec.push_back(fullBoneTransformVec[j]);
 				break;
 			}
 		}
@@ -224,13 +253,46 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 			}
 		}
 	}
+
+	for (int i = 0; i < fullBoneTransformVec.size(); ++i)
+	{
+		Transform * iter = fullBoneTransformVec[i];
+		if (iter->m_name == "Bone001"
+			|| iter->m_name == "Bip001"
+			|| iter->m_name == "Bip001 Pelvis"
+			|| iter->m_name == "Bip001 Spine")
+		{
+			if (iter->m_name == "Bone001")
+			{
+				int test = 0;
+			}
+			if (iter->m_name == "Bip001")
+			{
+				int test = 0;
+			}
+			if (iter->m_name == "Bip001 Pelvis")
+			{
+				int test = 0;
+			}
+			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
+				" localeuler " + iter->GetLocalEulerAngles().toString() +
+				" localScale " + iter->GetLocalScale().toString() +
+				" worldPos " + iter->GetPosition().toString() +
+				" worldEuler " + iter->GetEulerAngles().toString() +
+				" worldScale " + iter->GetLossyScale().toString());
+		}
+	}
+
 	for (int i = 0; i < boneTransformVec.size(); ++i)
 	{
 		Transform * iter = boneTransformVec[i];
 		//if (iter->m_name == "Bip001")
 		{
-			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
-				" localeuler " + iter->GetLocalEulerAngles().toString() + " worldPos " + iter->GetPosition().toString());
+// 			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
+// 				" localeuler " + iter->GetLocalEulerAngles().toString() + 
+// 				" worldPos " + iter->GetPosition().toString() + 
+// 				" worldEuler " + iter->GetEulerAngles().toString() + 
+// 			    " worldScale " + iter->GetLossyScale().toString());
 		}
 	}
 	//aiQuaternion key = animVec[0]->mRotationKeys[0].mValue;

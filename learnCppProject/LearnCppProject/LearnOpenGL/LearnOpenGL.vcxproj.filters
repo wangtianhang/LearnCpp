@@ -237,6 +237,9 @@
     <ClInclude Include="src\ModelFileHelper.h">
       <Filter>源文件\src\IO</Filter>
     </ClInclude>
+    <ClInclude Include="src\Learn3D\MathHelper.h">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

@@ -7,6 +7,7 @@
 
 #include "./ModelFileHelper.h"
 #include "./GUtil.h"
+#include "./Learn3D/MathHelper.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -113,6 +114,17 @@ Matrix4x4 Convert(aiMatrix4x4 offset)
 Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transform *> & boneTransformVec)
 {
 	Transform * transform = new Transform();
+	transform->m_name = std::string(aiNolde->mName.C_Str());
+	Matrix4x4 localToWorldMatrix = Convert(aiNolde->mTransformation);
+	if (transform->m_name == "Bip001 Spine")
+	{
+		int test = 0;
+		GUtil::Log("Bip001 Spine origin matrix " + localToWorldMatrix.ToString());
+	}
+	transform->m_localPostion = MathHelper::GetPosition(localToWorldMatrix);
+	transform->m_localRotation = MathHelper::GetRotation(localToWorldMatrix);
+	Vector3 localEuler = transform->GetLocalEulerAngles();
+	transform->m_localScale = MathHelper::GetScale(localToWorldMatrix);
 	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
 	{
 		Transform * childTrans = processHierarchyTransform(aiNolde->mChildren[i], boneTransformVec);
@@ -144,7 +156,7 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 
 void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, std::vector<aiNodeAnim *> & animVec)
 {
-	const aiNode * rootNode = FindNode(scene->mRootNode, aiString(boneNameVec[0].c_str()));
+	const aiNode * rootNode = FindNode(scene->mRootNode, aiString(animation->mChannels[0]->mNodeName));
 	std::vector<Transform *> tmpBoneTransformVec;
 	processHierarchyTransform(rootNode, tmpBoneTransformVec);
 	for (int i = 0; i < boneNameVec.size(); ++i)
@@ -168,6 +180,11 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 				break;
 			}
 		}
+	}
+	for (int i = 0; i < boneTransformVec.size(); ++i)
+	{
+		GUtil::Log(boneTransformVec[i]->m_name + " localpos " + boneTransformVec[i]->GetLocalPosition().toString() + 
+			" localeuler " + boneTransformVec[i]->GetLocalEulerAngles().toString());
 	}
 }
 

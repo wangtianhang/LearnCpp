@@ -205,6 +205,7 @@
     <ClInclude Include="src\GLHelper.h" />
     <ClInclude Include="src\GUtil.h" />
     <ClInclude Include="src\Learn3D\Mathf.h" />
+    <ClInclude Include="src\Learn3D\MathHelper.h" />
     <ClInclude Include="src\Learn3D\Matrix4x4.h" />
     <ClInclude Include="src\Learn3D\Quaternion.h" />
     <ClInclude Include="src\Learn3D\Test3DMath.h" />

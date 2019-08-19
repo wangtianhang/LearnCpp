@@ -30,6 +30,7 @@ public:
 	//bool m_isShared = false;
 	//int m_ShareCount = 1; // 非共享的情况下 不用了要delete vao和vbo
 	std::vector<Vector3> m_vertices;
+	std::vector<Vector3> m_normals;
 	std::vector<Matrix4x4> m_bindPoses;
 	std::vector<BoneWeight> m_boneWeights;
 

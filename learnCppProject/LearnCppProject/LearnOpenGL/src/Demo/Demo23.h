@@ -45,6 +45,8 @@ public:
 	RenderTexture m_blurDepthRenderTexture;
 	Material m_blurMat;
 
+	//BoneAnimation m_boneAnimation;
+
 	virtual void startup()
 	{
 		application::startup();
@@ -77,12 +79,13 @@ public:
 			std::vector<MeshFliter> retVec;
 			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
 			//FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
-			std::vector<BoneAnimation> animVec;
+			std::vector<BoneAnimation *> animVec;
 			
 			ModelFileHelper::loadBoneAnimation("./Assets/model/faluli.FBX", retVec, animVec);
 
 			//ModelFileHelper::loadMeshAsVAO("./Assets/model/faluli.FBX", retVec);
 			MeshFliter meshFilter = retVec[0];
+			BoneAnimation * boneAnimation = animVec[0];
 			//m_euler = Vector3(0, 180, 0);
 			//m_scale = Vector3::one() * 0.2f;
 
@@ -97,6 +100,7 @@ public:
 			obj->m_transform.SetLocalScale(Vector3::one() * 1);
 			obj->m_transform.SetPosition(Vector3(0, 1, 0));
 			obj->m_transform.SetEulerAngles(Vector3(0, 0, 0));
+			obj->SetBoneAnimation(boneAnimation);
 
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);
 

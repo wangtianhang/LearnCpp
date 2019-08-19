@@ -306,7 +306,7 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 	
 }
 
-void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBone, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
+void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBone, MeshFliter & meshFilter, BoneAnimation * boneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
@@ -366,6 +366,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	{
 		boneWeights.push_back(BoneWeight());
 	}
+	meshFilter.m_normals = normals;
 
 	std::vector<std::string> boneNameVec;
 	int numBones = mesh->mNumBones;
@@ -385,8 +386,8 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	if (scene->mNumAnimations > 0)
 	{
 		aiAnimation * animation = scene->mAnimations[0];
-		boneAnimation.m_framePerSecond = animation->mTicksPerSecond;
-		boneAnimation.m_totalFrame = animation->mDuration;
+		boneAnimation->m_framePerSecond = animation->mTicksPerSecond;
+		boneAnimation->m_totalFrame = animation->mDuration;
 // 		for (int i = 0; i < animation->mNumChannels; ++i)
 // 		{
 // 			//aiNodeAnim * anim = animation->mChannels[0];
@@ -394,7 +395,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 // 			aiNodeAnim * anim = animation->mChannels[i];
 // 		}
 		
-		processBoneAnimation(boneNameVec, scene, animation, boneAnimation.m_boneTransformVec, boneAnimation.m_aiNodeAnimVec);
+		processBoneAnimation(boneNameVec, scene, animation, boneAnimation->m_boneTransformVec, boneAnimation->m_aiNodeAnimVec);
 	}
 	//=====================测试静态骨骼数据====================
 
@@ -409,7 +410,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	std::vector<Matrix4x4> vertexToModel;
 	for (int i = 0; i < boneNameVec.size(); ++i)
 	{
-		Matrix4x4 mat = boneAnimation.m_boneTransformVec[i]->GetLocalToWorldMatrix() * meshFilter.m_bindPoses[i];
+		Matrix4x4 mat = boneAnimation->m_boneTransformVec[i]->GetLocalToWorldMatrix() * meshFilter.m_bindPoses[i];
 		vertexToModel.push_back(mat);
 	}
 	
@@ -436,14 +437,14 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 
 #pragma endregion
 
-void processNode(aiNode *node, const aiScene *scene, bool readBone, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
+void processNode(aiNode *node, const aiScene *scene, bool readBone, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation *> & boneAnimationVec, bool inverseZ)
 {
 	// 处理节点所有的网格（如果有的话）
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshFliter meshFilter;
-		BoneAnimation boneAnimation;
+		BoneAnimation * boneAnimation = new BoneAnimation();
 		processMesh(mesh, scene, inverseZ, readBone, meshFilter, boneAnimation);
 		meshFilterVec.push_back(meshFilter);
 		boneAnimationVec.push_back(boneAnimation);
@@ -457,11 +458,11 @@ void processNode(aiNode *node, const aiScene *scene, bool readBone, std::vector<
 
 bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
 {
-	std::vector<BoneAnimation> boneAnimation;
+	std::vector<BoneAnimation *> boneAnimation;
 	return loadBoneAnimation(path, ret, boneAnimation, inverseZ, false);
 }
 
-bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/, bool readBone)
+bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation *> & boneAnimation, bool inverseZ /*= true*/, bool readBone)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);

@@ -4,6 +4,7 @@
 #include "./MeshFliter.h"
 #include "./Material.h"
 #include "./Learn3D/Transform.h"
+#include "./BoneAnimation.h"
 
 struct MeshRenderObject
 {
@@ -17,6 +18,11 @@ public:
 	
 	Material m_material;
 
+	BoneAnimation * m_boneAnimation;
+
+	GLfloat * m_vertex_positions = NULL;
+	GLfloat * m_vertex_normals = NULL;
+
 // 	void InitShader(std::string vertexShader, std::string pixelShader)
 // 	{
 // 
@@ -26,6 +32,61 @@ public:
 // 	{
 // 
 // 	}
+
+	void SetBoneAnimation(BoneAnimation * boneAnimation)
+	{
+		m_boneAnimation = boneAnimation;
+		//if (m_vertex_positions == nullptr)
+		{
+			m_vertex_positions = new GLfloat[m_meshData.m_vertices.size() * 3];
+		}
+		//if (m_vertex_normals == nullptr)
+		{
+			m_vertex_normals = new GLfloat[m_meshData.m_normals.size() * 3];
+		}
+	}
+
+	void UpdateSkin(float delta)
+	{
+		if (m_boneAnimation != NULL)
+		{
+			m_boneAnimation->Update(delta);
+
+			std::vector<Matrix4x4> vertexToModel;
+			for (int i = 0; i < m_meshData.m_bindPoses.size(); ++i)
+			{
+				Matrix4x4 mat = m_boneAnimation->m_boneTransformVec[i]->GetLocalToWorldMatrix() * m_meshData.m_bindPoses[i];
+				vertexToModel.push_back(mat);
+			}
+
+			int count = m_meshData.m_vertices.size();
+			for (int i = 0; i < count; ++i)
+			{
+				Vector3 iter = m_meshData.m_vertices[i];
+				Vector3 normal = m_meshData.m_normals[i];
+				BoneWeight weight = m_meshData.m_boneWeights[i];
+				Matrix4x4 mat0 = vertexToModel[weight.m_index0];
+				Matrix4x4 mat1 = vertexToModel[weight.m_index1];
+				Matrix4x4 mat2 = vertexToModel[weight.m_index2];
+				Matrix4x4 mat3 = vertexToModel[weight.m_index3];
+				Vector3 newPos = mat0.MultiplyPoint(iter) * weight.m_weight0 +
+					mat1.MultiplyPoint(iter) * weight.m_weight1 +
+					mat2.MultiplyPoint(iter) * weight.m_weight2 +
+					mat3.MultiplyPoint(iter) * weight.m_weight3;
+				//posVertices.push_back(newPos);
+				Vector3 newNormal = mat0.MultiplyVector(normal) * weight.m_weight0 +
+					mat1.MultiplyVector(normal) * weight.m_weight1 +
+					mat2.MultiplyVector(normal) * weight.m_weight2 +
+					mat3.MultiplyVector(normal) * weight.m_weight3;
+				m_vertex_positions[3 * i] = newPos.x;
+				m_vertex_positions[3 * i + 1] = newPos.y;
+				m_vertex_positions[3 * i + 2] = newPos.z;
+				m_vertex_normals[3 * i] = newNormal.x;
+				m_vertex_normals[3 * i + 1] = newNormal.y;
+				m_vertex_normals[3 * i + 2] = newNormal.z;
+			}
+		}
+	}
 
 	void RenderObj()
 	{

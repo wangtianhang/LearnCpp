@@ -31,6 +31,6 @@ public:
 
 	void Update(float delta)
 	{
-
+		m_curTime += delta;
 	}
 };

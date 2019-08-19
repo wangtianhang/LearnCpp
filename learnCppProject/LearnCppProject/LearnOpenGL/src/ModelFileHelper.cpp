@@ -386,7 +386,16 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 		
 		processBoneAnimation(boneNameVec, scene, animation, boneAnimation.m_boneTransformVec, boneAnimation.m_aiNodeAnimVec);
 	}
-	//=========================================
+	//=====================²âÊÔ¾²Ì¬¹Ç÷ÀÊý¾Ý====================
+
+	GUtil::Log("vertexCount " + vertices.size());
+	std::string vertexData;
+	for (int i = 0; i < 100; ++i)
+	{
+		vertexData += vertices[i].toString() + "\n";
+	}
+	GUtil::Log("vertexData \n" + vertexData);
+
 	std::vector<Matrix4x4> vertexToModel;
 	for (int i = 0; i < boneNameVec.size(); ++i)
 	{
@@ -409,9 +418,10 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 			mat3.MultiplyPoint(iter) * weight.m_weight3;
 		posVertices.push_back(newPos);
 	}
+	//===========================================
 
-	//meshFilter = GetMeshFilter(vertices, normals, indices);
-	meshFilter = GetMeshFilter(posVertices, normals, indices);
+	meshFilter = GetMeshFilter(vertices, normals, indices);
+	//meshFilter = GetMeshFilter(posVertices, normals, indices);
 }
 
 #pragma endregion

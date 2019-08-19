@@ -52,4 +52,14 @@ public:
 
 		return q;
 	}
+
+	static float Modulo(float a, int b)
+	{
+		return a - ((int)a / b) * b;
+	}
+
+	static float Module2(float a, float b)
+	{
+		return a - ((int)a / b) * b;
+	}
 };

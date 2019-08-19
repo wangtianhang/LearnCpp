@@ -298,7 +298,7 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 	
 }
 
-void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
+void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBone, MeshFliter & meshFilter, BoneAnimation & boneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
@@ -340,8 +340,14 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	}
 
 	
+	meshFilter = GetMeshFilter(vertices, normals, indices);
 
 	//===================解析骨骼和骨骼动画=======================
+	if (!readBone)
+	{
+		return;
+	}
+
 	if (mesh->mNumBones == 0)
 	{
 		return;
@@ -415,13 +421,13 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, MeshFliter &
 	}
 	//===========================================
 
-	meshFilter = GetMeshFilter(vertices, normals, indices);
+	
 	//meshFilter = GetMeshFilter(posVertices, normals, indices);
 }
 
 #pragma endregion
 
-void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
+void processNode(aiNode *node, const aiScene *scene, bool readBone, std::vector<MeshFliter>& meshFilterVec, std::vector<BoneAnimation> & boneAnimationVec, bool inverseZ)
 {
 	// 处理节点所有的网格（如果有的话）
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -429,24 +435,24 @@ void processNode(aiNode *node, const aiScene *scene, std::vector<MeshFliter>& me
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshFliter meshFilter;
 		BoneAnimation boneAnimation;
-		processMesh(mesh, scene, inverseZ, meshFilter, boneAnimation);
+		processMesh(mesh, scene, inverseZ, readBone, meshFilter, boneAnimation);
 		meshFilterVec.push_back(meshFilter);
 		boneAnimationVec.push_back(boneAnimation);
 	}
 	// 接下来对它的子节点重复这一过程
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene, meshFilterVec, boneAnimationVec, inverseZ);
+		processNode(node->mChildren[i], scene, readBone, meshFilterVec, boneAnimationVec, inverseZ);
 	}
 }
 
 bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & ret, bool inverseZ)
 {
 	std::vector<BoneAnimation> boneAnimation;
-	return loadBoneAnimation(path, ret, boneAnimation, inverseZ);
+	return loadBoneAnimation(path, ret, boneAnimation, inverseZ, false);
 }
 
-bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/)
+bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation> & boneAnimation, bool inverseZ /*= true*/, bool readBone)
 {
 	Assimp::Importer import;
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
@@ -459,7 +465,7 @@ bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter
 	std::string directory = path.substr(0, path.find_last_of('/'));
 
 	//std::vector<MeshFliter> meshFilterVec;
-	processNode(scene->mRootNode, scene, ret, boneAnimation, inverseZ);
+	processNode(scene->mRootNode, scene, readBone, ret, boneAnimation, inverseZ);
 	return true;
 }
 

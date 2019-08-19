@@ -270,6 +270,7 @@ public:
 		//Vector3 newPos = PingPong(Vector3(0, 0.5, 0), Vector3(0, 1.5, 0), m_accTime);
 		//m_meshRenderObj->m_transform.SetPosition(newPos);
 
+		m_meshRenderObj->UpdateSkin(delta);
 
 		DrawDepth();
 

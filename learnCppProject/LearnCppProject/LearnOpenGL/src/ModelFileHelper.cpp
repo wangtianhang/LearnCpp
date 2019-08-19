@@ -121,8 +121,8 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 	Transform * transform = new Transform();
 	transform->m_name = std::string(aiNolde->mName.C_Str());
 	Matrix4x4 localToWorldMatrix = Convert(aiNolde->mTransformation);
-	if (transform->m_name == "Bip001 Pelvis")
-	{
+//	if (transform->m_name == "Bip001 Pelvis")
+//	{
 // 		int test = 0;
 // 		GUtil::Log(transform->m_name + " origin matrix \n" + localToWorldMatrix.ToString());
 // 		Quaternion qua = MathHelper::GetRotation(localToWorldMatrix);
@@ -145,7 +145,7 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 // 		GUtil::Log(MathHelper::GetPosition(x).toString());
 // 		GUtil::Log(MathHelper::GetRotation(x).eulerAngles().toString());
 // 		GUtil::Log(MathHelper::GetScale(x).toString());
-	}
+//	}
 	// 下面这两处很奇怪 不知道为何需要转一下
 	bool copyUnity = false;
 	Vector3 pos = MathHelper::GetPosition(localToWorldMatrix);
@@ -163,11 +163,12 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 		euler.z = -euler.z;
 	}
 	transform->SetLocalEulerAngles(euler);
-	transform->SetLocalScale(MathHelper::GetScale(localToWorldMatrix));
-	if (transform->m_name == "Bip001 Pelvis")
-	{
-		int test = 0;
-	}
+	Vector3 scale = MathHelper::GetScale(localToWorldMatrix);
+	transform->SetLocalScale(scale);
+// 	if (transform->m_name == "Bip001 Pelvis")
+// 	{
+// 		int test = 0;
+// 	}
 	
 	for (unsigned int i = 0; i < aiNolde->mNumChildren; i++)
 	{
@@ -258,47 +259,50 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 		}
 	}
 
-	for (int i = 0; i < fullBoneTransformVec.size(); ++i)
-	{
-		Transform * iter = fullBoneTransformVec[i];
-		if (iter->m_name == "Bone001"
-			|| iter->m_name == "Bip001"
-			|| iter->m_name == "Bip001 Pelvis"
-			|| iter->m_name == "Bip001 Spine")
-		{
-			if (iter->m_name == "Bone001")
-			{
-				int test = 0;
-			}
-			if (iter->m_name == "Bip001")
-			{
-				int test = 0;
-			}
-			if (iter->m_name == "Bip001 Pelvis")
-			{
-				int test = 0;
-			}
-			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
-				" localeuler " + iter->GetLocalEulerAngles().toString() +
-				" localScale " + iter->GetLocalScale().toString() +
-				" worldPos " + iter->GetPosition().toString() +
-				" worldEuler " + iter->GetEulerAngles().toString() +
-				" worldScale " + iter->GetLossyScale().toString());
-		}
-	}
+//	if (false)
+//	{
+// 		for (int i = 0; i < fullBoneTransformVec.size(); ++i)
+// 		{
+// 			Transform * iter = fullBoneTransformVec[i];
+// 			if (iter->m_name == "Bone001"
+// 				|| iter->m_name == "Bip001"
+// 				|| iter->m_name == "Bip001 Pelvis"
+// 				|| iter->m_name == "Bip001 Spine")
+// 			{
+// 				if (iter->m_name == "Bone001")
+// 				{
+// 					int test = 0;
+// 				}
+// 				if (iter->m_name == "Bip001")
+// 				{
+// 					int test = 0;
+// 				}
+// 				if (iter->m_name == "Bip001 Pelvis")
+// 				{
+// 					int test = 0;
+// 				}
+// 				GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
+// 					" localeuler " + iter->GetLocalEulerAngles().toString() +
+// 					" localScale " + iter->GetLocalScale().toString() +
+// 					" worldPos " + iter->GetPosition().toString() +
+// 					" worldEuler " + iter->GetEulerAngles().toString() +
+// 					" worldScale " + iter->GetLossyScale().toString());
+// 			}
+// 		}
+//	}
 
-	for (int i = 0; i < boneTransformVec.size(); ++i)
-	{
-		Transform * iter = boneTransformVec[i];
-		//if (iter->m_name == "Bip001")
-		{
-// 			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
-// 				" localeuler " + iter->GetLocalEulerAngles().toString() + 
-// 				" worldPos " + iter->GetPosition().toString() + 
-// 				" worldEuler " + iter->GetEulerAngles().toString() + 
-// 			    " worldScale " + iter->GetLossyScale().toString());
-		}
-	}
+
+// 	for (int i = 0; i < boneTransformVec.size(); ++i)
+// 	{
+// 		Transform * iter = boneTransformVec[i];
+// 		{
+// // 			GUtil::Log(iter->m_name + " localpos " + iter->GetLocalPosition().toString() +
+// // 				" localeuler " + iter->GetLocalEulerAngles().toString() + 
+// // 				" worldPos " + iter->GetPosition().toString() + 
+// // 				" worldEuler " + iter->GetEulerAngles().toString() + 
+// // 			    " worldScale " + iter->GetLossyScale().toString());
+// 		}
+// 	}
 	//aiQuaternion key = animVec[0]->mRotationKeys[0].mValue;
 	//Quaternion bip001Qua = Quaternion(key.x, key.y, key.z, key.w);
 	//GUtil::Log("bip001 euler " + bip001Qua.eulerAngles().toString());
@@ -312,7 +316,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	std::vector<GLuint> indices;
 	//std::vector<Texture> textures;
 	std::vector<Vector3> normals;
-	std::vector<BoneWeight> boneWeights;
+	
 
 	Matrix4x4 inverseMat = Matrix4x4::TRS(Vector3::zero(), Quaternion::Euler(Vector3(0, 180, 0)), Vector3::one());
 
@@ -361,20 +365,22 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	{
 		return;
 	}
-	meshFilter.m_vertices = vertices;
+	//meshFilter.m_vertices = vertices;
+	std::vector<BoneWeight> boneWeights;
 	for (int i = 0; i < vertices.size(); ++i)
 	{
 		boneWeights.push_back(BoneWeight());
 	}
-	meshFilter.m_normals = normals;
+	//meshFilter.m_normals = normals;
 
 	std::vector<std::string> boneNameVec;
-	int numBones = mesh->mNumBones;
-	for (int i = 0; i < numBones; ++i)
+	//int numBones = mesh->mNumBones;
+	std::vector<Matrix4x4> bindPoses;
+	for (int i = 0; i < mesh->mNumBones; ++i)
 	{
 		aiBone * bone = mesh->mBones[i];
 		Matrix4x4 bindPose = Convert(bone->mOffsetMatrix);
-		meshFilter.m_bindPoses.push_back(bindPose);
+		bindPoses.push_back(bindPose);
 		boneNameVec.push_back(bone->mName.C_Str());
 		for (int j = 0; j < bone->mNumWeights; ++j)
 		{
@@ -399,39 +405,42 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	}
 	//=====================测试静态骨骼数据====================
 
-	GUtil::Log("vertexCount " + vertices.size());
-	std::string vertexData;
-	for (int i = 0; i < 100; ++i)
-	{
-		vertexData += vertices[i].toString() + "\n";
-	}
-	GUtil::Log("vertexData \n" + vertexData);
-
-	std::vector<Matrix4x4> vertexToModel;
-	for (int i = 0; i < boneNameVec.size(); ++i)
-	{
-		Matrix4x4 mat = boneAnimation->m_boneTransformVec[i]->GetLocalToWorldMatrix() * meshFilter.m_bindPoses[i];
-		vertexToModel.push_back(mat);
-	}
+// 	GUtil::Log("vertexCount " + vertices.size());
+// 	std::string vertexData;
+// 	for (int i = 0; i < 100; ++i)
+// 	{
+// 		vertexData += vertices[i].toString() + "\n";
+// 	}
+// 	GUtil::Log("vertexData \n" + vertexData);
+// 
+// 	std::vector<Matrix4x4> vertexToModel;
+// 	for (int i = 0; i < boneNameVec.size(); ++i)
+// 	{
+// 		Matrix4x4 mat = boneAnimation->m_boneTransformVec[i]->GetLocalToWorldMatrix() * bindPoses[i];
+// 		vertexToModel.push_back(mat);
+// 	}
 	
-	std::vector<Vector3> posVertices;
-	for (int i = 0; i < vertices.size(); ++i)
-	{
-		Vector3 iter = vertices[i];
-		BoneWeight weight = boneWeights[i];
-		Matrix4x4 mat0 = vertexToModel[weight.m_index0];
-		Matrix4x4 mat1 = vertexToModel[weight.m_index1];
-		Matrix4x4 mat2 = vertexToModel[weight.m_index2];
-		Matrix4x4 mat3 = vertexToModel[weight.m_index3];
-		Vector3 newPos = mat0.MultiplyPoint(iter) * weight.m_weight0 + 
-			mat1.MultiplyPoint(iter) * weight.m_weight1 + 
-			mat2.MultiplyPoint(iter) * weight.m_weight2 + 
-			mat3.MultiplyPoint(iter) * weight.m_weight3;
-		posVertices.push_back(newPos);
-	}
+// 	std::vector<Vector3> posVertices;
+// 	for (int i = 0; i < vertices.size(); ++i)
+// 	{
+// 		Vector3 iter = vertices[i];
+// 		BoneWeight weight = boneWeights[i];
+// 		Matrix4x4 mat0 = vertexToModel[weight.m_index0];
+// 		Matrix4x4 mat1 = vertexToModel[weight.m_index1];
+// 		Matrix4x4 mat2 = vertexToModel[weight.m_index2];
+// 		Matrix4x4 mat3 = vertexToModel[weight.m_index3];
+// 		Vector3 newPos = mat0.MultiplyPoint(iter) * weight.m_weight0 + 
+// 			mat1.MultiplyPoint(iter) * weight.m_weight1 + 
+// 			mat2.MultiplyPoint(iter) * weight.m_weight2 + 
+// 			mat3.MultiplyPoint(iter) * weight.m_weight3;
+// 		posVertices.push_back(newPos);
+// 	}
 	//===========================================
-	meshFilter = GetMeshFilter(posVertices, normals, indices);
-	
+	meshFilter = GetMeshFilter(vertices, normals, indices);
+	meshFilter.m_vertices = vertices;
+	meshFilter.m_normals = normals;
+	meshFilter.m_bindPoses = bindPoses;
+	meshFilter.m_boneWeights = boneWeights;
 	//meshFilter = GetMeshFilter(posVertices, normals, indices);
 }
 

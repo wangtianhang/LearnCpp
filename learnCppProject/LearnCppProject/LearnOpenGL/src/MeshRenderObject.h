@@ -78,13 +78,19 @@ public:
 					mat1.MultiplyVector(normal) * weight.m_weight1 +
 					mat2.MultiplyVector(normal) * weight.m_weight2 +
 					mat3.MultiplyVector(normal) * weight.m_weight3;
-				m_vertex_positions[3 * i] = newPos.x;
+				m_vertex_positions[3 * i] = newPos.x + Mathf::Sin(m_boneAnimation->m_curTime);
 				m_vertex_positions[3 * i + 1] = newPos.y;
 				m_vertex_positions[3 * i + 2] = newPos.z;
 				m_vertex_normals[3 * i] = newNormal.x;
 				m_vertex_normals[3 * i + 1] = newNormal.y;
 				m_vertex_normals[3 * i + 2] = newNormal.z;
 			}
+
+			int size_vertex_positions = m_meshData.m_vertices.size() * 3 * 4;
+			glBindBuffer(GL_ARRAY_BUFFER, m_meshData.m_positionVBO);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, size_vertex_positions, m_vertex_positions);
+			glBindBuffer(GL_ARRAY_BUFFER, m_meshData.m_normalVBO);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, size_vertex_positions, m_vertex_normals);
 		}
 	}
 

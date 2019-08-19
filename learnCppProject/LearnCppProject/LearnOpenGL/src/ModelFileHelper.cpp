@@ -146,20 +146,15 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 // 		GUtil::Log(MathHelper::GetRotation(x).eulerAngles().toString());
 // 		GUtil::Log(MathHelper::GetScale(x).toString());
 	}
-	//Vector3 openglLocalPosition = MathHelper::GetPosition(localToWorldMatrix);
-	//Vector3 dxLocalPosition = Vector3(openglLocalPosition.x, openglLocalPosition.y, -openglLocalPosition.z);
+	// 下面这两处很奇怪 不知道为何需要转一下
 	Vector3 pos = MathHelper::GetPosition(localToWorldMatrix);
 	pos.x = -pos.x;
 	pos.z = -pos.z;
 	transform->SetLocalPosition(pos);
-	//Vector3 openglLocalEuler = MathHelper::GetRotation(localToWorldMatrix).eulerAngles();
-	//Vector3 dxLocalEuler = Vector3(-openglLocalEuler.x, -openglLocalEuler.y, openglLocalEuler.z);
 	Vector3 euler = MathHelper::GetRotation(localToWorldMatrix).eulerAngles();
-	//Quaternion dxQua = Quaternion(-openglQua.x, -openglQua.y, openglQua.z, openglQua.w);
 	euler.x = -euler.x;
 	euler.z = -euler.z;
 	transform->SetLocalEulerAngles(euler);
-	//Vector3 localEuler = transform->GetLocalEulerAngles();
 	transform->SetLocalScale(MathHelper::GetScale(localToWorldMatrix));
 	if (transform->m_name == "Bip001 Pelvis")
 	{

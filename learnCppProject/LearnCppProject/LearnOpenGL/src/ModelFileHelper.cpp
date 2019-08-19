@@ -147,13 +147,21 @@ Transform * processHierarchyTransform(const aiNode * aiNolde, std::vector<Transf
 // 		GUtil::Log(MathHelper::GetScale(x).toString());
 	}
 	// 下面这两处很奇怪 不知道为何需要转一下
+	bool copyUnity = false;
 	Vector3 pos = MathHelper::GetPosition(localToWorldMatrix);
-	pos.x = -pos.x;
-	pos.z = -pos.z;
+	if (copyUnity)
+	{
+		pos.x = -pos.x;
+		pos.z = -pos.z;
+	}
+
 	transform->SetLocalPosition(pos);
 	Vector3 euler = MathHelper::GetRotation(localToWorldMatrix).eulerAngles();
-	euler.x = -euler.x;
-	euler.z = -euler.z;
+	if (copyUnity)
+	{
+		euler.x = -euler.x;
+		euler.z = -euler.z;
+	}
 	transform->SetLocalEulerAngles(euler);
 	transform->SetLocalScale(MathHelper::GetScale(localToWorldMatrix));
 	if (transform->m_name == "Bip001 Pelvis")
@@ -340,11 +348,12 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	}
 
 	
-	meshFilter = GetMeshFilter(vertices, normals, indices);
+	
 
 	//===================解析骨骼和骨骼动画=======================
 	if (!readBone)
 	{
+		meshFilter = GetMeshFilter(vertices, normals, indices);
 		return;
 	}
 
@@ -420,7 +429,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 		posVertices.push_back(newPos);
 	}
 	//===========================================
-
+	meshFilter = GetMeshFilter(posVertices, normals, indices);
 	
 	//meshFilter = GetMeshFilter(posVertices, normals, indices);
 }

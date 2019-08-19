@@ -77,8 +77,11 @@ public:
 			std::vector<MeshFliter> retVec;
 			//ObjFileHelper::loadObjAsVAO("./Assets/model/faluli.FBX", retVec);
 			//FBXFileHelper::logFbx("./Assets/model/faluli.FBX");
+			std::vector<BoneAnimation> animVec;
 			
-			ModelFileHelper::loadMeshAsVAO("./Assets/model/faluli.FBX", retVec);
+			ModelFileHelper::loadBoneAnimation("./Assets/model/faluli.FBX", retVec, animVec);
+
+			//ModelFileHelper::loadMeshAsVAO("./Assets/model/faluli.FBX", retVec);
 			MeshFliter meshFilter = retVec[0];
 			//m_euler = Vector3(0, 180, 0);
 			//m_scale = Vector3::one() * 0.2f;
@@ -92,7 +95,7 @@ public:
 			obj->m_meshData = meshFilter;
 			obj->m_material = mat;
 			obj->m_transform.SetLocalScale(Vector3::one() * 1);
-			obj->m_transform.SetPosition(Vector3(0, 0, 0));
+			obj->m_transform.SetPosition(Vector3(0, 1, 0));
 			obj->m_transform.SetEulerAngles(Vector3(0, 0, 0));
 
 			m_sceneRenderMgr.m_renderGoVec.push_back(obj);

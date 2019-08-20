@@ -94,6 +94,13 @@ public:
 		{
 			delete m_channelVec[i];
 		}
+		m_channelVec.clear();
+		for (int i = 0; i < m_fullTransformVec.size(); ++i)
+		{
+			delete m_fullTransformVec[i];
+		}
+		m_fullTransformVec.clear();
+		m_boneTransformVec.clear();
 	}
 
 // 	Vector3 Convert(aiVector3D tmp)

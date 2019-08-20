@@ -16,7 +16,9 @@ public:
 		for (int i = 0; i < m_renderGoVec.size(); i++)
 		{
 			m_renderGoVec[i]->UnInit();
+			delete m_renderGoVec[i];
 		}
+		m_renderGoVec.clear();
 	}
 };
 

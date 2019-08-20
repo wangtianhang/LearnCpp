@@ -74,7 +74,8 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 
 	//GLUtil::Init();
 	//_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
-	//_CrtSetBreakAlloc(437);
+	//_CrtSetBreakAlloc(139566);
+	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
 
 	int demoId = 1;
 	if (demoId == 1)
@@ -83,7 +84,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 		//Demo7 *app = new Demo7;
 		app->run(app);
 		delete app;
-	}
+ 	}
 
 	_CrtDumpMemoryLeaks();
 

@@ -27,7 +27,7 @@ public:
 
 	//GLuint m_depth_fbo;
 
-	int m_DEPTH_TEXTURE_SIZE = 128;
+	int m_DEPTH_TEXTURE_SIZE = 256;
 
 	//GLuint m_depth_tex;
 	//GLuint m_depth_vsm_tex;

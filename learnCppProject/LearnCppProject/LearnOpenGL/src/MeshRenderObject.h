@@ -38,6 +38,32 @@ public:
 // 
 // 	}
 
+	void UnInit()
+	{
+		if (m_boneAnimation != nullptr)
+		{
+			m_boneAnimation->UnInit();
+			delete m_boneAnimation;
+			m_boneAnimation = NULL;
+		}
+
+		m_meshData.UnInit();
+
+		m_material.UnInit();
+
+		if (m_vertex_positions != nullptr)
+		{
+			delete m_vertex_positions;
+			m_vertex_positions = nullptr;
+		}
+
+		if (m_vertex_normals != nullptr)
+		{
+			delete m_vertex_normals;
+			m_vertex_normals = nullptr;
+		}
+	}
+
 	void SetBoneAnimation(BoneAnimation * boneAnimation)
 	{
 		m_boneAnimation = boneAnimation;
@@ -170,15 +196,5 @@ public:
 		}
 	}
 
-	void UnInit()
-	{
-		if (m_boneAnimation != nullptr)
-		{
-			m_boneAnimation->UnInit();
-		}
 
-		m_meshData.UnInit();
-
-		m_material.UnInit();
-	}
 };

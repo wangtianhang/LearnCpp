@@ -51,7 +51,8 @@ public:
 	//std::vector<std::string> m_boneNameVec;
 	std::vector<Transform *> m_boneTransformVec;
 	//std::vector<aiNodeAnim *> m_aiNodeAnimVec;
-	std::vector<Transform *> m_fullTransformVec;
+	std::vector<Transform *> m_fullAnimTransformVec;
+	std::vector<Transform *> m_allHierarchyTransformVec;
 	std::vector<ChannelFrameData *> m_channelVec;
 
 	//std::vector<int> m_curKey;
@@ -95,11 +96,12 @@ public:
 			delete m_channelVec[i];
 		}
 		m_channelVec.clear();
-		for (int i = 0; i < m_fullTransformVec.size(); ++i)
+		for (int i = 0; i < m_allHierarchyTransformVec.size(); ++i)
 		{
-			delete m_fullTransformVec[i];
+			delete m_allHierarchyTransformVec[i];
 		}
-		m_fullTransformVec.clear();
+		m_allHierarchyTransformVec.clear();
+		m_fullAnimTransformVec.clear();
 		m_boneTransformVec.clear();
 	}
 
@@ -121,9 +123,9 @@ public:
 
 		//float oneFrameSpan = 1 / m_framePerSecond;
 		// 这里先不考虑性能了。。
-		for (int i = 0; i < m_fullTransformVec.size(); ++i)
+		for (int i = 0; i < m_fullAnimTransformVec.size(); ++i)
 		{
-			if (m_fullTransformVec[i]->m_name == "Bip001")
+			if (m_fullAnimTransformVec[i]->m_name == "Bip001")
 			{
 				int test = 0;
 			}
@@ -137,7 +139,7 @@ public:
 				Vector3 endLocalPos = endPosKey.mValue;
 				Vector3 curLocalPos = Vector3::Lerp(beginLocalPos, endLocalPos, weight);
 
-				m_fullTransformVec[i]->SetLocalPosition(curLocalPos);
+				m_fullAnimTransformVec[i]->SetLocalPosition(curLocalPos);
 			}
 
 
@@ -150,7 +152,7 @@ public:
 				Quaternion endLocalQua =endQuaKey.mValue;
 				Quaternion curQua = Quaternion::Slerp(beginLocalQua, endLocalQua, weight);
 
-				m_fullTransformVec[i]->SetLocalRotation(curQua);
+				m_fullAnimTransformVec[i]->SetLocalRotation(curQua);
 			}
 		}
 	}

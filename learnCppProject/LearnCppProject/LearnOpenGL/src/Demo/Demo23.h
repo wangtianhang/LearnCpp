@@ -86,6 +86,7 @@ public:
 			//ModelFileHelper::loadMeshAsVAO("./Assets/model/faluli.FBX", retVec);
 			MeshFliter meshFilter = retVec[0];
 			BoneAnimation * boneAnimation = animVec[0];
+			delete animVec[1];
 			//m_euler = Vector3(0, 180, 0);
 			//m_scale = Vector3::one() * 0.2f;
 

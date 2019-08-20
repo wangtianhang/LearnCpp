@@ -75,6 +75,9 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	//GLUtil::Init();
 	//_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	//_CrtSetBreakAlloc(139566);
+	//_CrtSetBreakAlloc(139569);
+	//_CrtSetBreakAlloc(186545);
+	//_CrtSetBreakAlloc(631);
 	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
 
 	int demoId = 1;

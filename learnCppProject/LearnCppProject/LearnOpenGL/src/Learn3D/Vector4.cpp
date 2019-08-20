@@ -1,5 +1,7 @@
 /*#include "pch.h"*/
 
+#include "../DebugMemory.h"
+
 #include "./Vector4.h"
 
 Vector4 operator*(const float d, Vector4 b)

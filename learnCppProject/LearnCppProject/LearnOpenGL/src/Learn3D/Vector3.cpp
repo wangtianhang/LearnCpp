@@ -1,5 +1,6 @@
 
 /*#include "pch.h"*/
+#include "../DebugMemory.h"
 
 #include "Vector3.h"
 #include "Matrix4x4.h"

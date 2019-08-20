@@ -1,6 +1,9 @@
 /*#include "pch.h"*/
 
 #include <iostream>
+
+#include "../DebugMemory.h"
+
 #include "./Test3DMath.h"
 
 #include "./Mathf.h"

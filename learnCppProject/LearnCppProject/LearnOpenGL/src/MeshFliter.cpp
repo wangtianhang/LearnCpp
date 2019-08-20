@@ -5,5 +5,5 @@
 
 void MeshFliter::UnInit()
 {
-	application::app->m_resourceMgr.ReleaseMeshFilter(this);
+	application::s_app->m_resourceMgr.ReleaseMeshFilter(this);
 }

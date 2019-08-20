@@ -135,14 +135,14 @@ void GLHelper::Blit(RenderTexture srcRenderTexture, RenderTexture desRenderTextu
 // 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+	glViewport(0, 0, application::s_app->info.windowWidth, application::s_app->info.windowHeight);
 }
 
 void GLHelper::SaveScreen(std::string fileName)
 {
 	
-		int row_size = ((application::app->info.windowWidth * 3 + 3) & ~3);
-		int data_size = row_size * application::app->info.windowHeight;
+		int row_size = ((application::s_app->info.windowWidth * 3 + 3) & ~3);
+		int data_size = row_size * application::s_app->info.windowHeight;
 		unsigned char * data = new unsigned char[data_size];
 #pragma pack (push, 1)
 		struct
@@ -162,13 +162,13 @@ void GLHelper::SaveScreen(std::string fileName)
 		} tga_header;
 #pragma pack (pop)
 		glReadPixels(0, 0, // Origin
-			application::app->info.windowWidth, application::app->info.windowHeight, // Size
+			application::s_app->info.windowWidth, application::s_app->info.windowHeight, // Size
 			GL_BGR, GL_UNSIGNED_BYTE, // Format, type
 			data); // Data
 		memset(&tga_header, 0, sizeof(tga_header));
 		tga_header.imagetype = 2;
-		tga_header.width = (short)application::app->info.windowWidth;
-		tga_header.height = (short)application::app->info.windowHeight;
+		tga_header.width = (short)application::s_app->info.windowWidth;
+		tga_header.height = (short)application::s_app->info.windowHeight;
 		tga_header.bpp = 24;
 		FILE * f_out = fopen((fileName + ".tga").c_str(), "wb");
 		fwrite(&tga_header, sizeof(tga_header), 1, f_out);

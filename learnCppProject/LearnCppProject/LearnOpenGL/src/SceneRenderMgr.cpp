@@ -18,8 +18,8 @@ void SceneRenderMgr::Update(float delta)
 
 		
 
-		Matrix4x4 view = application::app->m_camera.GetViewMatrix();
-		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
+		Matrix4x4 view = application::s_app->m_camera.GetViewMatrix();
+		float aspect = (float)application::s_app->info.windowWidth / application::s_app->info.windowHeight;
 		float fov = 60;
 		float nearPlane = 0.3;
 		float farPlane = 1000;

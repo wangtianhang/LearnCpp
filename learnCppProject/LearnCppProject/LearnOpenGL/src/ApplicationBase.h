@@ -40,7 +40,7 @@ public:
 	virtual void run(application* the_app)
 	{
 		bool running = true;
-		app = the_app;
+		s_app = the_app;
 
 		if (!glfwInit())
 		{
@@ -190,7 +190,9 @@ public:
 
 	virtual void shutdown()
 	{
+		m_sceneRenderMgr.UnInit();
 		GLHelper::UnInit();
+		s_app = NULL;
 	}
 
 	void setWindowTitle(const char * title)
@@ -278,7 +280,7 @@ public:
 	};
 
 	APPINFO     info;
-	static      application * app;
+	static      application * s_app;
 	GLFWwindow* window;
 	SceneRenderMgr m_sceneRenderMgr;
 	ResourcesMgr m_resourceMgr;
@@ -289,27 +291,27 @@ protected:
 
 	static void glfw_onResize(GLFWwindow* window, int w, int h)
 	{
-		app->onResize(w, h);
+		s_app->onResize(w, h);
 	}
 
 	static void glfw_onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		app->onKey(key, action);
+		s_app->onKey(key, action);
 	}
 
 	static void glfw_onMouseButton(GLFWwindow* window, int button, int action, int mods)
 	{
-		app->onMouseButton(button, action);
+		s_app->onMouseButton(button, action);
 	}
 
 	static void glfw_onMouseMove(GLFWwindow* window, double x, double y)
 	{
-		app->onMouseMove(static_cast<int>(x), static_cast<int>(y));
+		s_app->onMouseMove(static_cast<int>(x), static_cast<int>(y));
 	}
 
 	static void glfw_onMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		app->onMouseWheel(static_cast<int>(yoffset));
+		s_app->onMouseWheel(static_cast<int>(yoffset));
 	}
 
 	void setVsync(bool enable)

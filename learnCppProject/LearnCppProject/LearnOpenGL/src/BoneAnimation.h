@@ -88,6 +88,14 @@ public:
 		}
 	}
 
+	void UnInit()
+	{
+		for (int i = 0; i < m_channelVec.size(); ++i)
+		{
+			delete m_channelVec[i];
+		}
+	}
+
 // 	Vector3 Convert(aiVector3D tmp)
 // 	{
 // 		return Vector3(tmp.x, tmp.y, tmp.z);

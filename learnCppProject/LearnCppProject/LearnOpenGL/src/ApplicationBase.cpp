@@ -24,7 +24,7 @@ int sb6IsExtensionSupported(const char * extname)
 	return 0;
 }
 
-application * application::app = 0;
+application * application::s_app = 0;
 
 void APIENTRY application::debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam)
 {

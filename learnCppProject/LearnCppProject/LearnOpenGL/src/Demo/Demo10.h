@@ -230,7 +230,7 @@ public:
 		// »Ö¸´viewPort
 		// unbind fbo
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+		glViewport(0, 0, application::s_app->info.windowWidth, application::s_app->info.windowHeight);
 	}
 
 	virtual void shutdown()

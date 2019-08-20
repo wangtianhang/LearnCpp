@@ -137,7 +137,7 @@ public:
 		Matrix4x4 lightCameraLocalToWorld = Matrix4x4::TRS(lightCameraPos, Quaternion::Euler(lightCameraEuler), Vector3::one());
 		Matrix4x4 view = GLHelper::worldToCameraMatrix(lightCameraLocalToWorld);
 
-		float aspect = (float)application::app->info.windowWidth / application::app->info.windowHeight;
+		float aspect = (float)application::s_app->info.windowWidth / application::s_app->info.windowHeight;
 		float size = 5;
 		Matrix4x4 orthoProject = Matrix4x4::Ortho(-size * aspect, size * aspect, -size, +size, 0.3, 50);
 
@@ -151,9 +151,9 @@ public:
 		//glEnable(GL_DEPTH_TEST);
 		//glDepthFunc(GL_LEQUAL);
 
-		for (int i = 0; i < application::app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
+		for (int i = 0; i < application::s_app->m_sceneRenderMgr.m_renderGoVec.size(); ++i)
 		{
-			MeshRenderObject * iter = application::app->m_sceneRenderMgr.m_renderGoVec[i];
+			MeshRenderObject * iter = application::s_app->m_sceneRenderMgr.m_renderGoVec[i];
 
 			//Matrix4x4 view = application::app->m_camera.GetViewMatrix();
 			
@@ -198,7 +198,7 @@ public:
 			iter->m_material = cacheMat;
 		}
 
-		glViewport(0, 0, application::app->info.windowWidth, application::app->info.windowHeight);
+		glViewport(0, 0, application::s_app->info.windowWidth, application::s_app->info.windowHeight);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		

@@ -85,6 +85,10 @@ std::vector<GLuint> indexs)
 		vertex_indices,
 		GL_STATIC_DRAW);
 
+	delete vertex_positions;
+	delete vertex_indices;
+	delete vertex_normals;
+
 	return ret;
 }
 
@@ -515,7 +519,7 @@ void processNode(aiNode *node, const aiScene *scene, bool readBone, std::vector<
 	{
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshFliter meshFilter;
-		BoneAnimation * boneAnimation = new BoneAnimation();
+		BoneAnimation * boneAnimation = new BoneAnimation(); 
 		processMesh(mesh, scene, inverseZ, readBone, meshFilter, boneAnimation);
 		meshFilterVec.push_back(meshFilter);
 		boneAnimationVec.push_back(boneAnimation);

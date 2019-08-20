@@ -33,6 +33,11 @@ public:
 // 
 // 	}
 
+// 	void UnInit()
+// 	{
+// 
+// 	}
+
 	void SetBoneAnimation(BoneAnimation * boneAnimation)
 	{
 		m_boneAnimation = boneAnimation;
@@ -167,6 +172,11 @@ public:
 
 	void UnInit()
 	{
+		if (m_boneAnimation != nullptr)
+		{
+			m_boneAnimation->UnInit();
+		}
+
 		m_meshData.UnInit();
 
 		m_material.UnInit();

@@ -264,19 +264,19 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 			if (animation->mChannels[j]->mNodeName == aiString(boneNameVec[i].c_str()))
 			{
 				aiNodeAnim * nodeAnim = animation->mChannels[j];
-				ChannelFrameData data;
+				ChannelFrameData * data = new ChannelFrameData();
 
 				for (int i = 0; i < nodeAnim->mNumPositionKeys; ++i)
 				{
-					data.m_posKeyVec.push_back(nodeAnim->mPositionKeys[i]);
+					data->m_posKeyVec.push_back(nodeAnim->mPositionKeys[i]);
 				}
 				for (int i = 0; i < nodeAnim->mNumRotationKeys; ++i)
 				{
-					data.m_quaKeyVec.push_back(nodeAnim->mRotationKeys[i]);
+					data->m_quaKeyVec.push_back(nodeAnim->mRotationKeys[i]);
 				}
 				for (int i = 0; i < nodeAnim->mNumScalingKeys; ++i)
 				{
-					data.m_scaleVec.push_back(nodeAnim->mScalingKeys[i]);
+					data->m_scaleVec.push_back(nodeAnim->mScalingKeys[i]);
 				}
 
 				boneAnimation->m_channelVec.push_back(data);

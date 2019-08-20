@@ -36,7 +36,7 @@ public:
 	//std::vector<std::string> m_boneNameVec;
 	std::vector<Transform *> m_boneTransformVec;
 	//std::vector<aiNodeAnim *> m_aiNodeAnimVec;
-	std::vector<ChannelFrameData> m_channelVec;
+	std::vector<ChannelFrameData *> m_channelVec;
 
 	//std::vector<int> m_curKey;
 
@@ -53,6 +53,23 @@ public:
 // 		{
 // 			m_curKey.push_back(0);
 // 		}
+		float oneFrameSpan = 1 / m_framePerSecond;
+		for (int i = 0; i < m_channelVec.size(); ++i)
+		{
+			ChannelFrameData* iter = m_channelVec[i];
+			for (int j = 0; j < iter->m_posKeyVec.size(); ++j)
+			{
+				iter->m_posKeyVec[j].mTime *= oneFrameSpan;
+			}
+			for (int j = 0; j < iter->m_quaKeyVec.size(); ++j)
+			{
+				iter->m_quaKeyVec[j].mTime *= oneFrameSpan;
+			}
+			for (int j = 0; j < iter->m_scaleVec.size(); ++j)
+			{
+				iter->m_scaleVec[j].mTime *= oneFrameSpan;
+			}
+		}
 	}
 
 	Vector3 Convert(aiVector3D tmp)
@@ -102,63 +119,67 @@ public:
 		}
 	}
 
-	void GetPosKey(float time, ChannelFrameData & channelData, aiVectorKey & beginKey, aiVectorKey & endKey)
+	void GetPosKey(float & time, ChannelFrameData * channelData, aiVectorKey & beginKey, aiVectorKey & endKey)
 	{
-		if (channelData.m_posKeyVec.size() == 1)
+		if (channelData->m_posKeyVec.size() == 1)
 		{
-			beginKey = channelData.m_posKeyVec[0];
-			endKey = channelData.m_posKeyVec[0];
+			beginKey = channelData->m_posKeyVec[0];
+			endKey = channelData->m_posKeyVec[0];
 			return;
+		}
+		if (time >= channelData->m_posKeyVec[channelData->m_posKeyVec.size() - 1].mTime)
+		{
+			//beginKey = channelData->m_posKeyVec[channelData->m_posKeyVec.size() - 2];
+			//endKey = channelData->m_posKeyVec[channelData->m_posKeyVec.size() - 1];
+			//return;
+			time -= channelData->m_posKeyVec[channelData->m_posKeyVec.size() - 1].mTime;
 		}
 		if (time == 0)
 		{
-			beginKey = channelData.m_posKeyVec[0];
-			endKey = channelData.m_posKeyVec[1];
+			beginKey = channelData->m_posKeyVec[0];
+			endKey = channelData->m_posKeyVec[1];
 			return;
 		}
-		if (time >= channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 1].mTime)
+
+		for (int i = 0; i < channelData->m_posKeyVec.size(); ++i)
 		{
-			beginKey = channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 2];
-			endKey = channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 1];
-			return;
-		}
-		for (int i = 0; i < channelData.m_posKeyVec.size(); ++i)
-		{
-			if (time < channelData.m_posKeyVec[i].mTime)
+			if (time < channelData->m_posKeyVec[i].mTime)
 			{
-				beginKey = channelData.m_posKeyVec[i - 1];
-				endKey = channelData.m_posKeyVec[i];
+				beginKey = channelData->m_posKeyVec[i - 1];
+				endKey = channelData->m_posKeyVec[i];
 				return;
 			}
 		}
 	}
 
-	void GetQuaKey(float time, ChannelFrameData & channelData, aiQuatKey & beginKey, aiQuatKey & endKey)
+	void GetQuaKey(float & time, ChannelFrameData * channelData, aiQuatKey & beginKey, aiQuatKey & endKey)
 	{
-		if (channelData.m_quaKeyVec.size() == 1)
+		if (channelData->m_quaKeyVec.size() == 1)
 		{
-			beginKey = channelData.m_quaKeyVec[0];
-			endKey = channelData.m_quaKeyVec[0];
+			beginKey = channelData->m_quaKeyVec[0];
+			endKey = channelData->m_quaKeyVec[0];
 			return;
+		}
+		if (time >= channelData->m_quaKeyVec[channelData->m_quaKeyVec.size() - 1].mTime)
+		{
+			//beginKey = channelData->m_quaKeyVec[channelData->m_quaKeyVec.size() - 2];
+			//endKey = channelData->m_quaKeyVec[channelData->m_quaKeyVec.size() - 1];
+			//return;
+			time -= channelData->m_quaKeyVec[channelData->m_quaKeyVec.size() - 1].mTime;
 		}
 		if (time == 0)
 		{
-			beginKey = channelData.m_quaKeyVec[0];
-			endKey = channelData.m_quaKeyVec[1];
+			beginKey = channelData->m_quaKeyVec[0];
+			endKey = channelData->m_quaKeyVec[1];
 			return;
 		}
-		if (time >= channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 1].mTime)
+
+		for (int i = 0; i < channelData->m_quaKeyVec.size(); ++i)
 		{
-			beginKey = channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 2];
-			endKey = channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 1];
-			return;
-		}
-		for (int i = 0; i < channelData.m_quaKeyVec.size(); ++i)
-		{
-			if (time < channelData.m_quaKeyVec[i].mTime)
+			if (time < channelData->m_quaKeyVec[i].mTime)
 			{
-				beginKey = channelData.m_quaKeyVec[i - 1];
-				endKey = channelData.m_quaKeyVec[i];
+				beginKey = channelData->m_quaKeyVec[i - 1];
+				endKey = channelData->m_quaKeyVec[i];
 				return;
 			}
 		}

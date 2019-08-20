@@ -215,7 +215,7 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 // 	return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
 // }
 
-void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, BoneAnimation * boneAnimation)
+void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, BoneAnimation * boneAnimation)
 {
 	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
 // 	Matrix4x4 localToWorldMatrix = Convert(bone001->mTransformation);
@@ -252,17 +252,20 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 		{
 			if (fullBoneTransformVec[j]->m_name == boneNameVec[i])
 			{
-				boneTransformVec.push_back(fullBoneTransformVec[j]);
+				boneAnimation->m_boneTransformVec.push_back(fullBoneTransformVec[j]);
 				break;
 			}
 		}
 	}
-	for (int i = 0; i < boneNameVec.size(); ++i)
+
+	std::vector<Transform *> allAnimationTransformVec;
+	for (int j = 0; j < animation->mNumChannels; ++j)
 	{
-		for (int j = 0; j < animation->mNumChannels; ++j)
+		for (int i = 0; i < fullBoneTransformVec.size(); ++i)
 		{
-			if (animation->mChannels[j]->mNodeName == aiString(boneNameVec[i].c_str()))
+			if (animation->mChannels[j]->mNodeName == aiString(fullBoneTransformVec[i]->m_name.c_str()))
 			{
+				allAnimationTransformVec.push_back(fullBoneTransformVec[i]);
 				aiNodeAnim * nodeAnim = animation->mChannels[j];
 				ChannelFrameData * data = new ChannelFrameData();
 
@@ -284,6 +287,9 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 			}
 		}
 	}
+
+	//boneAnimation->m_boneTransformVec = boneTransformVec;
+	boneAnimation->m_fullTransformVec = allAnimationTransformVec;
 
 //	if (false)
 //	{
@@ -427,7 +433,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 // 			aiNodeAnim * anim = animation->mChannels[i];
 // 		}
 		
-		processBoneAnimation(boneNameVec, scene, animation, pBoneAnimation->m_boneTransformVec, pBoneAnimation);
+		processBoneAnimation(boneNameVec, scene, animation, pBoneAnimation);
 	}
 	//=====================²âÊÔ¾²Ì¬¹Ç÷ÀÊý¾Ý====================
 

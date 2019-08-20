@@ -36,6 +36,7 @@ public:
 	//std::vector<std::string> m_boneNameVec;
 	std::vector<Transform *> m_boneTransformVec;
 	//std::vector<aiNodeAnim *> m_aiNodeAnimVec;
+	std::vector<Transform *> m_fullTransformVec;
 	std::vector<ChannelFrameData *> m_channelVec;
 
 	//std::vector<int> m_curKey;
@@ -90,8 +91,13 @@ public:
 
 		//float oneFrameSpan = 1 / m_framePerSecond;
 		// 这里先不考虑性能了。。
-		for (int i = 0; i < m_boneTransformVec.size(); ++i)
+		for (int i = 0; i < m_fullTransformVec.size(); ++i)
 		{
+			if (m_fullTransformVec[i]->m_name == "Bip001")
+			{
+				int test = 0;
+			}
+
 			{
 				aiVectorKey beginPosKey;
 				aiVectorKey endPosKey;
@@ -101,7 +107,7 @@ public:
 				Vector3 endLocalPos = Convert(endPosKey.mValue);
 				Vector3 curLocalPos = Vector3::Lerp(beginLocalPos, endLocalPos, weight);
 
-				m_boneTransformVec[i]->SetLocalPosition(curLocalPos);
+				m_fullTransformVec[i]->SetLocalPosition(curLocalPos);
 			}
 
 
@@ -114,7 +120,7 @@ public:
 				Quaternion endLocalQua = Convert(endQuaKey.mValue);
 				Quaternion curQua = Quaternion::Slerp(beginLocalQua, endLocalQua, weight);
 
-				m_boneTransformVec[i]->SetLocalRotation(curQua);
+				m_fullTransformVec[i]->SetLocalRotation(curQua);
 			}
 		}
 	}

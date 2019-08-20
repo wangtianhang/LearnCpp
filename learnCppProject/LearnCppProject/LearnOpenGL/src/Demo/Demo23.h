@@ -98,7 +98,7 @@ public:
 			obj->m_meshData = meshFilter;
 			obj->m_material = mat;
 			obj->m_transform.SetLocalScale(Vector3::one() * 1);
-			obj->m_transform.SetPosition(Vector3(0, 1, 0));
+			obj->m_transform.SetPosition(Vector3(0, 0, 0));
 			obj->m_transform.SetEulerAngles(Vector3(0, 0, 0));
 			obj->SetBoneAnimation(boneAnimation);
 

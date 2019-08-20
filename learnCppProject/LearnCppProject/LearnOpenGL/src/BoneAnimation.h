@@ -15,6 +15,14 @@
 // 	Transform m_bone;
 // };
 
+struct ChannelFrameData
+{
+public:
+	std::vector<aiVectorKey> m_posKeyVec;
+	std::vector<aiQuatKey> m_quaKeyVec;
+	std::vector<aiVectorKey> m_scaleVec;
+};
+
 struct BoneAnimation
 {
 public:
@@ -27,7 +35,8 @@ public:
 	float m_curTime = 0;
 	//std::vector<std::string> m_boneNameVec;
 	std::vector<Transform *> m_boneTransformVec;
-	std::vector<aiNodeAnim *> m_aiNodeAnimVec;
+	//std::vector<aiNodeAnim *> m_aiNodeAnimVec;
+	std::vector<ChannelFrameData> m_channelVec;
 
 	//std::vector<int> m_curKey;
 
@@ -69,7 +78,7 @@ public:
 			{
 				aiVectorKey beginPosKey;
 				aiVectorKey endPosKey;
-				GetPosKey(m_curTime, m_aiNodeAnimVec[i], beginPosKey, endPosKey);
+				GetPosKey(m_curTime, m_channelVec[i], beginPosKey, endPosKey);
 				float weight = (m_curTime - beginPosKey.mTime) / (endPosKey.mTime - beginPosKey.mTime);
 				Vector3 beginLocalPos = Convert(beginPosKey.mValue);
 				Vector3 endLocalPos = Convert(endPosKey.mValue);
@@ -82,7 +91,7 @@ public:
 			{
 				aiQuatKey beginQuaKey;
 				aiQuatKey endQuaKey;
-				GetQuaKey(m_curTime, m_aiNodeAnimVec[i], beginQuaKey, endQuaKey);
+				GetQuaKey(m_curTime, m_channelVec[i], beginQuaKey, endQuaKey);
 				float weight = (m_curTime - beginQuaKey.mTime) / (endQuaKey.mTime - beginQuaKey.mTime);
 				Quaternion beginLocalQua = Convert(beginQuaKey.mValue);
 				Quaternion endLocalQua = Convert(endQuaKey.mValue);
@@ -93,51 +102,63 @@ public:
 		}
 	}
 
-	void GetPosKey(float time, aiNodeAnim * animation, aiVectorKey & beginKey, aiVectorKey & endKey)
+	void GetPosKey(float time, ChannelFrameData & channelData, aiVectorKey & beginKey, aiVectorKey & endKey)
 	{
+		if (channelData.m_posKeyVec.size() == 1)
+		{
+			beginKey = channelData.m_posKeyVec[0];
+			endKey = channelData.m_posKeyVec[0];
+			return;
+		}
 		if (time == 0)
 		{
-			beginKey = animation->mPositionKeys[0];
-			endKey = animation->mPositionKeys[1];
+			beginKey = channelData.m_posKeyVec[0];
+			endKey = channelData.m_posKeyVec[1];
 			return;
 		}
-		if (time >= animation->mPositionKeys[animation->mNumPositionKeys - 1].mTime)
+		if (time >= channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 1].mTime)
 		{
-			beginKey = animation->mPositionKeys[animation->mNumPositionKeys - 2];
-			endKey = animation->mPositionKeys[animation->mNumPositionKeys - 1];
+			beginKey = channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 2];
+			endKey = channelData.m_posKeyVec[channelData.m_posKeyVec.size() - 1];
 			return;
 		}
-		for (int i = 0; i < animation->mNumPositionKeys; ++i)
+		for (int i = 0; i < channelData.m_posKeyVec.size(); ++i)
 		{
-			if (time < animation->mPositionKeys[i].mTime)
+			if (time < channelData.m_posKeyVec[i].mTime)
 			{
-				beginKey = animation->mPositionKeys[i - 1];
-				endKey = animation->mPositionKeys[i];
+				beginKey = channelData.m_posKeyVec[i - 1];
+				endKey = channelData.m_posKeyVec[i];
 				return;
 			}
 		}
 	}
 
-	void GetQuaKey(float time, aiNodeAnim * animation, aiQuatKey & beginKey, aiQuatKey & endKey)
+	void GetQuaKey(float time, ChannelFrameData & channelData, aiQuatKey & beginKey, aiQuatKey & endKey)
 	{
+		if (channelData.m_quaKeyVec.size() == 1)
+		{
+			beginKey = channelData.m_quaKeyVec[0];
+			endKey = channelData.m_quaKeyVec[0];
+			return;
+		}
 		if (time == 0)
 		{
-			beginKey = animation->mRotationKeys[0];
-			endKey = animation->mRotationKeys[1];
+			beginKey = channelData.m_quaKeyVec[0];
+			endKey = channelData.m_quaKeyVec[1];
 			return;
 		}
-		if (time >= animation->mRotationKeys[animation->mNumRotationKeys - 1].mTime)
+		if (time >= channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 1].mTime)
 		{
-			beginKey = animation->mRotationKeys[animation->mNumRotationKeys - 2];
-			endKey = animation->mRotationKeys[animation->mNumRotationKeys - 1];
+			beginKey = channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 2];
+			endKey = channelData.m_quaKeyVec[channelData.m_quaKeyVec.size() - 1];
 			return;
 		}
-		for (int i = 0; i < animation->mNumRotationKeys; ++i)
+		for (int i = 0; i < channelData.m_quaKeyVec.size(); ++i)
 		{
-			if (time < animation->mRotationKeys[i].mTime)
+			if (time < channelData.m_quaKeyVec[i].mTime)
 			{
-				beginKey = animation->mRotationKeys[i - 1];
-				endKey = animation->mRotationKeys[i];
+				beginKey = channelData.m_quaKeyVec[i - 1];
+				endKey = channelData.m_quaKeyVec[i];
 				return;
 			}
 		}

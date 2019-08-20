@@ -205,7 +205,17 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 	}
 }
 
-void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, std::vector<aiNodeAnim *> & animVec)
+// Vector3 Convert(aiVector3D tmp)
+// {
+// 	return Vector3(tmp.x, tmp.y, tmp.z);
+// }
+// 
+// Quaternion Convert(aiQuaternion tmp)
+// {
+// 	return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
+// }
+
+void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, std::vector<Transform *> & boneTransformVec, BoneAnimation * boneAnimation)
 {
 	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
 // 	Matrix4x4 localToWorldMatrix = Convert(bone001->mTransformation);
@@ -253,7 +263,23 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 		{
 			if (animation->mChannels[j]->mNodeName == aiString(boneNameVec[i].c_str()))
 			{
-				animVec.push_back(animation->mChannels[j]);
+				aiNodeAnim * nodeAnim = animation->mChannels[j];
+				ChannelFrameData data;
+
+				for (int i = 0; i < nodeAnim->mNumPositionKeys; ++i)
+				{
+					data.m_posKeyVec.push_back(nodeAnim->mPositionKeys[i]);
+				}
+				for (int i = 0; i < nodeAnim->mNumRotationKeys; ++i)
+				{
+					data.m_quaKeyVec.push_back(nodeAnim->mRotationKeys[i]);
+				}
+				for (int i = 0; i < nodeAnim->mNumScalingKeys; ++i)
+				{
+					data.m_scaleVec.push_back(nodeAnim->mScalingKeys[i]);
+				}
+
+				boneAnimation->m_channelVec.push_back(data);
 				break;
 			}
 		}
@@ -310,7 +336,7 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 	
 }
 
-void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBone, MeshFliter & meshFilter, BoneAnimation * boneAnimation)
+void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBone, MeshFliter & meshFilter, BoneAnimation * pBoneAnimation)
 {
 	std::vector<Vector3> vertices;
 	std::vector<GLuint> indices;
@@ -392,8 +418,8 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 	if (scene->mNumAnimations > 0)
 	{
 		aiAnimation * animation = scene->mAnimations[0];
-		boneAnimation->m_framePerSecond = animation->mTicksPerSecond;
-		boneAnimation->m_totalFrame = animation->mDuration;
+		pBoneAnimation->m_framePerSecond = animation->mTicksPerSecond;
+		pBoneAnimation->m_totalFrame = animation->mDuration;
 // 		for (int i = 0; i < animation->mNumChannels; ++i)
 // 		{
 // 			//aiNodeAnim * anim = animation->mChannels[0];
@@ -401,7 +427,7 @@ void processMesh(aiMesh *mesh, const aiScene *scene, bool inverseZ, bool readBon
 // 			aiNodeAnim * anim = animation->mChannels[i];
 // 		}
 		
-		processBoneAnimation(boneNameVec, scene, animation, boneAnimation->m_boneTransformVec, boneAnimation->m_aiNodeAnimVec);
+		processBoneAnimation(boneNameVec, scene, animation, pBoneAnimation->m_boneTransformVec, pBoneAnimation);
 	}
 	//=====================²âÊÔ¾²Ì¬¹Ç÷ÀÊý¾Ý====================
 

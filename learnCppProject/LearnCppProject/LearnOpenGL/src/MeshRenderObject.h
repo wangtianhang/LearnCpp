@@ -78,7 +78,7 @@ public:
 					mat1.MultiplyVector(normal) * weight.m_weight1 +
 					mat2.MultiplyVector(normal) * weight.m_weight2 +
 					mat3.MultiplyVector(normal) * weight.m_weight3;
-				m_vertex_positions[3 * i] = newPos.x + Mathf::Sin(m_boneAnimation->m_curTime);
+				m_vertex_positions[3 * i] = newPos.x /*+ Mathf::Sin(m_boneAnimation->m_curTime)*/;
 				m_vertex_positions[3 * i + 1] = newPos.y;
 				m_vertex_positions[3 * i + 2] = newPos.z;
 				m_vertex_normals[3 * i] = newNormal.x;

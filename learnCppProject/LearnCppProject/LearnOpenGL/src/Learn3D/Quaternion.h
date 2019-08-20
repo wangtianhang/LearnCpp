@@ -581,7 +581,7 @@ public:
 		return Vector3(x, y, z);
 	}
 
-	Vector3 SetXYZ(Vector3 xyz)
+	void SetXYZ(Vector3 xyz)
 	{
 		x = xyz.x;
 		y = xyz.y;

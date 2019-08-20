@@ -51,6 +51,11 @@ public:
 		return Vector3(tmp.x, tmp.y, tmp.z);
 	}
 
+	Quaternion Convert(aiQuaternion tmp)
+	{
+		return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
+	}
+
 	void Update(float delta)
 	{
 		Init();
@@ -61,15 +66,30 @@ public:
 		// 这里先不考虑性能了。。
 		for (int i = 0; i < m_boneTransformVec.size(); ++i)
 		{
-			aiVectorKey *beginPosKey;
-			aiVectorKey *endPosKey;
-			GetPosKey(m_curTime, m_aiNodeAnimVec[i], &beginPosKey, &endPosKey);
-			float weight = (m_curTime - beginPosKey->mTime) / (endPosKey->mTime - beginPosKey->mTime);
-			Vector3 beginLocalPos = Convert(beginPosKey->mValue);
-			Vector3 endLocalPos = Convert(endPosKey->mValue);
-			Vector3 curLocalPos = Vector3::Lerp(beginLocalPos, endLocalPos, weight);
+			{
+				aiVectorKey beginPosKey;
+				aiVectorKey endPosKey;
+				GetPosKey(m_curTime, m_aiNodeAnimVec[i], beginPosKey, endPosKey);
+				float weight = (m_curTime - beginPosKey.mTime) / (endPosKey.mTime - beginPosKey.mTime);
+				Vector3 beginLocalPos = Convert(beginPosKey.mValue);
+				Vector3 endLocalPos = Convert(endPosKey.mValue);
+				Vector3 curLocalPos = Vector3::Lerp(beginLocalPos, endLocalPos, weight);
 
-			m_boneTransformVec[i]->SetLocalPosition(curLocalPos);
+				m_boneTransformVec[i]->SetLocalPosition(curLocalPos);
+			}
+
+
+			{
+				aiQuatKey beginQuaKey;
+				aiQuatKey endQuaKey;
+				GetQuaKey(m_curTime, m_aiNodeAnimVec[i], beginQuaKey, endQuaKey);
+				float weight = (m_curTime - beginQuaKey.mTime) / (endQuaKey.mTime - beginQuaKey.mTime);
+				Quaternion beginLocalQua = Convert(beginQuaKey.mValue);
+				Quaternion endLocalQua = Convert(endQuaKey.mValue);
+				Quaternion curQua = Quaternion::Slerp(beginLocalQua, endLocalQua, weight);
+
+				m_boneTransformVec[i]->SetLocalRotation(curQua);
+			}
 		}
 	}
 
@@ -81,17 +101,45 @@ public:
 			endKey = animation->mPositionKeys[1];
 			return;
 		}
+		if (time >= animation->mPositionKeys[animation->mNumPositionKeys - 1].mTime)
+		{
+			beginKey = animation->mPositionKeys[animation->mNumPositionKeys - 2];
+			endKey = animation->mPositionKeys[animation->mNumPositionKeys - 1];
+			return;
+		}
 		for (int i = 0; i < animation->mNumPositionKeys; ++i)
 		{
 			if (time < animation->mPositionKeys[i].mTime)
 			{
-
+				beginKey = animation->mPositionKeys[i - 1];
+				endKey = animation->mPositionKeys[i];
+				return;
 			}
 		}
 	}
 
-	aiVectorKey * GetEulerKey(float time)
+	void GetQuaKey(float time, aiNodeAnim * animation, aiQuatKey & beginKey, aiQuatKey & endKey)
 	{
-
+		if (time == 0)
+		{
+			beginKey = animation->mRotationKeys[0];
+			endKey = animation->mRotationKeys[1];
+			return;
+		}
+		if (time >= animation->mRotationKeys[animation->mNumRotationKeys - 1].mTime)
+		{
+			beginKey = animation->mRotationKeys[animation->mNumRotationKeys - 2];
+			endKey = animation->mRotationKeys[animation->mNumRotationKeys - 1];
+			return;
+		}
+		for (int i = 0; i < animation->mNumRotationKeys; ++i)
+		{
+			if (time < animation->mRotationKeys[i].mTime)
+			{
+				beginKey = animation->mRotationKeys[i - 1];
+				endKey = animation->mRotationKeys[i];
+				return;
+			}
+		}
 	}
 };

@@ -68,12 +68,13 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	LPSTR lpCmdLine, 
 	int nCmdShow)                  
 {
-	Matrix4x4::Test();
+	//Matrix4x4::Test();
 
-	Transform::Test();
+	//Transform::Test();
 
 	//GLUtil::Init();
 	//_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+	//_CrtSetBreakAlloc(437);
 
 	int demoId = 1;
 	if (demoId == 1)

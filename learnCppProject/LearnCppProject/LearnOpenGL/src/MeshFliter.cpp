@@ -1,3 +1,5 @@
+#include "./DebugMemory.h"
+
 #include "./MeshFliter.h"
 #include "./ApplicationBase.h"
 

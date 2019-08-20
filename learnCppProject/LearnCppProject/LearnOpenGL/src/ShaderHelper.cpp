@@ -1,3 +1,5 @@
+#include "./DebugMemory.h"
+
 #include "ShaderHelper.h"
 
 GLuint CreateShaderFromFile(const char * filename, GLenum shader_type, bool check_errors)

@@ -1,5 +1,7 @@
 #include "./gl3w.h"
 
+#include "./DebugMemory.h"
+
 #include "./GLHelper.h"
 #include "./ApplicationBase.h"
 #include "./vmath.h"

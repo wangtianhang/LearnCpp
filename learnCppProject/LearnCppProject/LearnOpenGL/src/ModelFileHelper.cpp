@@ -5,13 +5,17 @@
 #include <fstream>
 #include<sstream>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include "./DebugMemory.h"
+
 #include "./ModelFileHelper.h"
 #include "./GUtil.h"
 #include "./Learn3D/MathHelper.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+
 /*
 
 */
@@ -215,6 +219,32 @@ const aiNode * FindNode(const aiNode * node, aiString nodeName)
 // 	return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
 // }
 
+// Vector3 Convert(aiVector3D tmp)
+// {
+// 	return Vector3(tmp.x, tmp.y, tmp.z);
+// }
+// 
+// Quaternion Convert(aiQuaternion tmp)
+// {
+// 	return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
+// }
+
+VectorKey Covnert2(aiVectorKey key)
+{
+	VectorKey ret;
+	ret.mTime = key.mTime;
+	ret.mValue = Vector3(key.mValue.x, key.mValue.y, key.mValue.z);
+	return ret;
+}
+
+QuatKey Convert3(aiQuatKey key)
+{
+	QuatKey ret;
+	ret.mTime = key.mTime;
+	ret.mValue = Quaternion(key.mValue.x, key.mValue.y, key.mValue.z, key.mValue.w);
+	return ret;
+}
+
 void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene *scene, aiAnimation *animation, BoneAnimation * boneAnimation)
 {
 	const aiNode * bone001 = FindNode(scene->mRootNode, aiString("Bone001"));
@@ -271,15 +301,15 @@ void processBoneAnimation(std::vector<std::string> & boneNameVec, const aiScene 
 
 				for (int i = 0; i < nodeAnim->mNumPositionKeys; ++i)
 				{
-					data->m_posKeyVec.push_back(nodeAnim->mPositionKeys[i]);
+					data->m_posKeyVec.push_back(Covnert2(nodeAnim->mPositionKeys[i]));
 				}
 				for (int i = 0; i < nodeAnim->mNumRotationKeys; ++i)
 				{
-					data->m_quaKeyVec.push_back(nodeAnim->mRotationKeys[i]);
+					data->m_quaKeyVec.push_back(Convert3(nodeAnim->mRotationKeys[i]));
 				}
 				for (int i = 0; i < nodeAnim->mNumScalingKeys; ++i)
 				{
-					data->m_scaleVec.push_back(nodeAnim->mScalingKeys[i]);
+					data->m_scaleVec.push_back(Covnert2(nodeAnim->mScalingKeys[i]));
 				}
 
 				boneAnimation->m_channelVec.push_back(data);

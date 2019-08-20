@@ -69,7 +69,7 @@ public:
     unsigned int get_sub_object_count() const           { return num_sub_objects; }
     GLuint       get_vao() const                        { return vao; }
     void load(const char * filename);
-    void free();
+    void freeObj();
 
 private:
     GLuint                  data_buffer;

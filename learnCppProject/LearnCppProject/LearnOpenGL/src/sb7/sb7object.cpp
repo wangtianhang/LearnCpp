@@ -24,6 +24,9 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
 #include "GL/gl3w.h"
+
+#include "../DebugMemory.h"
+
 #include <object.h>
 
 #include <stdio.h>
@@ -50,7 +53,7 @@ void object::load(const char * filename)
     size_t filesize;
     char * data;
 
-    this->free();
+    this->freeObj();
 
     fseek(infile, 0, SEEK_END);
     filesize = ftell(infile);
@@ -191,7 +194,7 @@ void object::load(const char * filename)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void object::free()
+void object::freeObj()
 {
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &data_buffer);

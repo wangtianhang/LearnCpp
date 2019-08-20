@@ -23,6 +23,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+#include "../DebugMemory.h"
+
 #include <sb7textoverlay.h>
 
 #include <sb7ktx.h>

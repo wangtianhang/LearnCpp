@@ -1,3 +1,5 @@
+#include "./DebugMemory.h"
+
 #include "./SceneRenderMgr.h"
 #include "./ApplicationBase.h"
 

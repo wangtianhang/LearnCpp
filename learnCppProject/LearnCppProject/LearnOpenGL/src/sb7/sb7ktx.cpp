@@ -20,6 +20,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+#include "../DebugMemory.h"
 
 #include "sb7ktx.h"
 
@@ -124,7 +125,7 @@ unsigned int load(const char * filename, unsigned int tex)
     unsigned char * data;
     GLenum target = GL_NONE;
 
-    fp = fopen(filename, "rb");
+    fopen_s(&fp, filename, "rb");
 
     if (!fp)
         return 0;

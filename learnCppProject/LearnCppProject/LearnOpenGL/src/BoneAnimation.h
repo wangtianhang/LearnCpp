@@ -2,9 +2,10 @@
 
 #include <vector>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/postprocess.h>
+//#include <assimp/anim.h>
 
 #include "./Learn3D/Transform.h"
 
@@ -15,12 +16,26 @@
 // 	Transform m_bone;
 // };
 
+struct VectorKey
+{
+public:
+	double mTime;
+	Vector3 mValue;
+};
+
+struct QuatKey
+{
+public:
+	double mTime;
+	Quaternion mValue;
+};
+
 struct ChannelFrameData
 {
 public:
-	std::vector<aiVectorKey> m_posKeyVec;
-	std::vector<aiQuatKey> m_quaKeyVec;
-	std::vector<aiVectorKey> m_scaleVec;
+	std::vector<VectorKey> m_posKeyVec;
+	std::vector<QuatKey> m_quaKeyVec;
+	std::vector<VectorKey> m_scaleVec;
 };
 
 struct BoneAnimation
@@ -73,15 +88,15 @@ public:
 		}
 	}
 
-	Vector3 Convert(aiVector3D tmp)
-	{
-		return Vector3(tmp.x, tmp.y, tmp.z);
-	}
-
-	Quaternion Convert(aiQuaternion tmp)
-	{
-		return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
-	}
+// 	Vector3 Convert(aiVector3D tmp)
+// 	{
+// 		return Vector3(tmp.x, tmp.y, tmp.z);
+// 	}
+// 
+// 	Quaternion Convert(aiQuaternion tmp)
+// 	{
+// 		return Quaternion(tmp.x, tmp.y, tmp.z, tmp.w);
+// 	}
 
 	void Update(float delta)
 	{
@@ -99,12 +114,12 @@ public:
 			}
 
 			{
-				aiVectorKey beginPosKey;
-				aiVectorKey endPosKey;
+				VectorKey beginPosKey;
+				VectorKey endPosKey;
 				GetPosKey(m_curTime, m_channelVec[i], beginPosKey, endPosKey);
 				float weight = (m_curTime - beginPosKey.mTime) / (endPosKey.mTime - beginPosKey.mTime);
-				Vector3 beginLocalPos = Convert(beginPosKey.mValue);
-				Vector3 endLocalPos = Convert(endPosKey.mValue);
+				Vector3 beginLocalPos = beginPosKey.mValue;
+				Vector3 endLocalPos = endPosKey.mValue;
 				Vector3 curLocalPos = Vector3::Lerp(beginLocalPos, endLocalPos, weight);
 
 				m_fullTransformVec[i]->SetLocalPosition(curLocalPos);
@@ -112,12 +127,12 @@ public:
 
 
 			{
-				aiQuatKey beginQuaKey;
-				aiQuatKey endQuaKey;
+				QuatKey beginQuaKey;
+				QuatKey endQuaKey;
 				GetQuaKey(m_curTime, m_channelVec[i], beginQuaKey, endQuaKey);
 				float weight = (m_curTime - beginQuaKey.mTime) / (endQuaKey.mTime - beginQuaKey.mTime);
-				Quaternion beginLocalQua = Convert(beginQuaKey.mValue);
-				Quaternion endLocalQua = Convert(endQuaKey.mValue);
+				Quaternion beginLocalQua = beginQuaKey.mValue;
+				Quaternion endLocalQua =endQuaKey.mValue;
 				Quaternion curQua = Quaternion::Slerp(beginLocalQua, endLocalQua, weight);
 
 				m_fullTransformVec[i]->SetLocalRotation(curQua);
@@ -125,7 +140,7 @@ public:
 		}
 	}
 
-	void GetPosKey(float & time, ChannelFrameData * channelData, aiVectorKey & beginKey, aiVectorKey & endKey)
+	void GetPosKey(float & time, ChannelFrameData * channelData, VectorKey & beginKey, VectorKey & endKey)
 	{
 		if (channelData->m_posKeyVec.size() == 1)
 		{
@@ -158,7 +173,7 @@ public:
 		}
 	}
 
-	void GetQuaKey(float & time, ChannelFrameData * channelData, aiQuatKey & beginKey, aiQuatKey & endKey)
+	void GetQuaKey(float & time, ChannelFrameData * channelData, QuatKey & beginKey, QuatKey & endKey)
 	{
 		if (channelData->m_quaKeyVec.size() == 1)
 		{

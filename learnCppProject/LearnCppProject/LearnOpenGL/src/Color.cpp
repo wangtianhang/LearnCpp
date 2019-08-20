@@ -1,4 +1,7 @@
+#include "./DebugMemory.h"
+
 #include "./Color.h"
+
 
 Color operator*(const float d, Color b)
 {

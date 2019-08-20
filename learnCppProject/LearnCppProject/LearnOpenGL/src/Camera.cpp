@@ -1,3 +1,5 @@
+#include "./DebugMemory.h"
+
 #include "./Camera.h"
 
 #include "./ApplicationBase.h"

@@ -551,6 +551,8 @@ bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter
 
 	//std::vector<MeshFliter> meshFilterVec;
 	processNode(scene->mRootNode, scene, readBone, ret, boneAnimation, inverseZ);
+
+	import.FreeScene();
 	return true;
 }
 

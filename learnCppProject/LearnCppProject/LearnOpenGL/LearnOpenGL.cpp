@@ -1,7 +1,8 @@
 ﻿// LearnOpenGL.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-#include "pch.h"
+
+//#include "pch.h"
 #include <iostream>
 
 // int main()
@@ -10,8 +11,11 @@
 // }
 
 //#define _CRT_SECURE_NO_WARNINGS 1
-
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 //#include "sb7.h"
+#include "./src/DebugMemory.h"
 #include "./src/ApplicationBase.h"
 #include "./src/ShaderHelper.h"
 #include "./src/Learn3D/Matrix4x4.h"
@@ -44,9 +48,7 @@
 #include "./src/Demo/Demo22.h"
 #include "./src/Demo/Demo23.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+
 
 // Derive my_application from sb7::application
 
@@ -70,6 +72,7 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	Transform::Test();
 
 	//GLUtil::Init();
+	//_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 
 	int demoId = 1;
 	if (demoId == 1)
@@ -79,6 +82,8 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 		app->run(app);
 		delete app;
 	}
+
+	_CrtDumpMemoryLeaks();
 
 	//GLUtil::UnInit();
 	return 0;                                       

@@ -243,6 +243,9 @@
     <ClInclude Include="src\Learn3D\Matrix3x3.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\DebugMemory.h">
+      <Filter>源文件\src\GUtil</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

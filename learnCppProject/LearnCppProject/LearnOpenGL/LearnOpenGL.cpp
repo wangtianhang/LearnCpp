@@ -80,6 +80,8 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	//_CrtSetBreakAlloc(631);
 	//_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
 
+	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
+
 	int demoId = 1;
 	if (demoId == 1)
 	{
@@ -89,9 +91,12 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 		delete app;
  	}
 
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 
 	//GLUtil::UnInit();
+	//char * test = new char[128];
+	GUtil::Log("program end");
+
 	return 0;                                       
 }
 

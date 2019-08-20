@@ -541,7 +541,6 @@ bool ModelFileHelper::loadMeshAsVAO(std::string path, std::vector<MeshFliter> & 
 bool ModelFileHelper::loadBoneAnimation(std::string path, std::vector<MeshFliter> & ret, std::vector<BoneAnimation *> & boneAnimation, bool inverseZ /*= true*/, bool readBone)
 {
 	Assimp::Importer import;
-	// ReadFile内部有两个内存泄漏点。。
 	const aiScene *scene = import.ReadFile(path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ConvertToLeftHanded);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)

@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearnOpenGL", "LearnOpenGL\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Math3dRightHand", "Math3dRightHand\Math3dRightHand.csproj", "{2D587564-665D-4A0E-9A39-B32E1E7BB452}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LearnVulkan", "LearnVulkan\LearnVulkan.vcxproj", "{6FE1C857-C92F-42C5-B99D-938FEC5C774E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,16 @@ Global
 		{2D587564-665D-4A0E-9A39-B32E1E7BB452}.Release|x64.Build.0 = Release|Any CPU
 		{2D587564-665D-4A0E-9A39-B32E1E7BB452}.Release|x86.ActiveCfg = Release|Any CPU
 		{2D587564-665D-4A0E-9A39-B32E1E7BB452}.Release|x86.Build.0 = Release|Any CPU
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Debug|x64.ActiveCfg = Debug|x64
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Debug|x64.Build.0 = Debug|x64
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Debug|x86.ActiveCfg = Debug|Win32
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Debug|x86.Build.0 = Debug|Win32
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Release|x64.ActiveCfg = Release|x64
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Release|x64.Build.0 = Release|x64
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Release|x86.ActiveCfg = Release|Win32
+		{6FE1C857-C92F-42C5-B99D-938FEC5C774E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

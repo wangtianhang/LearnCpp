@@ -9,15 +9,9 @@
 struct GUtil
 {
 public:
-	static void Log(std::string log)
-	{
-		//std::cout << log << std::endl;
-		log += "\n";
-		OutputDebugStringA(log.c_str());
-	}
+	static void Log(std::string log);
 
-	static void Print(std::string log)
-	{
-		OutputDebugStringA(log.c_str());
-	}
+
+	static void Print(std::string log);
+
 };

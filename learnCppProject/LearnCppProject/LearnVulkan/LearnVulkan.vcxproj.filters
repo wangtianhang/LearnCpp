@@ -77,5 +77,8 @@
     <ClCompile Include="src\Learn3D\Vector4.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUtil.cpp">
+      <Filter>源文件\src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

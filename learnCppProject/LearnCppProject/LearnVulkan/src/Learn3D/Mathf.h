@@ -18,145 +18,43 @@ public:
 		std::cout << "acos " << Acos(0.5) << std::endl;
 	}
 
-	static float Abs(float f)
-	{
-		return abs(f);
-	}
+	static float Abs(float f);
 
-	static int Abs(int value)
-	{
-		return abs(value);
-	}
+	static int Abs(int value);
 
-	static float Acos(float f)
-	{
-		return acos(f);
-	}
+	static float Acos(float f);
 
-	static bool Approximately(float a, float b)
-	{
-		return Mathf::Abs(b - a) < Mathf::Max(1E-06f * Mathf::Max(Mathf::Abs(a), Mathf::Abs(b)), 1.121039E-44f);
-	}
+	static bool Approximately(float a, float b);
 
-	static float Asin(float f)
-	{
-		return asin(f);
-	}
+	static float Asin(float f);
 
-	static float Atan(float f)
-	{
-		return atan(f);
-	}
+	static float Atan(float f);
 
-	static float Atan2(float y, float x)
-	{
-		return atan2(y, x);
-	}
+	static float Atan2(float y, float x);
 
-	static float Ceil(float f)
-	{
-		return ceil(f);
-	}
+	static float Ceil(float f);
 
-	static int CeilToInt(float f)
-	{
-		return (int)ceil(f);
-	}
+	static int CeilToInt(float f);
 
-	static float Clamp(float value, float min, float max)
-	{
-		if (value < min)
-		{
-			value = min;
-		}
-		else if (value > max)
-		{
-			value = max;
-		}
-		return value;
-	}
+	static float Clamp(float value, float min, float max);
 
-	static double Clamp(double value, double min, double max)
-	{
-		if (value < min)
-		{
-			value = min;
-		}
-		else if (value > max)
-		{
-			value = max;
-		}
-		return value;
-	}
+	static double Clamp(double value, double min, double max);
 
-	static int Clamp(int value, int min, int max)
-	{
-		if (value < min)
-		{
-			value = min;
-		}
-		else if (value > max)
-		{
-			value = max;
-		}
-		return value;
-	}
+	static int Clamp(int value, int min, int max);
 
-	static float Clamp01(float value)
-	{
-		if (value < 0)
-		{
-			return 0;
-		}
-		if (value > 1)
-		{
-			return 1;
-		}
-		return value;
-	}
+	static float Clamp01(float value);
 
-	static double Clamp01(double value)
-	{
-		if (value < 0)
-		{
-			return 0;
-		}
-		if (value > 1)
-		{
-			return 1;
-		}
-		return value;
-	}
+	static double Clamp01(double value);
 
-	static float Cos(float f)
-	{
-		return cos(f);
-	}
+	static float Cos(float f);
 
-	static float DeltaAngle(float current, float target)
-	{
-		float num = Mathf::Repeat(target - current, 360);
-		if (num > 180)
-		{
-			num -= 360;
-		}
-		return num;
-	}
+	static float DeltaAngle(float current, float target);
 
-	static float Exp(float power)
-	{
-		return exp(power);
-	}
+	static float Exp(float power);
 
-	static float Floor(float f)
-	{
-		return floor(f);
-	}
+	static float Floor(float f);
 
-	static int FloorToInt(float f)
-	{
-		return (int)floor(f);
-	}
+	static int FloorToInt(float f);
 
 	static float Gamma(float value, float absmax, float gamma)
 	{

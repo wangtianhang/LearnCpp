@@ -51,6 +51,12 @@
     <ClInclude Include="src\Learn3D\Vector4.h">
       <Filter>源文件\src\Learn3D</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUtil.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugMemory.h">
+      <Filter>源文件\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

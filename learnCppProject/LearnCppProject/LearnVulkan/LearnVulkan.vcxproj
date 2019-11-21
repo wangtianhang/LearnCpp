@@ -152,6 +152,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\DebugMemory.h" />
+    <ClInclude Include="src\GUtil.h" />
     <ClInclude Include="src\Learn3D\Mathf.h" />
     <ClInclude Include="src\Learn3D\MathHelper.h" />
     <ClInclude Include="src\Learn3D\Matrix3x3.h" />

@@ -179,6 +179,7 @@
     <ClCompile Include="src\Learn3D\Matrix4x4.cpp" />
     <ClCompile Include="src\Learn3D\Quaternion.cpp" />
     <ClCompile Include="src\Learn3D\Test3DMath.cpp" />
+    <ClCompile Include="src\Learn3D\Transform.cpp" />
     <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\Learn3D\Vector4.cpp" />
   </ItemGroup>

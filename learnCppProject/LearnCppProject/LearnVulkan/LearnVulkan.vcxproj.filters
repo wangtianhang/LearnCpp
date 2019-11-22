@@ -89,5 +89,8 @@
     <ClCompile Include="src\Learn3D\Matrix4x4.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Learn3D\Quaternion.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

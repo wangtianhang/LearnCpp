@@ -80,5 +80,8 @@
     <ClCompile Include="src\GUtil.cpp">
       <Filter>源文件\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Learn3D\MathHelper.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

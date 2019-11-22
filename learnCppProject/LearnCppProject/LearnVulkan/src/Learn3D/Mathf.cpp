@@ -3,6 +3,9 @@
 
 #include "./Mathf.h"
 
+#include <iostream>
+#include <cmath>
+
 float Mathf::Deg2Rad = 0.0174533f;
 float Mathf::Epsilon = 1.4013e-045f;
 float Mathf::Infinity = 1.0f / 0.0f;

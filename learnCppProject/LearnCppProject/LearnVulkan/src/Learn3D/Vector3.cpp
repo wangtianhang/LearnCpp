@@ -6,6 +6,7 @@
 #include "./Mathf.h"
 
 #include "Vector3.h"
+#include "./Vector4.h"
 #include "Matrix4x4.h"
 
 // Vector3 operator*(const float d, Vector3 & b)

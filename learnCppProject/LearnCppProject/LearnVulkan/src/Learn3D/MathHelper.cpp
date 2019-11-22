@@ -3,6 +3,7 @@
 #include "./Vector3.h"
 #include "./Quaternion.h"
 #include "./Matrix4x4.h"
+#include "./Vector4.h"
 #include "./Mathf.h"
 
 Vector3 MathHelper::GetPosition(Matrix4x4 m)

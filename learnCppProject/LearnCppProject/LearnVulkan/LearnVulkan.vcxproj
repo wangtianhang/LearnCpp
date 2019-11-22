@@ -176,6 +176,7 @@
     <ClCompile Include="src\Learn3D\Mathf.cpp" />
     <ClCompile Include="src\Learn3D\MathHelper.cpp" />
     <ClCompile Include="src\Learn3D\Matrix3x3.cpp" />
+    <ClCompile Include="src\Learn3D\Matrix4x4.cpp" />
     <ClCompile Include="src\Learn3D\Test3DMath.cpp" />
     <ClCompile Include="src\Learn3D\Vector3.cpp" />
     <ClCompile Include="src\Learn3D\Vector4.cpp" />

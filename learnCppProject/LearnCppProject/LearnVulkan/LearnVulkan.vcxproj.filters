@@ -83,5 +83,8 @@
     <ClCompile Include="src\Learn3D\MathHelper.cpp">
       <Filter>源文件\src\Learn3D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Learn3D\Matrix3x3.cpp">
+      <Filter>源文件\src\Learn3D</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

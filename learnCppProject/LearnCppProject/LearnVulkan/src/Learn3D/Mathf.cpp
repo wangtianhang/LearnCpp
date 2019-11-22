@@ -1,10 +1,10 @@
 /*#include "pch.h"*/
 #include "../DebugMemory.h"
 
-#include "./Mathf.h"
-
 #include <iostream>
 #include <cmath>
+
+#include "./Mathf.h"
 
 float Mathf::Deg2Rad = 0.0174533f;
 float Mathf::Epsilon = 1.4013e-045f;
